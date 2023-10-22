@@ -2,7 +2,7 @@
   "name": "modernize",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://alfa2267.github.io/alfa2267.github.io",
+  "homepage": "https://alfa2267.github.io",
   "dependencies": {
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
