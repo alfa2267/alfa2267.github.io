@@ -26,9 +26,9 @@ This is a React Node Website that uses Modernize-react.
 * Sugessted workflow.
    - Local server updates automatically after changes in code. If you have autosave in vscode, this means changes are reflected as soon as you stop typing.
    - So Work locally with local server, viewing changes in browser. 
-   - when changes are finalised, `npm run deploy`.
-   - If changes look good on .io domain at this point you can go ahead and commit and update this repo with your changes.
+   - when changes are finalised, `npm run deploy` and check if it's all good live.
+   - If changes look good on .io domain, at this point you can go ahead and commit and update this repo with your changes.
 
-This way simple discarding all changes in vs-code and running `npm run deploy` after will reset you live site back to defaults. 
+This way simply discarding all uncommited changes in editor, and running `npm run deploy` after will reset your live site back. 
 
 Here's an example of Live demo using Modernize React : <a href="https://modernize-react-free.netlify.app/dashboard">Live Demo</a>
