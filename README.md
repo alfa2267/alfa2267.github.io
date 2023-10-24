@@ -1,4 +1,4 @@
-This is a React Node Websites that uses Modernize-react. 
+This is a React Node Website that uses Modernize-react. 
 
 ### Set-up Instructions 
 * Download repo. 
