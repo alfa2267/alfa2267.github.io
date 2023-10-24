@@ -11,9 +11,10 @@ This is a React Node Website that uses Modernize-react.
 
 * Set-up repo
     - In terminal, Navgate to root of repo folder. The file npm config file `package.json` should exist here. Can do `ls -la` to check. 
-    - type `npm i` to install packages from package.json (this only needs to be done if new packages have been added or package.json has been updated).
-    - To run local server, use :
-            `npm run start`
+    - Type `npm i` to install packages from package.json (this only needs to be done if first time installing repo, new packages have been added, package.json has been updated or
+      if folder `node_modules` was deleted/doesn't exist). It creates/updates node_modules folder and, if needs be, updates `package_lock.json`
+   
+* To run local server, use `npm run start`. This local server updates with your changes live. No more waiting 3 minutes to see updates. Work using this before deploying to live.
       
 * Deploying to github.io
     - To deploy website, type `npm run deploy` in terminal. This will build your static website and assets, 
