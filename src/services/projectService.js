@@ -128,10 +128,6 @@ class ProjectService {
     // Static utility items
     const utilityMenuItems = [
       {
-        navlabel: true,
-        subheader: 'Utilities',
-      },
-      {
         id: uniqueId(),
         title: 'Icons',
         icon: IconMoodHappy,

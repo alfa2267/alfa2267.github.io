@@ -14,7 +14,7 @@ import { Link, Typography } from '@mui/material';
 
 const RecentTransactions = () => {
   return (
-    <DashboardCard title="Recent Transactions">
+    <DashboardCard title="Recent Activity">
       <>
         <Timeline
           className="theme-timeline"
@@ -35,65 +35,48 @@ const RecentTransactions = () => {
           }}
         >
           <TimelineItem>
-            <TimelineOppositeContent>09:30 am</TimelineOppositeContent>
+            <TimelineOppositeContent>09:10 am</TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="primary" variant="outlined" />
               <TimelineConnector />
             </TimelineSeparator>
-            <TimelineContent>Payment received from John Doe of $385.90</TimelineContent>
+            <TimelineContent>Pushed 3 commits to <Typography component="span" fontWeight={600}>alfa2267.github.io</Typography></TimelineContent>
           </TimelineItem>
           <TimelineItem>
-            <TimelineOppositeContent>10:00 am</TimelineOppositeContent>
+            <TimelineOppositeContent>08:35 am</TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="secondary" variant="outlined" />
               <TimelineConnector />
             </TimelineSeparator>
             <TimelineContent>
-              <Typography fontWeight="600">New sale recorded</Typography>{' '}
-              <Link href="/" underline="none">
-                #ML-3467
-              </Link>
+              Opened PR <Link href="https://github.com/alfa2267/community-vote/pulls" underline="none" target="_blank" rel="noreferrer">#42</Link>
             </TimelineContent>
           </TimelineItem>
           <TimelineItem>
-            <TimelineOppositeContent>12:00 am</TimelineOppositeContent>
+            <TimelineOppositeContent>Yesterday</TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="success" variant="outlined" />
               <TimelineConnector />
             </TimelineSeparator>
-            <TimelineContent>Payment was made of $64.95 to Michael</TimelineContent>
+            <TimelineContent>Merged PR on <Typography component="span" fontWeight={600}>community-vote</Typography></TimelineContent>
           </TimelineItem>
           <TimelineItem>
-            <TimelineOppositeContent>09:30 am</TimelineOppositeContent>
+            <TimelineOppositeContent>2 days ago</TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="warning" variant="outlined" />
               <TimelineConnector />
             </TimelineSeparator>
-            <TimelineContent>
-              <Typography fontWeight="600">New sale recorded</Typography>{' '}
-              <Link href="/" underline="none">
-                #ML-3467
-              </Link>
-            </TimelineContent>
+            <TimelineContent>Published new post on portfolio blog</TimelineContent>
           </TimelineItem>
           <TimelineItem>
-            <TimelineOppositeContent>09:30 am</TimelineOppositeContent>
+            <TimelineOppositeContent>3 days ago</TimelineOppositeContent>
             <TimelineSeparator>
               <TimelineDot color="error" variant="outlined" />
               <TimelineConnector />
             </TimelineSeparator>
-            <TimelineContent>
-              <Typography fontWeight="600">New arrival recorded</Typography>
-            </TimelineContent>
+            <TimelineContent>Starred repository <Link href="https://github.com/vercel/next.js" target="_blank" rel="noreferrer" underline="none">vercel/next.js</Link></TimelineContent>
           </TimelineItem>
-          <TimelineItem>
-            <TimelineOppositeContent>12:00 am</TimelineOppositeContent>
-            <TimelineSeparator>
-              <TimelineDot color="success" variant="outlined" />
-            </TimelineSeparator>
-            <TimelineContent>Payment Received</TimelineContent>
-          </TimelineItem>
-        </Timeline>
+      </Timeline>
       </>
     </DashboardCard>
   );

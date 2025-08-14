@@ -67,9 +67,5 @@ const getStaticMenuItems = () => {
       external: true,
     },
    
-    {
-      navlabel: true,
-      subheader: 'Utilities',
-    },
   ];
 };

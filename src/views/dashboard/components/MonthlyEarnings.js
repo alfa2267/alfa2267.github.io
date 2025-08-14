@@ -2,7 +2,7 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import { useTheme } from '@mui/material/styles';
 import { Stack, Typography, Avatar, Fab } from '@mui/material';
-import { IconArrowDownRight, IconCurrencyDollar } from '@tabler/icons';
+import { IconArrowUpRight, IconGitBranch } from '@tabler/icons';
 import DashboardCard from '../../../components/shared/DashboardCard';
 
 const MonthlyEarnings = () => {
@@ -45,18 +45,18 @@ const MonthlyEarnings = () => {
   };
   const seriescolumnchart = [
     {
-      name: '',
+      name: 'Commits',
       color: secondary,
-      data: [25, 66, 20, 40, 12, 58, 20],
+      data: [5, 12, 7, 10, 4, 15, 9],
     },
   ];
 
   return (
     <DashboardCard
-      title="Monthly Earnings"
+      title="Monthly Contributions"
       action={
         <Fab color="secondary" size="medium" sx={{color: '#ffffff'}}>
-          <IconCurrencyDollar width={24} />
+          <IconGitBranch width={24} />
         </Fab>
       }
       footer={
@@ -65,17 +65,17 @@ const MonthlyEarnings = () => {
     >
       <>
         <Typography variant="h3" fontWeight="700" mt="-20px">
-          $6,820
+          62 commits
         </Typography>
         <Stack direction="row" spacing={1} my={1} alignItems="center">
           <Avatar sx={{ bgcolor: errorlight, width: 27, height: 27 }}>
-            <IconArrowDownRight width={20} color="#FA896B" />
+            <IconArrowUpRight width={20} color="#FA896B" />
           </Avatar>
           <Typography variant="subtitle2" fontWeight="600">
-            +9%
+            +14%
           </Typography>
           <Typography variant="subtitle2" color="textSecondary">
-            last year
+            vs last month
           </Typography>
         </Stack>
       </>

@@ -6,9 +6,9 @@ import PageContainer from 'src/components/container/PageContainer';
 import SalesOverview from './components/SalesOverview';
 import YearlyBreakup from './components/YearlyBreakup';
 import RecentTransactions from './components/RecentTransactions';
-import ProductPerformance from './components/ProductPerformance';
 import Blog from './components/Blog';
 import MonthlyEarnings from './components/MonthlyEarnings';
+import AboutMe from './components/AboutMe';
 
 
 const Dashboard = () => {
@@ -30,10 +30,14 @@ const Dashboard = () => {
             </Grid>
           </Grid>
           <Grid item xs={12} lg={4}>
-            <RecentTransactions />
-          </Grid>
-          <Grid item xs={12} lg={8}>
-            <ProductPerformance />
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <RecentTransactions />
+              </Grid>
+              <Grid item xs={12}>
+                <AboutMe />
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item xs={12}>
             <Blog />

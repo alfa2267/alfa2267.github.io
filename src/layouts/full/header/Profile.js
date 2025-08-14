@@ -12,8 +12,8 @@ import {
 } from '@mui/material';
 
 import { IconListCheck, IconMail, IconUser } from '@tabler/icons';
-
-import ProfileImg from 'src/assets/images/profile/user-1.jpg';
+// Use GitHub profile avatar
+const PROFILE_AVATAR_URL = 'https://github.com/alfa2267.png';
 
 const Profile = () => {
   const [anchorEl2, setAnchorEl2] = useState(null);
@@ -40,8 +40,8 @@ const Profile = () => {
         onClick={handleClick2}
       >
         <Avatar
-          src={ProfileImg}
-          alt={ProfileImg}
+          src={PROFILE_AVATAR_URL}
+          alt="alfa2267"
           sx={{
             width: 35,
             height: 35,
