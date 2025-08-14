@@ -1,5 +1,5 @@
 import {
-  IconAperture, IconCopy, IconLayoutDashboard, IconLogin, IconMoodHappy, IconTypography, IconUserPlus
+  IconAperture, IconCopy, IconLayoutDashboard, IconLogin, IconMoodHappy, IconTypography, IconUserPlus, IconVote
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
@@ -15,6 +15,13 @@ const Menuitems = [
     title: 'Dashboard',
     icon: IconLayoutDashboard,
     href: '/dashboard',
+  },
+  {
+    id: uniqueId(),
+    title: 'Community Vote',
+    icon: IconVote,
+    href: 'https://alfa2267.github.io/community-vote/',
+    external: true,
   },
   {
     navlabel: true,
