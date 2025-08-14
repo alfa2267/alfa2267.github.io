@@ -19,7 +19,7 @@ const Menuitems = [
   {
     id: uniqueId(),
     title: 'Community Vote',
-    icon: IconVote,
+    icon: IconChecks,
     href: 'https://alfa2267.github.io/community-vote/',
     external: true,
   },
