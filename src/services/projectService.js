@@ -107,7 +107,7 @@ class ProjectService {
     const githubMenuItems = [
       {
         navlabel: true,
-        subheader: 'GitHub Projects',
+        subheader: 'Projects',
       },
       {
         id: uniqueId(),
@@ -127,10 +127,6 @@ class ProjectService {
 
     // Static utility items
     const utilityMenuItems = [
-      {
-        navlabel: true,
-        subheader: 'Utilities',
-      },
       {
         id: uniqueId(),
         title: 'Icons',

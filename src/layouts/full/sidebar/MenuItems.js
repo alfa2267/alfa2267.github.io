@@ -23,15 +23,6 @@ const Menuitems = [
     href: 'https://alfa2267.github.io/community-vote/',
     external: true,
   },
-  {
-    navlabel: true,
-    subheader: 'Utilities',
-  },
-  
-  {
-    navlabel: true,
-    subheader: 'Auth',
-  },
   
 ];
 
