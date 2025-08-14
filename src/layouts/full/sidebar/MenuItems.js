@@ -73,10 +73,6 @@ const Menuitems = [
     icon: IconUserPlus,
     href: '/auth/register',
   },
-  {
-    navlabel: true,
-    subheader: 'Extra',
-  },
 ];
 
 export default Menuitems;
