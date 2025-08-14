@@ -26,7 +26,7 @@ project:
 ```
 <!-- PROJECT-META-END -->
 
-Hi there! I'm **alfa2267**, a passionate developer who loves building innovative web applications and exploring cutting-edge technologies. This is my personal portfolio dashboard - a dynamic, self-updating showcase of my projects and interests.
+Hi there! I'm **alfa2267**, a enthusiast who loves building web applications and exploring cutting-edge technologies. This is my personal portfolio dashboard - a dynamic, self-updating showcase of my projects and interests.
 
 ## 🚀 About Me
 
