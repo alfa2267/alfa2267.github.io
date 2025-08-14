@@ -1,5 +1,5 @@
 import {
-  IconAperture, IconCopy, IconLayoutDashboard, IconLogin, IconMoodHappy, IconTypography, IconUserPlus
+  IconCopy, IconLayoutDashboard, IconLogin, IconTypography, IconUserPlus, IconChecks, IconBrandGithub
 } from '@tabler/icons';
 
 import { uniqueId } from 'lodash';
@@ -15,6 +15,31 @@ const Menuitems = [
     title: 'Dashboard',
     icon: IconLayoutDashboard,
     href: '/dashboard',
+  },
+  {
+    id: uniqueId(),
+    title: 'Community Vote',
+    icon: IconChecks,
+    href: 'https://alfa2267.github.io/community-vote/',
+    external: true,
+  },
+  {
+    navlabel: true,
+    subheader: 'GitHub Projects',
+  },
+  {
+    id: uniqueId(),
+    title: 'alfa2267.github.io',
+    icon: IconBrandGithub,
+    href: 'https://github.com/alfa2267/alfa2267.github.io',
+    external: true,
+  },
+  {
+    id: uniqueId(),
+    title: 'community-vote',
+    icon: IconBrandGithub,
+    href: 'https://github.com/alfa2267/community-vote',
+    external: true,
   },
   {
     navlabel: true,
@@ -51,18 +76,6 @@ const Menuitems = [
   {
     navlabel: true,
     subheader: 'Extra',
-  },
-  {
-    id: uniqueId(),
-    title: 'Icons',
-    icon: IconMoodHappy,
-    href: '/icons',
-  },
-  {
-    id: uniqueId(),
-    title: 'Sample Page',
-    icon: IconAperture,
-    href: '/sample-page',
   },
 ];
 
