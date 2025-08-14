@@ -1,6 +1,6 @@
 import React from 'react';
 import { Avatar, Box, Button, Chip, Stack, Typography } from '@mui/material';
-import { IconUser, IconMail } from '@tabler/icons';
+import { IconBrandGithub, IconBrandLinkedin, IconMail } from '@tabler/icons-react';
 import DashboardCard from '../../../components/shared/DashboardCard';
 
 const GITHUB_AVATAR = 'https://github.com/alfa2267.png';
@@ -27,7 +27,7 @@ const AboutMe = () => {
           <Button
             variant="contained"
             color="primary"
-            startIcon={<IconUser size={18} />}
+            startIcon={<IconBrandGithub size={18} />}
             href="https://github.com/alfa2267"
             target="_blank"
             rel="noreferrer"
@@ -37,7 +37,7 @@ const AboutMe = () => {
           <Button
             variant="outlined"
             color="primary"
-            startIcon={<IconUser size={18} />}
+            startIcon={<IconBrandLinkedin size={18} />}
             href="https://www.linkedin.com/in/alfa2267"
             target="_blank"
             rel="noreferrer"
