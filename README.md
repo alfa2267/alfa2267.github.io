@@ -146,7 +146,6 @@ project:
   features:
     - "Feature 1"
     - "Feature 2"
-```
 <!-- PROJECT-META-END -->
 ```
 
