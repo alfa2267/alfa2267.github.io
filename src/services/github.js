@@ -45,6 +45,33 @@ class GitHubService {
   }
 
   /**
+   * Fetch README rendered as HTML for a specific repository
+   */
+  async fetchReadmeHtml(repoName) {
+    try {
+      const response = await fetch(
+        `${this.baseUrl}/repos/${this.username}/${repoName}/readme`,
+        {
+          headers: {
+            Accept: 'application/vnd.github.html',
+          },
+        }
+      );
+      if (!response.ok) {
+        if (response.status === 404) {
+          return null; // No README found
+        }
+        throw new Error(`GitHub API error: ${response.status}`);
+      }
+      const html = await response.text();
+      return html;
+    } catch (error) {
+      console.error(`Error fetching README HTML for ${repoName}:`, error);
+      return null;
+    }
+  }
+
+  /**
    * Fetch repositories with their README content
    */
   async fetchRepositoriesWithReadme() {
