@@ -38,8 +38,8 @@ export const useMenuItems = () => {
  */
 const getStaticMenuItems = () => {
   const {
-    IconAperture, IconCopy, IconLayoutDashboard, IconLogin, 
-    IconMoodHappy, IconTypography, IconUserPlus, IconChecks, IconBrandGithub
+    IconCopy, IconLayoutDashboard, IconLogin, 
+    IconTypography, IconUserPlus, IconChecks, IconBrandGithub
   } = require('@tabler/icons');
   const { uniqueId } = require('lodash');
 
@@ -82,18 +82,6 @@ const getStaticMenuItems = () => {
     {
       navlabel: true,
       subheader: 'Utilities',
-    },
-    {
-      id: uniqueId(),
-      title: 'Icons',
-      icon: IconMoodHappy,
-      href: '/icons',
-    },
-    {
-      id: uniqueId(),
-      title: 'Sample Page',
-      icon: IconAperture,
-      href: '/sample-page',
     },
   ];
 };
