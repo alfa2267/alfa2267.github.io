@@ -1,47 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CardContent, Typography, Grid, Rating, Tooltip, Fab } from '@mui/material';
-import img1 from 'src/assets/images/products/s4.jpg';
-import img2 from 'src/assets/images/products/s5.jpg';
-import img3 from 'src/assets/images/products/s7.jpg';
-import img4 from 'src/assets/images/products/s11.jpg';
 import { Stack } from '@mui/system';
 import { IconBasket } from '@tabler/icons';
 import BlankCard from '../../../components/shared/BlankCard';
 
+// Project snapshot cards. Photo can be an external URL (e.g., raw GitHub image).
 const ecoCard = [
     {
-        title: 'Boat Headphone',
-        subheader: 'September 14, 2023',
-        photo: img1,
-        salesPrice: 375,
-        price: 285,
-        rating: 4,
-    },
-    {
-        title: 'MacBook Air Pro',
-        subheader: 'September 14, 2023',
-        photo: img2,
-        salesPrice: 650,
-        price: 900,
+        title: 'Community Vote',
+        subheader: 'Latest snapshot',
+        // Replace with actual path created by CI in the Community Vote repo
+        photo: 'https://raw.githubusercontent.com/alfa2267/community-vote/main/assets/snapshots/home.png',
+        href: 'https://github.com/alfa2267/community-vote',
+        price: 0,
+        salesPrice: 0,
         rating: 5,
     },
-    {
-        title: 'Red Valvet Dress',
-        subheader: 'September 14, 2023',
-        photo: img3,
-        salesPrice: 150,
-        price: 200,
-        rating: 3,
-    },
-    {
-        title: 'Cute Soft Teddybear',
-        subheader: 'September 14, 2023',
-        photo: img4,
-        salesPrice: 285,
-        price: 345,
-        rating: 2,
-    },
+    // Add more projects here as you add snapshot automation in each repo
 ];
 
 const Blog = () => {
@@ -50,8 +26,8 @@ const Blog = () => {
             {ecoCard.map((product, index) => (
                 <Grid item sm={12} md={4} lg={3} key={index}>
                     <BlankCard>
-                        <Typography component={Link} to="/">
-                            <img src={product.photo} alt="img" width="100%" />
+                        <Typography component={Link} to={product.href || '/'}>
+                            <img src={product.photo} alt={product.title} width="100%" />
                         </Typography>
                         <Tooltip title="Add To Cart">
                             <Fab
