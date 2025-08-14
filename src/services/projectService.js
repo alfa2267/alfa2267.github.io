@@ -107,7 +107,7 @@ class ProjectService {
     const githubMenuItems = [
       {
         navlabel: true,
-        subheader: 'GitHub Projects',
+        subheader: 'Projects',
       },
       {
         id: uniqueId(),
