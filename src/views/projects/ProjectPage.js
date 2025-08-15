@@ -249,7 +249,7 @@ const ProjectPage = () => {
             <Box sx={{ p: 3 }}>
               <Box
                 component="img"
-                src={`${process.env.PUBLIC_URL}/projects/${project.slug}/demo.png`}
+                src={`https://raw.githubusercontent.com/alfa2267/${project.github_data?.name || project.slug}/main/demo.png`}
                 alt={`${project.name} Demo`}
                 sx={{
                   width: '100%',
