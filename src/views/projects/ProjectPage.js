@@ -18,6 +18,7 @@ import {
   Tab,
   CircularProgress
 } from '@mui/material';
+import DOMPurify from 'dompurify';
 import {
   IconExternalLink,
   IconBrandGithub,
@@ -302,7 +303,7 @@ const ProjectPage = () => {
                         borderRadius: 0
                       },
                     }}
-                    dangerouslySetInnerHTML={{ __html: readmeHtml }}
+                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(readmeHtml) }}
                   />
                 )}
               </Box>
