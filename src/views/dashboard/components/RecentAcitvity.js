@@ -24,53 +24,17 @@ const RecentActivity = () => {
         setLoading(true);
         const githubService = new GitHubService();
         
-        // Fetch recent activity from GitHub
-        // This would need to be implemented in GitHubService
-        // For now, use fallback static data
-        const staticActivities = [
-          {
-            id: 1,
-            type: 'push',
-            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-            description: 'Pushed commits to portfolio',
-            repository: 'alfa2267.github.io',
-            color: 'primary'
-          },
-          {
-            id: 2,
-            type: 'pr',
-            timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000), // 4 hours ago
-            description: 'Opened pull request',
-            repository: 'various projects',
-            color: 'secondary'
-          },
-          {
-            id: 3,
-            type: 'merge',
-            timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-            description: 'Merged pull request',
-            repository: 'project repository',
-            color: 'success'
-          },
-          {
-            id: 4,
-            type: 'publish',
-            timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-            description: 'Published new content',
-            repository: 'portfolio blog',
-            color: 'warning'
-          },
-          {
-            id: 5,
-            type: 'star',
-            timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-            description: 'Starred interesting repository',
-            repository: 'open source project',
-            color: 'error'
-          }
-        ];
-
-        setActivities(staticActivities);
+        // Try to fetch real GitHub activity
+        try {
+          const recentEvents = await githubService.fetchUserEvents();
+          const processedActivities = processGitHubEvents(recentEvents);
+          setActivities(processedActivities);
+        } catch (githubError) {
+          console.warn('Could not fetch GitHub events, using fallback data:', githubError);
+          // Fallback to dynamic placeholder data
+          const fallbackActivities = generateFallbackActivities();
+          setActivities(fallbackActivities);
+        }
         setError(null);
       } catch (err) {
         console.error('Error loading recent activity:', err);
@@ -83,6 +47,67 @@ const RecentActivity = () => {
 
     loadRecentActivity();
   }, []);
+
+  const processGitHubEvents = (events) => {
+    if (!events || !Array.isArray(events)) return [];
+    
+    return events.slice(0, 5).map((event, index) => {
+      const eventType = event.type;
+      let description = 'Activity';
+      let color = 'primary';
+      
+      switch (eventType) {
+        case 'PushEvent':
+          description = `Pushed ${event.payload.commits?.length || 1} commit${event.payload.commits?.length === 1 ? '' : 's'} to`;
+          color = 'primary';
+          break;
+        case 'PullRequestEvent':
+          description = `${event.payload.action === 'opened' ? 'Opened' : 'Updated'} pull request in`;
+          color = 'secondary';
+          break;
+        case 'IssuesEvent':
+          description = `${event.payload.action === 'opened' ? 'Opened' : 'Updated'} issue in`;
+          color = 'warning';
+          break;
+        case 'CreateEvent':
+          description = `Created ${event.payload.ref_type} in`;
+          color = 'success';
+          break;
+        case 'WatchEvent':
+          description = 'Starred repository';
+          color = 'error';
+          break;
+        default:
+          description = `${eventType.replace('Event', '')} activity in`;
+      }
+      
+      return {
+        id: event.id || index,
+        type: eventType,
+        timestamp: new Date(event.created_at),
+        description,
+        repository: event.repo?.name || 'repository',
+        color
+      };
+    });
+  };
+
+  const generateFallbackActivities = () => {
+    const activities = [
+      { description: 'Pushed commits to', repository: 'portfolio', color: 'primary' },
+      { description: 'Updated project in', repository: 'repository', color: 'secondary' },
+      { description: 'Merged changes in', repository: 'project', color: 'success' },
+      { description: 'Published content to', repository: 'blog', color: 'warning' },
+      { description: 'Starred', repository: 'open source project', color: 'error' }
+    ];
+    
+    return activities.map((activity, index) => ({
+      id: index + 1,
+      type: 'activity',
+      timestamp: new Date(Date.now() - (index + 1) * 4 * 60 * 60 * 1000), // Spread over hours
+      ...activity
+    }));
+  };
 
   const formatTimestamp = (timestamp) => {
     const now = new Date();
