@@ -1,32 +1,6 @@
 # 👋 Welcome to My Portfolio
 
-<!-- PROJECT-META-START -->
-```yaml
-project:
-  name: "Portfolio Dashboard"
-  slug: "portfolio-dashboard"
-  description: "A dynamic React-based portfolio dashboard that automatically fetches and displays projects from GitHub repositories"
-  status: "active"
-  category: "portfolio"
-  tech_stack: ["React", "Material-UI", "JavaScript", "GitHub API", "YAML"]
-  demo_url: "https://alfa2267.github.io"
-  repo_url: "https://github.com/alfa2267/alfa2267.github.io"
-  priority: 1
-  show_in_nav: true
-  icon: "dashboard"
-  features:
-    - "Dynamic project discovery from README files"
-    - "Automated sidebar navigation generation"
-    - "Responsive Material-UI design"
-    - "GitHub API integration"
-    - "Project categorization and filtering"
-  created_date: "2024-08-01"
-  updated_date: "2024-08-14"
-  tags: ["portfolio", "dashboard", "dynamic", "automation"]
-```
-<!-- PROJECT-META-END -->
-
-Hi there! I'm **alfa2267**, a enthusiast who loves building web applications and exploring cutting-edge technologies. This is my personal portfolio dashboard - a dynamic, self-updating showcase of my projects and interests.
+Hi there! I'm Oceania, a enthusiast who loves building web applications and exploring cutting-edge technologies. This is my personal portfolio dashboard - a dynamic, self-updating showcase of my projects and interests.
 
 ## 🚀 About Me
 
@@ -128,7 +102,6 @@ src/
 
 To have your project appear in this portfolio dashboard, add a metadata section to your project's README:
 
-```markdown
 <!-- PROJECT-META-START -->
 ```yaml
 project:
@@ -156,7 +129,7 @@ project:
   tags: ["tag1", "tag2"]
 ```
 <!-- PROJECT-META-END -->
-```
+
 
 ### Contributing
 
