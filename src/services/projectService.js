@@ -2,6 +2,9 @@ import GitHubService from './github.js';
 import ReadmeParser from './readmeParser.js';
 import { uniqueId } from 'lodash';
 import { IconBrandGithub, IconLayoutDashboard, IconChecks, IconMoodHappy } from '@tabler/icons';
+import { getMockProjectBySlug, getAllMockProjects } from '../mock/mockProjectData';
+
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 /**
  * Service for managing projects and generating dynamic menu items
@@ -36,6 +39,15 @@ class ProjectService {
    * Fetch and parse all projects with caching
    */
   async fetchProjects(forceRefresh = false) {
+    // Use mock data in development
+    if (isDevelopment) {
+      console.log('Development mode: Using mock project data');
+      const mockProjects = getAllMockProjects();
+      this.cache.projects = mockProjects;
+      this.cache.lastFetch = Date.now();
+      return mockProjects;
+    }
+
     // Check cache
     if (!forceRefresh && this.cache.projects && this.cache.lastFetch) {
       const now = Date.now();
@@ -118,6 +130,24 @@ class ProjectService {
       },
     ];
 
+    // Development menu items (only in development mode)
+    const devMenuItems = [];
+    
+    if (isDevelopment) {
+      devMenuItems.push(
+        {
+          navlabel: true,
+          subheader: 'Development',
+        },
+        {
+          id: uniqueId(),
+          title: 'Sample Projects',
+          icon: IconMoodHappy,
+          href: '/sample-projects',
+        }
+      );
+    }
+
     // Static utility items
     const utilityMenuItems = [
       {
@@ -132,16 +162,25 @@ class ProjectService {
       ...staticMenuItems,
       ...projectMenuItems,
       ...githubMenuItems,
-      ...utilityMenuItems
+      ...utilityMenuItems,
+      ...devMenuItems
     ];
   }
 
   /**
    * Get project by slug
+   * @param {string} slug - Project slug
+   * @returns {Promise<Object>} Project data
    */
   async getProjectBySlug(slug) {
+    // Use mock data in development
+    if (isDevelopment) {
+      console.log(`Development mode: Getting mock project with slug ${slug}`);
+      return getMockProjectBySlug(slug);
+    }
+    
     const projects = await this.fetchProjects();
-    return projects.find(project => project.slug === slug);
+    return projects.find(p => p.slug === slug) || null;
   }
 
   /**
