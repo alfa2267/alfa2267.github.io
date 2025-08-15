@@ -16,8 +16,6 @@ import {
   ListItemIcon,
   ListItemText,
   Skeleton,
-  Tabs,
-  Tab,
   CircularProgress
 } from '@mui/material';
 import {
@@ -38,7 +36,6 @@ const ProjectPage = () => {
   const [error, setError] = useState(null);
   const [readmeHtml, setReadmeHtml] = useState('');
   const [readmeLoading, setReadmeLoading] = useState(false);
-  const [currentTab, setCurrentTab] = useState(0);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -253,110 +250,98 @@ const ProjectPage = () => {
           </Grid>
         )}
 
-        {/* Content Tabs */}
-        <Grid item xs={12}>
-          <DashboardCard>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-              <Tabs 
-                value={currentTab} 
-                onChange={(e, newValue) => setCurrentTab(newValue)}
-                variant="scrollable"
-                scrollButtons="auto"
-              >
-                <Tab label="README" />
-                <Tab label="Repository Info" disabled={!project.github_data} />
-              </Tabs>
-            </Box>
-            
-            {/* Tab content */}
-            <Box sx={{ p: 0 }}>
-              {currentTab === 1 && project.github_data ? (
-                renderRepoInfo()
-              ) : (
-                <Box sx={{ p: 0 }}>
-                {readmeLoading ? (
-                  <Box display="flex" justifyContent="center" py={4}>
-                    <CircularProgress size={24} />
-                  </Box>
-                ) : (
-                  <Box sx={{ p: 3 }}>
-                    <ReactMarkdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeRaw]}
-                      components={{
-                        // Custom rendering for code blocks
-                        code({node, inline, className, children, ...props}) {
-                          const match = /language-(\w+)/.exec(className || '');
-                          return !inline && match ? (
-                            <Box 
-                              component="pre" 
-                              sx={{ 
-                                background: theme => theme.palette.mode === 'dark' ? '#1E1E1E' : '#f6f8fa',
-                                p: 2,
-                                borderRadius: 1,
-                                overflow: 'auto',
-                                fontSize: '0.9em',
-                                mb: 2
-                              }}
-                            >
-                              <code className={className} {...props}>
-                                {children}
-                              </code>
-                            </Box>
-                          ) : (
-                            <code className={className} {...props}>
-                              {children}
-                            </code>
-                          );
-                        },
-                        // Custom rendering for images
-                        img: ({node, ...props}) => (
-                          <Box 
-                            component="img" 
-                            {...props} 
-                            style={{ maxWidth: '100%', height: 'auto' }} 
-                            alt={props.alt || ''}
-                          />
-                        ),
-                        // Custom rendering for tables
-                        table: ({node, ...props}) => (
-                          <Box component="div" sx={{ overflowX: 'auto', my: 2 }}>
-                            <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%' }} {...props} />
-                          </Box>
-                        ),
-                        th: ({node, ...props}) => (
-                          <Box 
-                            component="th" 
-                            sx={{ 
-                              border: '1px solid', 
-                              borderColor: 'divider', 
-                              p: 1,
-                              textAlign: 'left',
-                              backgroundColor: theme => theme.palette.mode === 'dark' ? '#2d2d2d' : '#f5f5f5'
-                            }} 
-                            {...props} 
-                          />
-                        ),
-                        td: ({node, ...props}) => (
-                          <Box 
-                            component="td" 
-                            sx={{ 
-                              border: '1px solid', 
-                              borderColor: 'divider', 
-                              p: 1 
-                            }} 
-                            {...props} 
-                          />
-                        ),
-                      }}
-                    >
-                      {readmeHtml}
-                    </ReactMarkdown>
-                  </Box>
-                )}
-                </Box>
-              )}
-            </Box>
+        {/* Repository Info */}
+        {project.github_data && (
+          <Grid item xs={12} md={4}>
+            <DashboardCard title="Repository Info">
+              {renderRepoInfo()}
+            </DashboardCard>
+          </Grid>
+        )}
+
+        {/* README Content */}
+        <Grid item xs={12} md={project.github_data ? 8 : 12}>
+          <DashboardCard title="README">
+            {readmeLoading ? (
+              <Box display="flex" justifyContent="center" py={4}>
+                <CircularProgress size={24} />
+              </Box>
+            ) : (
+              <Box sx={{ p: 3 }}>
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw]}
+                  components={{
+                    // Custom rendering for code blocks
+                    code({node, inline, className, children, ...props}) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return !inline && match ? (
+                        <Box 
+                          component="pre" 
+                          sx={{ 
+                            background: theme => theme.palette.mode === 'dark' ? '#1E1E1E' : '#f6f8fa',
+                            p: 2,
+                            borderRadius: 1,
+                            overflow: 'auto',
+                            fontSize: '0.9em',
+                            mb: 2
+                          }}
+                        >
+                          <code className={className} {...props}>
+                            {children}
+                          </code>
+                        </Box>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                    // Custom rendering for images
+                    img: ({node, ...props}) => (
+                      <Box 
+                        component="img" 
+                        {...props} 
+                        style={{ maxWidth: '100%', height: 'auto' }} 
+                        alt={props.alt || ''}
+                      />
+                    ),
+                    // Custom rendering for tables
+                    table: ({node, ...props}) => (
+                      <Box component="div" sx={{ overflowX: 'auto', my: 2 }}>
+                        <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%' }} {...props} />
+                      </Box>
+                    ),
+                    th: ({node, ...props}) => (
+                      <Box 
+                        component="th" 
+                        sx={{ 
+                          border: '1px solid', 
+                          borderColor: 'divider', 
+                          p: 1,
+                          textAlign: 'left',
+                          backgroundColor: theme => theme.palette.mode === 'dark' ? '#2d2d2d' : '#f5f5f5'
+                        }} 
+                        {...props} 
+                      />
+                    ),
+                    td: ({node, ...props}) => (
+                      <Box 
+                        component="td" 
+                        sx={{ 
+                          border: '1px solid', 
+                          borderColor: 'divider', 
+                          p: 1 
+                        }} 
+                        {...props} 
+                      />
+                    ),
+                  }}
+                >
+                  {readmeHtml}
+                </ReactMarkdown>
+              </Box>
+            )}
           </DashboardCard>
         </Grid>
       </Grid>
