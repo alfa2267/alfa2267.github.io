@@ -91,6 +91,7 @@ class ProjectService {
         id: uniqueId(),
         title: 'Dashboard',
         href: '/dashboard',
+        icon: this.getIconComponent('dashboard'),
       }
     ];
 
@@ -109,6 +110,7 @@ class ProjectService {
           title: project.name,
           href: `/projects/${project.slug}`,
           external: false,
+          icon: this.getIconComponent('folder'),
         });
       }
     }
@@ -124,6 +126,7 @@ class ProjectService {
         title: 'GitHub Profile',
         href: 'https://github.com/alfa2267',
         external: true,
+        icon: this.getIconComponent('github'),
       },
     ];
 
@@ -140,19 +143,13 @@ class ProjectService {
           id: uniqueId(),
           title: 'Sample Projects',
           href: '/sample-projects',
+          icon: this.getIconComponent('default'),
         }
       );
     }
 
     // Static utility items
-    const utilityMenuItems = [
-      {
-        id: uniqueId(),
-        title: 'Icons',
-        icon: IconMoodHappy,
-        href: '/icons',
-      }
-    ];
+    const utilityMenuItems = [];
 
     return [
       ...staticMenuItems,
