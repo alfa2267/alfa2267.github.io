@@ -11,7 +11,7 @@ const AboutMe = () => {
       <Stack spacing={2} alignItems="center" textAlign="center" sx={{ height: '100%', justifyContent: 'center' }}>
         <Avatar src={GITHUB_AVATAR} alt="alfa2267" sx={{ width: 72, height: 72 }} />
         <Box>
-          <Typography variant="h6" fontWeight={700}>Oceania Alfa</Typography>
+          <Typography variant="h6" fontWeight={700}>Oce A</Typography>
           <Typography variant="body2" color="textSecondary">Tech Enthusiast</Typography>
         </Box>
         <Typography variant="body2" color="textSecondary">
