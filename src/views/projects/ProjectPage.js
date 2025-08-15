@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import {
   Box,
   Typography,
@@ -17,7 +20,6 @@ import {
   Tab,
   CircularProgress
 } from '@mui/material';
-import DOMPurify from 'dompurify';
 import {
   IconExternalLink,
   IconBrandGithub,
@@ -273,26 +275,80 @@ const ProjectPage = () => {
                     <CircularProgress size={24} />
                   </Box>
                 ) : (
-                  <Box
-                    component="div"
-                    sx={{
-                      width: '100%',
-                      maxWidth: '100%',
-                      overflowX: 'auto',
-                      px: 4,
-                      py: 3,
-                      '& img': { maxWidth: '100%' },
-                      '& table': { width: '100%', borderCollapse: 'collapse' },
-                      '& pre': { 
-                        background: '#f6f8fa', 
-                        padding: 2, 
-                        overflow: 'auto',
-                        margin: 0,
-                        borderRadius: 0
-                      },
-                    }}
-                    dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(readmeHtml) }}
-                  />
+                  <Box sx={{ p: 3 }}>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                      components={{
+                        // Custom rendering for code blocks
+                        code({node, inline, className, children, ...props}) {
+                          const match = /language-(\w+)/.exec(className || '');
+                          return !inline && match ? (
+                            <Box 
+                              component="pre" 
+                              sx={{ 
+                                background: theme => theme.palette.mode === 'dark' ? '#1E1E1E' : '#f6f8fa',
+                                p: 2,
+                                borderRadius: 1,
+                                overflow: 'auto',
+                                fontSize: '0.9em',
+                                mb: 2
+                              }}
+                            >
+                              <code className={className} {...props}>
+                                {children}
+                              </code>
+                            </Box>
+                          ) : (
+                            <code className={className} {...props}>
+                              {children}
+                            </code>
+                          );
+                        },
+                        // Custom rendering for images
+                        img: ({node, ...props}) => (
+                          <Box 
+                            component="img" 
+                            {...props} 
+                            style={{ maxWidth: '100%', height: 'auto' }} 
+                            alt={props.alt || ''}
+                          />
+                        ),
+                        // Custom rendering for tables
+                        table: ({node, ...props}) => (
+                          <Box component="div" sx={{ overflowX: 'auto', my: 2 }}>
+                            <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%' }} {...props} />
+                          </Box>
+                        ),
+                        th: ({node, ...props}) => (
+                          <Box 
+                            component="th" 
+                            sx={{ 
+                              border: '1px solid', 
+                              borderColor: 'divider', 
+                              p: 1,
+                              textAlign: 'left',
+                              backgroundColor: theme => theme.palette.mode === 'dark' ? '#2d2d2d' : '#f5f5f5'
+                            }} 
+                            {...props} 
+                          />
+                        ),
+                        td: ({node, ...props}) => (
+                          <Box 
+                            component="td" 
+                            sx={{ 
+                              border: '1px solid', 
+                              borderColor: 'divider', 
+                              p: 1 
+                            }} 
+                            {...props} 
+                          />
+                        ),
+                      }}
+                    >
+                      {readmeHtml}
+                    </ReactMarkdown>
+                  </Box>
                 )}
               </Box>
             )}
