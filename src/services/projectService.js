@@ -4,7 +4,7 @@ import { uniqueId } from 'lodash';
 import { IconBrandGithub, IconLayoutDashboard, IconChecks, IconMoodHappy } from '@tabler/icons';
 import { getMockProjectBySlug, getAllMockProjects } from '../mock/mockProjectData';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment = true; // Force using mock data for now until GitHub API is properly configured
 
 /**
  * Service for managing projects and generating dynamic menu items

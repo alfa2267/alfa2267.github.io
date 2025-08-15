@@ -245,8 +245,8 @@ const ProjectPage = () => {
 
         {/* Demo Image */}
         <Grid item xs={12} md={project.github_data ? 8 : 12}>
-          <DashboardCard title="Demo">
-            <Box sx={{ p: 3 }}>
+          
+          
               <Box
                 component="img"
                 src={`https://raw.githubusercontent.com/alfa2267/${project.github_data?.name || project.slug}/main/demo.png`}
@@ -266,8 +266,8 @@ const ProjectPage = () => {
                   e.target.parentNode.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Demo image not available</p>';
                 }}
               />
-            </Box>
-          </DashboardCard>
+          
+       
         </Grid>
       </Grid>
     </PageContainer>
