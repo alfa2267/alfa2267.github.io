@@ -52,6 +52,9 @@
     "gh-pages": "^6.0.0",
     "prettier": "^2.3.1"
   },
+  "overrides": {
+    "ws": "^8.14.2"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
