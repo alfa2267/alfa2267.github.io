@@ -17,6 +17,10 @@ const Menuitems = [
     href: '/dashboard',
   },
   {
+    navlabel: true,
+    subheader: 'Projects',
+  },
+  {
     id: uniqueId(),
     title: 'Community Vote',
     icon: IconChecks,
