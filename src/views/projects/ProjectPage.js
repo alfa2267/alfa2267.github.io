@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
 import {
   Box,
   Typography,
@@ -14,16 +11,15 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Skeleton,
-  CircularProgress
+  Skeleton
 } from '@mui/material';
 import {
   IconBrandGithub,
   IconCheck,
-  IconCalendar
+  IconCalendar,
+  IconExternalLink
 } from '@tabler/icons';
 import ProjectService from '../../services/projectService.js';
-import GitHubService from '../../services/github.js';
 import PageContainer from '../../components/container/PageContainer.js';
 import DashboardCard from '../../components/shared/DashboardCard.js';
 
@@ -32,8 +28,6 @@ const ProjectPage = () => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [readmeHtml, setReadmeHtml] = useState('');
-  const [readmeLoading, setReadmeLoading] = useState(false);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -49,14 +43,6 @@ const ProjectPage = () => {
         
         setProject(projectData);
         setError(null);
-        
-        // Load README HTML
-        setReadmeLoading(true);
-        const github = new GitHubService('alfa2267');
-        const repoName = projectData.github_data?.name || slug;
-        const html = await github.fetchReadmeHtml(repoName);
-        setReadmeHtml(html || '<p>README not found.</p>');
-        setReadmeLoading(false);
       } catch (err) {
         console.error('Error loading project:', err);
         setError('Failed to load project');
@@ -189,16 +175,16 @@ const ProjectPage = () => {
       title={project.name} 
       description={project.description}
       action={
-        project.repo_url && (
+        project.project_url && (
           <Button
-            variant="outlined"
-            startIcon={<IconBrandGithub size={16} />}
-            href={project.repo_url}
+            variant="contained"
+            startIcon={<IconExternalLink size={16} />}
+            href={project.project_url}
             target="_blank"
             rel="noopener noreferrer"
             size="small"
           >
-            View Source Code
+            View Demo
           </Button>
         )
       }
@@ -257,89 +243,30 @@ const ProjectPage = () => {
           </Grid>
         )}
 
-        {/* README Content */}
+        {/* Demo Image */}
         <Grid item xs={12} md={project.github_data ? 8 : 12}>
-          <DashboardCard title="README">
-            {readmeLoading ? (
-              <Box display="flex" justifyContent="center" py={4}>
-                <CircularProgress size={24} />
-              </Box>
-            ) : (
-              <Box sx={{ p: 3 }}>
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                  components={{
-                    // Custom rendering for code blocks
-                    code({node, inline, className, children, ...props}) {
-                      const match = /language-(\w+)/.exec(className || '');
-                      return !inline && match ? (
-                        <Box 
-                          component="pre" 
-                          sx={{ 
-                            background: theme => theme.palette.mode === 'dark' ? '#1E1E1E' : '#f6f8fa',
-                            p: 2,
-                            borderRadius: 1,
-                            overflow: 'auto',
-                            fontSize: '0.9em',
-                            mb: 2
-                          }}
-                        >
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        </Box>
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      );
-                    },
-                    // Custom rendering for images
-                    img: ({node, ...props}) => (
-                      <Box 
-                        component="img" 
-                        {...props} 
-                        style={{ maxWidth: '100%', height: 'auto' }} 
-                        alt={props.alt || ''}
-                      />
-                    ),
-                    // Custom rendering for tables
-                    table: ({node, ...props}) => (
-                      <Box component="div" sx={{ overflowX: 'auto', my: 2 }}>
-                        <Box component="table" sx={{ borderCollapse: 'collapse', width: '100%' }} {...props} />
-                      </Box>
-                    ),
-                    th: ({node, ...props}) => (
-                      <Box 
-                        component="th" 
-                        sx={{ 
-                          border: '1px solid', 
-                          borderColor: 'divider', 
-                          p: 1,
-                          textAlign: 'left',
-                          backgroundColor: theme => theme.palette.mode === 'dark' ? '#2d2d2d' : '#f5f5f5'
-                        }} 
-                        {...props} 
-                      />
-                    ),
-                    td: ({node, ...props}) => (
-                      <Box 
-                        component="td" 
-                        sx={{ 
-                          border: '1px solid', 
-                          borderColor: 'divider', 
-                          p: 1 
-                        }} 
-                        {...props} 
-                      />
-                    ),
-                  }}
-                >
-                  {readmeHtml}
-                </ReactMarkdown>
-              </Box>
-            )}
+          <DashboardCard title="Demo">
+            <Box sx={{ p: 3 }}>
+              <Box
+                component="img"
+                src={`${process.env.PUBLIC_URL}/projects/${project.slug}/demo.png`}
+                alt={`${project.name} Demo`}
+                sx={{
+                  width: '100%',
+                  height: 'auto',
+                  borderRadius: 1,
+                  boxShadow: 2,
+                  '&:hover': {
+                    boxShadow: 4,
+                    transition: 'box-shadow 0.3s ease-in-out'
+                  }
+                }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentNode.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Demo image not available</p>';
+                }}
+              />
+            </Box>
           </DashboardCard>
         </Grid>
       </Grid>
