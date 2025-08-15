@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import {
   Box,
   Typography,
-  Card,
   CardContent,
   Chip,
   Button,
@@ -23,8 +22,7 @@ import {
   IconExternalLink,
   IconBrandGithub,
   IconCheck,
-  IconCalendar,
-  IconStar
+  IconCalendar
 } from '@tabler/icons';
 import ProjectService from '../../services/projectService.js';
 import GitHubService from '../../services/github.js';

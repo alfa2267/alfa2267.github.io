@@ -8,7 +8,7 @@ import { useMenuItems } from '../../../hooks/useMenuItems';
 const SidebarItems = () => {
   const { pathname } = useLocation();
   const pathDirect = pathname;
-  const { menuItems, loading, error } = useMenuItems();
+  const { menuItems, loading } = useMenuItems();
 
   if (loading) {
     return (

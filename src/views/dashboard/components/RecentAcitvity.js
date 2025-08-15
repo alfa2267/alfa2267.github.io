@@ -10,7 +10,7 @@ import {
   TimelineContent,
   timelineOppositeContentClasses,
 } from '@mui/lab';
-import { Link, Typography, CircularProgress, Box } from '@mui/material';
+import { Typography, CircularProgress, Box } from '@mui/material';
 import GitHubService from '../../../services/github.js';
 
 const RecentActivity = () => {
