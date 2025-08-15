@@ -144,17 +144,7 @@ const ProjectPage = () => {
               </Box>
 
               <Box display="flex" gap={2} mb={3}>
-                {project.demo_url && (
-                  <Button
-                    variant="contained"
-                    startIcon={<IconExternalLink size={16} />}
-                    href={project.demo_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    View Demo
-                  </Button>
-                )}
+              
                 {project.repo_url && (
                   <Button
                     variant="outlined"
