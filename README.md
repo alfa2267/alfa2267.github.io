@@ -173,4 +173,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-*Built with ❤️ by alfa2267 | Last updated: August 2024*
+*Built with ❤️ by alfa2267 | Last updated: August 2025*
