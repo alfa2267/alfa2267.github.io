@@ -9,7 +9,6 @@ import {
   Grid,
   Typography,
   CircularProgress,
-  Divider,
   useTheme,
 } from '@mui/material';
 import { IconBrandGithub, IconExternalLink } from '@tabler/icons';

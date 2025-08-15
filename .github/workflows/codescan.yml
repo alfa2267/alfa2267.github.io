@@ -37,6 +37,11 @@ jobs:
                         ~/.sonar
                     key: ${{ runner.os }}-sonar
                     restore-keys: ${{ runner.os }}-sonar
+            -   name: Set up Java 17
+                uses: actions/setup-java@v4
+                with:
+                    java-version: '17'
+                    distribution: 'temurin'
             -   name: Run Analysis
                 uses: codescan-io/codescan-scanner-action@5b2e8c5683ef6a5adc8fa3b7950bb07debccce12
                 with:

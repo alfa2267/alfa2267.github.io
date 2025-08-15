@@ -10,7 +10,6 @@ import {
   Chip,
   Button,
   Grid,
-  Divider,
   List,
   ListItem,
   ListItemIcon,
@@ -19,7 +18,6 @@ import {
   CircularProgress
 } from '@mui/material';
 import {
-  IconExternalLink,
   IconBrandGithub,
   IconCheck,
   IconCalendar
