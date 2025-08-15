@@ -66,7 +66,7 @@ class GitHubService {
       const html = await response.text();
       return html;
     } catch (error) {
-      console.error(`Error fetching README HTML for ${repoName}:`, error);
+      console.error('Error fetching README HTML for %s:', repoName, error);
       return null;
     }
   }
