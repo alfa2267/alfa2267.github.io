@@ -90,7 +90,6 @@ class ProjectService {
       {
         id: uniqueId(),
         title: 'Dashboard',
-        icon: IconLayoutDashboard,
         href: '/dashboard',
       }
     ];
@@ -108,7 +107,6 @@ class ProjectService {
         projectMenuItems.push({
           id: uniqueId(),
           title: project.name,
-          icon: this.getIconComponent(project.icon),
           href: `/projects/${project.slug}`,
           external: false,
         });
@@ -124,7 +122,6 @@ class ProjectService {
       {
         id: uniqueId(),
         title: 'GitHub Profile',
-        icon: IconBrandGithub,
         href: 'https://github.com/alfa2267',
         external: true,
       },
@@ -142,7 +139,6 @@ class ProjectService {
         {
           id: uniqueId(),
           title: 'Sample Projects',
-          icon: IconMoodHappy,
           href: '/sample-projects',
         }
       );

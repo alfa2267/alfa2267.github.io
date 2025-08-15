@@ -37,7 +37,6 @@ export const useMenuItems = () => {
  * Fallback static menu items if dynamic loading fails
  */
 const getStaticMenuItems = () => {
-  const { IconLayoutDashboard } = require('@tabler/icons');
   const { uniqueId } = require('lodash');
 
   return [
@@ -48,7 +47,6 @@ const getStaticMenuItems = () => {
     {
       id: uniqueId(),
       title: 'Dashboard',
-      icon: IconLayoutDashboard,
       href: '/dashboard',
     }
   ];
