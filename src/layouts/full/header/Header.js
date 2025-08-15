@@ -117,17 +117,17 @@ const Header = (props) => {
         </Box>
 
         <Stack direction="row" spacing={2} alignItems="center" sx={{ flexShrink: 0, ml: 2 }}>
-           {currentProject.repo_url && (
-                          <Button
-                            variant="outlined"
-                            startIcon={<IconBrandGithub size={16} />}
-                            href={currentProject.repo_url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Source Code
-                          </Button>
-                        )}
+           {currentProject?.repo_url && (
+             <Button
+               variant="outlined"
+               startIcon={<IconBrandGithub size={16} />}
+               href={currentProject.repo_url}
+               target="_blank"
+               rel="noopener noreferrer"
+             >
+               Source Code
+             </Button>
+           )}
         
           {showDemoButton && (
             <Button
