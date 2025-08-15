@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, CircularProgress } from '@mui/material';
-import { IconExternalLink } from '@tabler/icons';
+import { Box, CircularProgress } from '@mui/material';
 import PageContainer from '../../components/container/PageContainer';
 import DashboardCard from '../../components/shared/DashboardCard';
 import GitHubService from '../../services/github.js';
 
-const DEMO_URL = 'https://alfa2267.github.io/community-vote/';
 
 const CommunityVote = () => {
   const [readmeHtml, setReadmeHtml] = useState('');
@@ -30,40 +28,49 @@ const CommunityVote = () => {
 
   return (
     <PageContainer title="Community Vote" description="Community Vote project details">
-      <DashboardCard
-        title={
-          <Box display="flex" justifyContent="space-between" alignItems="center" width="100%">
-            <Box component="span">Community Vote</Box>
-            <Button
-              variant="contained"
-              size="small"
-              startIcon={<IconExternalLink size={16} />}
-              href={DEMO_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Demo
-            </Button>
-          </Box>
+      <Box sx={{ 
+        mx: -3,
+        '@media (min-width: 600px)': {
+          mx: -4
         }
-      >
-        <Box p={2}>
-          {loading ? (
-            <Box display="flex" justifyContent="center" py={4}>
-              <CircularProgress size={24} />
-            </Box>
-          ) : (
-            <Box
-              sx={{
-                '& img': { maxWidth: '100%' },
-                '& table': { width: '100%', borderCollapse: 'collapse' },
-                '& pre': { background: '#f6f8fa', padding: 2, overflow: 'auto' },
-              }}
-              dangerouslySetInnerHTML={{ __html: readmeHtml }}
-            />
-          )}
-        </Box>
-      </DashboardCard>
+      }}>
+        <DashboardCard 
+          sx={{ 
+            p: 0, 
+            '& .MuiCardContent-root': { 
+              p: 0,
+              '&:last-child': {
+                pb: 0
+              }
+            } 
+          }}
+        >
+        {loading ? (
+          <Box display="flex" justifyContent="center" py={4}>
+            <CircularProgress size={24} />
+          </Box>
+        ) : (
+          <Box
+            component="div"
+            sx={{
+              width: '100%',
+              maxWidth: '100%',
+              overflowX: 'auto',
+              '& img': { maxWidth: '100%' },
+              '& table': { width: '100%', borderCollapse: 'collapse' },
+              '& pre': { 
+                background: '#f6f8fa', 
+                padding: 2, 
+                overflow: 'auto',
+                margin: 0,
+                borderRadius: 0
+              },
+            }}
+            dangerouslySetInnerHTML={{ __html: readmeHtml }}
+          />
+        )}
+        </DashboardCard>
+      </Box>
     </PageContainer>
   );
 };

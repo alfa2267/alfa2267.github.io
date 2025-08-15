@@ -20,8 +20,7 @@ const Menuitems = [
     id: uniqueId(),
     title: 'Community Vote',
     icon: IconChecks,
-    href: 'https://alfa2267.github.io/community-vote/',
-    external: true,
+    href: '/community-vote',
   },
   
 ];
