@@ -98,38 +98,6 @@ src/
 └── layouts/            # Layout components
 ```
 
-### Adding Project Metadata
-
-To have your project appear in this portfolio dashboard, add a metadata section to your project's README:
-
-<!-- PROJECT-META-START -->
-```yaml
-project:
-  name: "Your Project Name"
-  slug: "project-slug"
-  description: "Brief description of your project"
-  status: "active"
-  category: "web-app"
-  tech_stack: ["React", "Node.js"]
-  demo_url: "https://your-demo.com"
-  repo_url: "https://github.com/username/repo"
-  priority: 1
-  show_in_nav: true
-  icon: "dashboard"
-  metrics:
-    business_value: 350    # 0-500 scale - How valuable/useful is this project?
-    complexity: 250       # 0-500 scale - How complex was it to build?
-    time_spent: 200       # 0-500 scale - Relative time investment
-    fun_rating: 450       # 0-500 scale - How enjoyable was it to work on?
-  features:
-    - "Feature 1"
-    - "Feature 2"
-  created_date: "2025-08-15"
-  updated_date: "2025-08-15"
-  tags: ["tag1", "tag2"]
-```
-<!-- PROJECT-META-END -->
-
 
 ### Contributing
 
