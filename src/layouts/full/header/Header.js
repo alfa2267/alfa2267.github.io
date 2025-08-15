@@ -5,7 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 // components
 import Profile from './Profile';
-import { IconMenu, IconExternalLink } from '@tabler/icons';
+import { IconMenu, IconExternalLink, IconBrandGithub } from '@tabler/icons';
 import Breadcrumbs from '../../../components/shared/Breadcrumbs';
 import { useMenuItems } from '../../../hooks/useMenuItems';
 import ProjectService from '../../../services/projectService';

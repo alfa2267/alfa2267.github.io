@@ -117,7 +117,7 @@ const ProjectPage = () => {
     <PageContainer title={project.name} description={project.description}>
       <Grid container spacing={3}>
         {/* Main Project Info */}
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6} lg={8}>
           <DashboardCard>
             <CardContent>
               <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
@@ -198,7 +198,7 @@ const ProjectPage = () => {
 
         {/* GitHub Stats */}
         {project.github_data && (
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={6} lg={4}>
             <DashboardCard title="Repository Info">
               <CardContent>
                 <Box display="flex" alignItems="center" mb={2}>
