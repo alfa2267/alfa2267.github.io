@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, AppBar, Toolbar, styled, Stack, IconButton, Button } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { useLocation } from 'react-router-dom';
 import Profile from './Profile';
 import { IconMenu, IconExternalLink } from '@tabler/icons';
 import Breadcrumbs from '../../../components/shared/Breadcrumbs';
+import { useMenuItems } from '../../../hooks/useMenuItems';
+import ProjectService from '../../../services/projectService';
 
 const Header = (props) => {
 
@@ -29,6 +31,7 @@ const Header = (props) => {
   }));
 
   const location = useLocation();
+  const { menuItems } = useMenuItems();
   
   // Get breadcrumb items based on current route
   const getBreadcrumbItems = () => {
@@ -42,14 +45,17 @@ const Header = (props) => {
         to: '/',
       });
 
-      // Add current page breadcrumb
-      if (pathname.includes('community-vote')) {
+      // Find matching menu item for current path
+      const currentMenuItem = menuItems.find(item => 
+        item.href && pathname.includes(item.href.replace('/', ''))
+      );
+
+      if (currentMenuItem) {
         items.push({
-          label: 'Community Vote',
-          to: '/community-vote',
+          label: currentMenuItem.title,
+          to: currentMenuItem.href,
         });
       }
-      // Add more routes as needed
 
       return items;
     } catch (error) {
@@ -58,8 +64,32 @@ const Header = (props) => {
     }
   };
 
-  // Check if we should show the demo button
-  const showDemoButton = location.pathname.includes('community-vote');
+  const [currentProject, setCurrentProject] = useState(null);
+
+  useEffect(() => {
+    const loadCurrentProject = async () => {
+      const pathname = location?.pathname || '';
+      const projectSlug = pathname.split('/projects/')[1];
+      
+      if (!projectSlug) {
+        setCurrentProject(null);
+        return;
+      }
+
+      try {
+        const projectService = new ProjectService();
+        const project = await projectService.getProjectBySlug(projectSlug);
+        setCurrentProject(project);
+      } catch (error) {
+        console.error('Error loading current project:', error);
+        setCurrentProject(null);
+      }
+    };
+
+    loadCurrentProject();
+  }, [location.pathname]);
+
+  const showDemoButton = currentProject && currentProject.demo_url;
 
   return (
     <AppBarStyled position="sticky" color="default" elevation={1}>
@@ -93,7 +123,7 @@ const Header = (props) => {
               size="small"
               color="primary"
               startIcon={<IconExternalLink size={16} />}
-              href="https://alfa2267.github.io/community-vote/"
+              href={currentProject.demo_url}
               target="_blank"
               rel="noopener noreferrer"
               sx={{

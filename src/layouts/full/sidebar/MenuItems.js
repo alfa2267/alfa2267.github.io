@@ -1,32 +1,25 @@
-import {
-  IconCopy, IconLayoutDashboard, IconLogin, IconTypography, IconUserPlus, IconChecks, IconBrandGithub
-} from '@tabler/icons';
+import React from 'react';
+import { useMenuItems } from '../../../hooks/useMenuItems';
+import SidebarItems from './SidebarItems';
+import { CircularProgress, Box } from '@mui/material';
 
-import { uniqueId } from 'lodash';
+const MenuItems = () => {
+  const { menuItems, loading, error } = useMenuItems();
 
-const Menuitems = [
-  {
-    navlabel: true,
-    subheader: 'Home',
-  },
+  // Show loading state
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" py={2}>
+        <CircularProgress size={20} />
+      </Box>
+    );
+  }
 
-  {
-    id: uniqueId(),
-    title: 'Dashboard',
-    icon: IconLayoutDashboard,
-    href: '/dashboard',
-  },
-  {
-    navlabel: true,
-    subheader: 'Projects',
-  },
-  {
-    id: uniqueId(),
-    title: 'Community Vote',
-    icon: IconChecks,
-    href: '/community-vote',
-  },
-  
-];
+  if (error) {
+    console.warn('Menu loading error, using fallback items:', error);
+  }
 
-export default Menuitems;
+  return <SidebarItems items={menuItems} />;
+};
+
+export default MenuItems;

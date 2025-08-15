@@ -15,7 +15,7 @@ const Shadow = Loadable(lazy(() => import('../views/utilities/Shadow')))
 const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
 const Login = Loadable(lazy(() => import('../views/authentication/Login')));
-const CommunityVote = Loadable(lazy(() => import('../views/community-vote/CommunityVote')));
+const ProjectPage = Loadable(lazy(() => import('../views/projects/ProjectPage')));
 
 const Router = [
   {
@@ -25,7 +25,7 @@ const Router = [
       { path: '/', element: <Navigate to="/dashboard" /> },
       { path: '/dashboard', exact: true, element: <Dashboard /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
-      { path: '/community-vote', exact: true, element: <CommunityVote /> },
+      { path: '/projects/:slug', exact: true, element: <ProjectPage /> },
       { path: '/icons', exact: true, element: <Icons /> },
       { path: '/ui/typography', exact: true, element: <TypographyPage /> },
       { path: '/ui/shadow', exact: true, element: <Shadow /> },
