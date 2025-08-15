@@ -71,6 +71,13 @@ class ReadmeParser {
       icon: project.icon || 'folder',
       features: Array.isArray(project.features) ? project.features : [],
       screenshots: Array.isArray(project.screenshots) ? project.screenshots : [],
+      // Project metrics for dashboard
+      metrics: {
+        business_value: typeof project.metrics?.business_value === 'number' ? project.metrics.business_value : 0,
+        complexity: typeof project.metrics?.complexity === 'number' ? project.metrics.complexity : 0,
+        time_spent: typeof project.metrics?.time_spent === 'number' ? project.metrics.time_spent : 0,
+        fun_rating: typeof project.metrics?.fun_rating === 'number' ? project.metrics.fun_rating : 0,
+      },
       // Additional metadata
       created_date: project.created_date || null,
       updated_date: project.updated_date || null,

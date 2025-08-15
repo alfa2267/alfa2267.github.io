@@ -11,11 +11,17 @@ const DashboardCard = ({
   headtitle,
   headsubtitle,
   middlecontent,
+  fullHeight = false,
 }) => {
 
   return (
     <Card
-      sx={{ padding: 0 }}
+      sx={{ 
+        padding: 0,
+        height: fullHeight ? '100%' : 'auto',
+        display: fullHeight ? 'flex' : 'block',
+        flexDirection: fullHeight ? 'column' : undefined
+      }}
       elevation={9}
       variant={undefined}
     >
@@ -27,7 +33,12 @@ const DashboardCard = ({
           </Typography>
         </CardContent>
       ) : (
-        <CardContent sx={{ p: "30px" }}>
+        <CardContent sx={{ 
+          p: "16px",
+          flex: fullHeight ? 1 : undefined,
+          display: fullHeight ? 'flex' : undefined,
+          flexDirection: fullHeight ? 'column' : undefined
+        }}>
           {title ? (
             <Stack
               direction="row"
@@ -51,7 +62,9 @@ const DashboardCard = ({
             </Stack>
           ) : null}
 
-          {children}
+          <Box sx={{ flex: fullHeight ? 1 : undefined }}>
+            {children}
+          </Box>
         </CardContent>
       )}
 

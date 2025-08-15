@@ -1,49 +1,58 @@
 import React from 'react';
-import { Grid, Box } from '@mui/material';
 import PageContainer from 'src/components/container/PageContainer';
 
 // components
-import SalesOverview from './components/SalesOverview';
-import YearlyBreakup from './components/YearlyBreakup';
-import RecentTransactions from './components/RecentTransactions';
-import Blog from './components/Blog';
-import MonthlyEarnings from './components/MonthlyEarnings';
+import MyProjects from './components/MyProjects';
+import WorkCapacity from './components/WorkCapacity';
+import RecentActivity from './components/RecentAcitvity';
+import MonthlyActivity from './components/MonthlyActivity';
 import AboutMe from './components/AboutMe';
-
 
 const Dashboard = () => {
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
-      <Box>
-        <Grid container spacing={3}>
-          <Grid item xs={12} lg={8}>
-            <SalesOverview />
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <YearlyBreakup />
-              </Grid>
-              <Grid item xs={12}>
-                <MonthlyEarnings />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} lg={4}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <RecentTransactions />
-              </Grid>
-              <Grid item xs={12}>
-                <AboutMe />
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Blog />
-          </Grid>
-        </Grid>
-      </Box>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* Top row - Chart and side cards */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '24px',
+          flexDirection: window.innerWidth < 1200 ? 'column' : 'row',
+          minHeight: '500px'
+        }}>
+          <div style={{ flex: '2' }}>
+            <MyProjects />
+          </div>
+          <div style={{ 
+            flex: '1',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            height: '100%'
+          }}>
+            <div style={{ flex: '0 0 auto' }}>
+              <WorkCapacity />
+            </div>
+            <div style={{ flex: '1', minHeight: '0' }}>
+              <MonthlyActivity />
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom row */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '24px',
+          flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+          alignItems: 'stretch'
+        }}>
+          <div style={{ flex: '1', height: '100%' }}>
+            <RecentActivity />
+          </div>
+          <div style={{ flex: '1', height: '100%' }}>
+            <AboutMe />
+          </div>
+        </div>
+      </div>
     </PageContainer>
   );
 };

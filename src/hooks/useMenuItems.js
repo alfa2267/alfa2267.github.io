@@ -37,10 +37,7 @@ export const useMenuItems = () => {
  * Fallback static menu items if dynamic loading fails
  */
 const getStaticMenuItems = () => {
-  const {
-    IconCopy, IconLayoutDashboard, IconLogin, 
-    IconTypography, IconUserPlus, IconChecks, IconBrandGithub
-  } = require('@tabler/icons');
+  const { IconLayoutDashboard } = require('@tabler/icons');
   const { uniqueId } = require('lodash');
 
   return [
@@ -53,19 +50,6 @@ const getStaticMenuItems = () => {
       title: 'Dashboard',
       icon: IconLayoutDashboard,
       href: '/dashboard',
-    },
-   
-    {
-      navlabel: true,
-      subheader: 'Projects',
-    },
-    {
-      id: uniqueId(),
-      title: 'Community Vote',
-      icon: IconChecks,
-      href: 'https://alfa2267.github.io/community-vote/',
-      external: true,
-    },
-   
+    }
   ];
 };

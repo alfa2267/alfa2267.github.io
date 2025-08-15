@@ -23,7 +23,7 @@ class ProjectService {
   getIconComponent(iconName) {
     const iconMap = {
       'dashboard': IconLayoutDashboard,
-      'vote': IconChecks,
+      'voice': IconChecks,
       'github': IconBrandGithub,
       'folder': IconMoodHappy, // fallback icon
       'default': IconMoodHappy
@@ -107,20 +107,13 @@ class ProjectService {
     const githubMenuItems = [
       {
         navlabel: true,
-        subheader: 'Projects',
+        subheader: 'External Links',
       },
       {
         id: uniqueId(),
-        title: 'alfa2267.github.io',
+        title: 'GitHub Profile',
         icon: IconBrandGithub,
-        href: 'https://github.com/alfa2267/alfa2267.github.io',
-        external: true,
-      },
-      {
-        id: uniqueId(),
-        title: 'community-vote',
-        icon: IconBrandGithub,
-        href: 'https://github.com/alfa2267/community-vote',
+        href: 'https://github.com/alfa2267',
         external: true,
       },
     ];

@@ -1,18 +1,18 @@
 import React from 'react';
 import { Avatar, Box, Button, Chip, Stack, Typography } from '@mui/material';
-import { IconBrandGithub, IconBrandLinkedin, IconMail } from '@tabler/icons-react';
+import { IconBrandGithub, IconMail } from '@tabler/icons-react';
 import DashboardCard from '../../../components/shared/DashboardCard';
 
 const GITHUB_AVATAR = 'https://github.com/alfa2267.png';
 
 const AboutMe = () => {
   return (
-    <DashboardCard title="About Me">
-      <Stack spacing={2} alignItems="center" textAlign="center">
+    <DashboardCard title="About Me" fullHeight>
+      <Stack spacing={2} alignItems="center" textAlign="center" sx={{ height: '100%', justifyContent: 'center' }}>
         <Avatar src={GITHUB_AVATAR} alt="alfa2267" sx={{ width: 72, height: 72 }} />
         <Box>
           <Typography variant="h6" fontWeight={700}>Oceania Alfa</Typography>
-          <Typography variant="body2" color="textSecondary">Software Engineer • Frontend / Full‑stack</Typography>
+          <Typography variant="body2" color="textSecondary">Tech Enthusiast</Typography>
         </Box>
         <Typography variant="body2" color="textSecondary">
           Building delightful web experiences. Passionate about React, design systems, and shipping useful tools.
@@ -34,21 +34,12 @@ const AboutMe = () => {
           >
             GitHub
           </Button>
-          <Button
-            variant="outlined"
-            color="primary"
-            startIcon={<IconBrandLinkedin size={18} />}
-            href="https://www.linkedin.com/in/alfa2267"
-            target="_blank"
-            rel="noreferrer"
-          >
-            LinkedIn
-          </Button>
+
           <Button
             variant="text"
             color="primary"
             startIcon={<IconMail size={18} />}
-            href="mailto:hello@alfa.dev"
+            href="mailto:hello@ainaeco.uk"
           >
             Email
           </Button>

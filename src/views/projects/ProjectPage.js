@@ -13,7 +13,10 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Skeleton
+  Skeleton,
+  Tabs,
+  Tab,
+  CircularProgress
 } from '@mui/material';
 import {
   IconExternalLink,
@@ -23,6 +26,7 @@ import {
   IconStar
 } from '@tabler/icons';
 import ProjectService from '../../services/projectService.js';
+import GitHubService from '../../services/github.js';
 import PageContainer from '../../components/container/PageContainer.js';
 import DashboardCard from '../../components/shared/DashboardCard.js';
 
@@ -31,6 +35,9 @@ const ProjectPage = () => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [readmeHtml, setReadmeHtml] = useState('');
+  const [readmeLoading, setReadmeLoading] = useState(false);
+  const [currentTab, setCurrentTab] = useState(0);
 
   useEffect(() => {
     const loadProject = async () => {
@@ -46,6 +53,14 @@ const ProjectPage = () => {
         
         setProject(projectData);
         setError(null);
+        
+        // Load README HTML
+        setReadmeLoading(true);
+        const github = new GitHubService('alfa2267');
+        const repoName = projectData.github_data?.name || slug;
+        const html = await github.fetchReadmeHtml(repoName);
+        setReadmeHtml(html || '<p>README not found.</p>');
+        setReadmeLoading(false);
       } catch (err) {
         console.error('Error loading project:', err);
         setError('Failed to load project');
@@ -253,6 +268,47 @@ const ProjectPage = () => {
             </DashboardCard>
           </Grid>
         )}
+
+        {/* README Documentation */}
+        <Grid item xs={12}>
+          <DashboardCard>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={currentTab} onChange={(e, newValue) => setCurrentTab(newValue)}>
+                <Tab label="README" />
+              </Tabs>
+            </Box>
+            {currentTab === 0 && (
+              <Box sx={{ p: 0 }}>
+                {readmeLoading ? (
+                  <Box display="flex" justifyContent="center" py={4}>
+                    <CircularProgress size={24} />
+                  </Box>
+                ) : (
+                  <Box
+                    component="div"
+                    sx={{
+                      width: '100%',
+                      maxWidth: '100%',
+                      overflowX: 'auto',
+                      px: 4,
+                      py: 3,
+                      '& img': { maxWidth: '100%' },
+                      '& table': { width: '100%', borderCollapse: 'collapse' },
+                      '& pre': { 
+                        background: '#f6f8fa', 
+                        padding: 2, 
+                        overflow: 'auto',
+                        margin: 0,
+                        borderRadius: 0
+                      },
+                    }}
+                    dangerouslySetInnerHTML={{ __html: readmeHtml }}
+                  />
+                )}
+              </Box>
+            )}
+          </DashboardCard>
+        </Grid>
       </Grid>
     </PageContainer>
   );
