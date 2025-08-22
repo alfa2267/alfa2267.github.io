@@ -2,6 +2,30 @@
 
 SpatialSense is a comprehensive automation platform designed specifically for consultants to streamline their workflow, manage client engagements, and deliver exceptional value. This all-in-one solution helps consultants efficiently handle client data, project management, strategy development, and reporting from a single, intuitive interface.
 
+<!-- PROJECT-META-START -->
+```yaml
+project:
+  name: "SpatialSense"
+  slug: "spatial-sense"
+  description: "Consultant's Automation Suite - AI-powered workflow management"
+  status: "active"
+  category: "fullstack"
+  tech_stack: ["React", "Node.js", "AI Integration", "Project Management"]
+  demo_url: "https://spatial-sense-demo.netlify.app"
+  repo_url: "https://github.com/alfa2267/spatial-sense"
+  priority: 2
+  show_in_nav: true
+  icon: "folder"
+  features:
+    - "Client & Project Management"
+    - "Strategy Development"
+    - "Analysis & Reporting"
+    - "AI-powered Insights"
+    - "Real-time Collaboration"
+    - "Timeline Visualization"
+```
+<!-- PROJECT-META-END -->
+
 ## 🌟 Key Features
 
 ### Client & Project Management
