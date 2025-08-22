@@ -35,7 +35,8 @@ export const mockProjects = [
       fun_rating: 9
     },
     icon: 'dashboard',
-    featured: true
+    featured: true,
+    show_in_nav: true
   },
   {
     id: 'web-app-project',
@@ -69,7 +70,8 @@ export const mockProjects = [
       fun_rating: 8
     },
     icon: 'github',
-    featured: true
+    featured: true,
+    show_in_nav: true
   },
   {
     id: 'mobile-app',
@@ -103,7 +105,8 @@ export const mockProjects = [
       fun_rating: 7
     },
     icon: 'folder',
-    featured: false
+    featured: false,
+    show_in_nav: true
   }
 ];
 
