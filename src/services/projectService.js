@@ -63,6 +63,15 @@ class ProjectService {
       console.log('Parsing project metadata...');
       const projects = this.readmeParser.parseRepositoriesMetadata(repositories);
       
+      // If no projects found from GitHub, fall back to mock data
+      if (projects.length === 0) {
+        console.log('No projects found from GitHub, falling back to mock data');
+        const mockProjects = getAllMockProjects();
+        this.cache.projects = mockProjects;
+        this.cache.lastFetch = Date.now();
+        return mockProjects;
+      }
+      
       // Update cache
       this.cache.projects = projects;
       this.cache.lastFetch = Date.now();
@@ -71,7 +80,12 @@ class ProjectService {
       return projects;
     } catch (error) {
       console.error('Error fetching projects:', error);
-      return this.cache.projects || [];
+      // Fall back to mock data if GitHub API fails
+      console.log('GitHub API failed, falling back to mock data');
+      const mockProjects = getAllMockProjects();
+      this.cache.projects = mockProjects;
+      this.cache.lastFetch = Date.now();
+      return mockProjects;
     }
   }
 
@@ -173,7 +187,15 @@ class ProjectService {
     }
     
     const projects = await this.fetchProjects();
-    return projects.find(p => p.slug === slug) || null;
+    const foundProject = projects.find(p => p.slug === slug);
+    
+    // If not found in fetched projects, try mock data as fallback
+    if (!foundProject) {
+      console.log(`Project ${slug} not found, checking mock data`);
+      return getMockProjectBySlug(slug);
+    }
+    
+    return foundProject;
   }
 
   /**
