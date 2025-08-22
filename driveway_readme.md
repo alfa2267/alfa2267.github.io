@@ -2,6 +2,30 @@
 
 A comprehensive driving school management system built with React and TypeScript, designed to streamline test management, lesson scheduling, and student progress tracking.
 
+<!-- PROJECT-META-START -->
+```yaml
+project:
+  name: "Driveway"
+  slug: "driveway"
+  description: "Driving School Management System - React & TypeScript"
+  status: "active"
+  category: "web"
+  tech_stack: ["React", "TypeScript", "Tailwind CSS", "React Router"]
+  demo_url: "https://driveway-demo.netlify.app"
+  repo_url: "https://github.com/alfa2267/driveway"
+  priority: 1
+  show_in_nav: true
+  icon: "folder"
+  features:
+    - "Student Management"
+    - "Instructor Management" 
+    - "Lesson Scheduling"
+    - "Vehicle Management"
+    - "Test Routes Management"
+    - "Reports & Analytics"
+```
+<!-- PROJECT-META-END -->
+
 ## 🚀 Features
 
 - **Dashboard**: Overview of school operations with onboarding checklist
