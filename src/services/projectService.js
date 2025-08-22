@@ -4,7 +4,7 @@ import { uniqueId } from 'lodash';
 import { IconBrandGithub, IconLayoutDashboard, IconChecks, IconMoodHappy } from '@tabler/icons';
 import { getMockProjectBySlug, getAllMockProjects } from '../mock/mockProjectData';
 
-const isDevelopment = true; // Force using mock data for now until GitHub API is properly configured
+const isDevelopment = false; // Use real GitHub data - set to true for testing with mock data
 
 /**
  * Service for managing projects and generating dynamic menu items
