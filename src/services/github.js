@@ -10,11 +10,17 @@ class GitHubService {
    */
   async fetchRepositories() {
     try {
-      const response = await fetch(`${this.baseUrl}/users/${this.username}/repos?sort=updated&per_page=100`);
+      const url = `${this.baseUrl}/users/${this.username}/repos?sort=updated&per_page=100`;
+      console.log('Fetching repositories from:', url);
+      const response = await fetch(url);
+      console.log('GitHub API response status:', response.status);
       if (!response.ok) {
+        console.error(`GitHub API error: ${response.status} ${response.statusText}`);
         throw new Error(`GitHub API error: ${response.status}`);
       }
-      return await response.json();
+      const repos = await response.json();
+      console.log(`Found ${repos.length} repositories`);
+      return repos;
     } catch (error) {
       console.error('Error fetching repositories:', error);
       return [];
@@ -26,9 +32,13 @@ class GitHubService {
    */
   async fetchReadmeContent(repoName) {
     try {
-      const response = await fetch(`${this.baseUrl}/repos/${this.username}/${repoName}/readme`);
+      const url = `${this.baseUrl}/repos/${this.username}/${repoName}/readme`;
+      console.log(`Fetching README for ${repoName} from:`, url);
+      const response = await fetch(url);
+      console.log(`README response for ${repoName}:`, response.status);
       if (!response.ok) {
         if (response.status === 404) {
+          console.log(`No README found for ${repoName}`);
           return null; // No README found
         }
         throw new Error(`GitHub API error: ${response.status}`);
@@ -37,6 +47,7 @@ class GitHubService {
       const data = await response.json();
       // Decode base64 content
       const content = atob(data.content);
+      console.log(`README content length for ${repoName}:`, content.length);
       return content;
     } catch (error) {
       console.error(`Error fetching README for ${repoName}:`, error);

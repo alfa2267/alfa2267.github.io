@@ -9,7 +9,10 @@ class ReadmeParser {
    * Looks for content between <!-- PROJECT-META-START --> and <!-- PROJECT-META-END -->
    */
   parseProjectMetadata(readmeContent) {
-    if (!readmeContent) return null;
+    if (!readmeContent) {
+      console.log('No README content provided');
+      return null;
+    }
 
     const startMarker = '<!-- PROJECT-META-START -->';
     const endMarker = '<!-- PROJECT-META-END -->';
@@ -17,7 +20,10 @@ class ReadmeParser {
     const startIndex = readmeContent.indexOf(startMarker);
     const endIndex = readmeContent.indexOf(endMarker);
     
+    console.log('Metadata markers found:', { startIndex, endIndex });
+    
     if (startIndex === -1 || endIndex === -1) {
+      console.log('No metadata markers found in README');
       return null; // No metadata found
     }
     
@@ -26,15 +32,22 @@ class ReadmeParser {
       .substring(startIndex + startMarker.length, endIndex)
       .trim();
     
+    console.log('Raw metadata section:', metadataSection.substring(0, 200) + '...');
+    
     // Remove markdown code fence if present
     const yamlContent = metadataSection
       .replace(/^```yaml?\s*\n?/i, '')
       .replace(/\n?```\s*$/i, '')
       .trim();
     
+    console.log('Cleaned YAML content:', yamlContent.substring(0, 200) + '...');
+    
     try {
       const metadata = yaml.load(yamlContent);
-      return this.validateAndNormalizeMetadata(metadata);
+      console.log('Parsed YAML metadata:', metadata);
+      const normalized = this.validateAndNormalizeMetadata(metadata);
+      console.log('Normalized metadata:', normalized);
+      return normalized;
     } catch (error) {
       console.error('Error parsing YAML metadata:', error);
       return null;
