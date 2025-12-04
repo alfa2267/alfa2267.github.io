@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Typography,
@@ -335,53 +335,48 @@ const ReloamPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Requirements & User Stories">
             <CardContent>
-              <Stack spacing={3}>
+              <Stack spacing={2}>
                 {caseStudy.requirements.epics.map((epic, epicIndex) => (
-                  <Accordion key={epicIndex}>
-                    <AccordionSummary expandIcon={<IconChevronDown />}>
-                      <Box>
-                        <Typography variant="h6">{epic.name}</Typography>
-                        <Typography variant="body2" color="text.secondary">{epic.description}</Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Stack spacing={2}>
-                        {epic.userStories.map((story, storyIndex) => (
-                          <Paper key={storyIndex} elevation={1} sx={{ p: 2 }}>
-                            <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
-                              <Typography variant="subtitle1" fontWeight="bold">
-                                {story.title} ({story.id})
-                              </Typography>
-                              <Chip 
-                                label={story.priority} 
-                                size="small" 
-                                color={story.priority === 'P0' ? 'error' : 'default'}
-                              />
-                            </Box>
-                            <Typography variant="body2" fontStyle="italic" mb={1}>
-                              As a <strong>{story.as}</strong>, I want <strong>{story.want}</strong>, so that <strong>{story.so}</strong>.
+                  <Box key={epicIndex}>
+                    <Typography variant="h6" gutterBottom>{epic.name}</Typography>
+                    <Typography variant="body2" color="text.secondary" paragraph>{epic.description}</Typography>
+                    <Stack spacing={1.5}>
+                      {epic.userStories.map((story, storyIndex) => (
+                        <Paper key={storyIndex} elevation={1} sx={{ p: 1.5 }}>
+                          <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
+                            <Typography variant="subtitle2" fontWeight="bold">
+                              {story.title} ({story.id})
                             </Typography>
-                            <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                              Acceptance Criteria:
-                            </Typography>
-                            <List dense>
-                              {story.acceptanceCriteria.map((criteria, cIndex) => (
-                                <ListItem key={cIndex} disablePadding>
-                                  <ListItemIcon sx={{ minWidth: 32 }}>
-                                    <IconCheck size={14} color="green" />
-                                  </ListItemIcon>
-                                  <ListItemText primary={criteria} />
-                                </ListItem>
-                              ))}
-                            </List>
-                            <Box mt={1}>
-                              <Chip label={`Effort: ${story.effort}`} size="small" variant="outlined" />
-                            </Box>
-                          </Paper>
-                        ))}
-                      </Stack>
-                    </AccordionDetails>
-                  </Accordion>
+                            <Chip 
+                              label={story.priority} 
+                              size="small" 
+                              color={story.priority === 'P0' ? 'error' : 'default'}
+                            />
+                          </Box>
+                          <Typography variant="body2" fontStyle="italic" mb={1} sx={{ fontSize: '0.875rem' }}>
+                            As a <strong>{story.as}</strong>, I want <strong>{story.want}</strong>, so that <strong>{story.so}</strong>.
+                          </Typography>
+                          <Typography variant="caption" fontWeight="bold" display="block" mb={0.5}>
+                            Acceptance Criteria:
+                          </Typography>
+                          <List dense>
+                            {story.acceptanceCriteria.map((criteria, cIndex) => (
+                              <ListItem key={cIndex} disablePadding sx={{ py: 0.25 }}>
+                                <ListItemIcon sx={{ minWidth: 24 }}>
+                                  <IconCheck size={12} color="green" />
+                                </ListItemIcon>
+                                <ListItemText primary={criteria} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
+                              </ListItem>
+                            ))}
+                          </List>
+                          <Box mt={1}>
+                            <Chip label={`Effort: ${story.effort}`} size="small" variant="outlined" />
+                          </Box>
+                        </Paper>
+                      ))}
+                    </Stack>
+                    {epicIndex < caseStudy.requirements.epics.length - 1 && <Divider sx={{ my: 2 }} />}
+                  </Box>
                 ))}
               </Stack>
             </CardContent>
