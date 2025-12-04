@@ -21,8 +21,6 @@ import {
   IconChevronDown,
   IconCheck,
   IconCalendar,
-  IconTrendingUp,
-  IconUsers,
   IconChartBar,
   IconRocket,
   IconAlertTriangle,

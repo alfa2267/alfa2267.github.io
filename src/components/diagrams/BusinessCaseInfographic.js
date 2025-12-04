@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Grid, Paper } from '@mui/material';
-import { IconTrendingUp, IconDollar, IconChartBar, IconClock } from '@tabler/icons';
+import { IconTrendingUp, IconCurrencyDollar, IconChartBar, IconClock } from '@tabler/icons';
 
 /**
  * Business Case Infographic Component
@@ -45,7 +45,7 @@ const BusinessCaseInfographic = ({ data = {}, title = "Business Case" }) => {
               height: '100%'
             }}
           >
-            <IconDollar size={32} style={{ marginBottom: 8 }} />
+            <IconCurrencyDollar size={32} style={{ marginBottom: 8 }} />
             <Typography variant="h5" fontWeight="bold">
               {formatCurrency(investment)}
             </Typography>
