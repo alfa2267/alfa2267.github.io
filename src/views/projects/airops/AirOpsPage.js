@@ -26,7 +26,8 @@ import {
   IconChartBar,
   IconRocket,
   IconAlertTriangle,
-  IconFileText
+  IconFileText,
+  IconBrandGithub
 } from '@tabler/icons';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
@@ -42,6 +43,86 @@ const AirOpsPage = () => {
 
   const handleSectionChange = (section) => (event, isExpanded) => {
     setExpandedSection(isExpanded ? section : false);
+  };
+
+  const renderRepoInfo = () => {
+    if (!project.github_data) return null;
+    
+    return (
+      <Box sx={{ p: 3 }}>
+        <Box display="flex" alignItems="center" mb={3}>
+          <IconBrandGithub size={24} />
+          <Typography variant="h6" sx={{ ml: 1 }}>
+            {project.github_data.full_name}
+          </Typography>
+        </Box>
+        
+        <Grid container spacing={2} mb={3}>
+          <Grid item xs={6}>
+            <Box textAlign="center">
+              <Typography variant="h4">
+                {project.github_data.stargazers_count || 0}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Stars
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box textAlign="center">
+              <Typography variant="h4">
+                {project.github_data.language || 'N/A'}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Language
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {project.github_data.updated_at && (
+          <Box mb={3}>
+            <Typography variant="body2" color="text.secondary" display="flex" alignItems="center">
+              <IconCalendar size={16} />
+              <Box component="span" ml={1}>
+                Updated: {new Date(project.github_data.updated_at).toLocaleDateString()}
+              </Box>
+            </Typography>
+          </Box>
+        )}
+
+        {project.tech_stack && project.tech_stack.length > 0 && (
+          <Box mb={2}>
+            <Typography variant="subtitle1" gutterBottom>
+              Technology Stack
+            </Typography>
+            <Box display="flex" flexWrap="wrap" gap={1}>
+              {project.tech_stack.map((tech, index) => (
+                <Chip key={index} label={tech} size="small" />
+              ))}
+            </Box>
+          </Box>
+        )}
+
+        {project.features && project.features.length > 0 && (
+          <Box>
+            <Typography variant="subtitle1" gutterBottom>
+              Key Features
+            </Typography>
+            <List dense>
+              {project.features.map((feature, index) => (
+                <ListItem key={index} disablePadding>
+                  <ListItemIcon sx={{ minWidth: 32 }}>
+                    <IconCheck size={16} color="green" />
+                  </ListItemIcon>
+                  <ListItemText primary={feature} />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        )}
+      </Box>
+    );
   };
 
   const StatCard = ({ icon: Icon, label, value, color = 'primary' }) => (
@@ -119,15 +200,42 @@ const AirOpsPage = () => {
           />
         </Grid>
 
+        {/* Repository Info */}
+        {project.github_data && (
+          <Grid item xs={12} md={4}>
+            <DashboardCard title="Repository Info">
+              {renderRepoInfo()}
+            </DashboardCard>
+          </Grid>
+        )}
+
+        {/* Demo Image */}
+        <Grid item xs={12} md={project.github_data ? 8 : 12}>
+          <Box
+            component="img"
+            src={`https://raw.githubusercontent.com/alfa2267/${project.github_data?.name || project.slug}/main/demo.png`}
+            alt={`${project.name} Demo`}
+            sx={{
+              width: '100%',
+              height: 'auto',
+              borderRadius: 1,
+              boxShadow: 2,
+              '&:hover': {
+                boxShadow: 4,
+                transition: 'box-shadow 0.3s ease-in-out'
+              }
+            }}
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.parentNode.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Demo image not available</p>';
+            }}
+          />
+        </Grid>
+
         {/* Executive Summary */}
         <Grid item xs={12}>
           <DashboardCard title="Executive Summary">
             <CardContent>
-              <Accordion expanded={expandedSection === 'executive-summary'} onChange={handleSectionChange('executive-summary')}>
-                <AccordionSummary expandIcon={<IconChevronDown />}>
-                  <Typography variant="h6">Problem Statement & Solution</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
                       <Typography variant="subtitle1" gutterBottom fontWeight="bold" color="error">
@@ -224,8 +332,6 @@ const AirOpsPage = () => {
                       </Paper>
                     </Grid>
                   </Grid>
-                </AccordionDetails>
-              </Accordion>
             </CardContent>
           </DashboardCard>
         </Grid>
@@ -234,77 +340,68 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Product Vision & Strategy">
             <CardContent>
-              <Box mb={3}>
-                <Typography variant="h6" gutterBottom>
-                  Vision Statement
-                </Typography>
-                <Paper elevation={1} sx={{ p: 2, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
-                  <Typography variant="body1" fontStyle="italic">
-                    "{caseStudy.productVision.visionStatement}"
-                  </Typography>
-                </Paper>
-              </Box>
+              <Typography variant="body1" paragraph mb={2}>
+                "{caseStudy.productVision.visionStatement}"
+              </Typography>
 
-              <Grid container spacing={3}>
+              <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Short-term Objectives
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Short-term
                   </Typography>
                   <List dense>
                     {caseStudy.productVision.strategicObjectives.shortTerm.map((obj, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconCheck size={16} color="green" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconCheck size={14} color="green" />
                         </ListItemIcon>
-                        <ListItemText primary={obj} />
+                        <ListItemText primary={obj} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Mid-term Objectives
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Mid-term
                   </Typography>
                   <List dense>
                     {caseStudy.productVision.strategicObjectives.midTerm.map((obj, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconCheck size={16} color="orange" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconCheck size={14} color="orange" />
                         </ListItemIcon>
-                        <ListItemText primary={obj} />
+                        <ListItemText primary={obj} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Long-term Objectives
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Long-term
                   </Typography>
                   <List dense>
                     {caseStudy.productVision.strategicObjectives.longTerm.map((obj, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconCheck size={16} color="purple" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconCheck size={14} color="purple" />
                         </ListItemIcon>
-                        <ListItemText primary={obj} />
+                        <ListItemText primary={obj} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
                 </Grid>
               </Grid>
 
-              <Divider sx={{ my: 3 }} />
+              <Divider sx={{ my: 2 }} />
 
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                 Success Metrics & KPIs
               </Typography>
-              <Grid container spacing={2}>
+              <Box display="flex" flexWrap="wrap" gap={1}>
                 {caseStudy.productVision.successMetrics.map((metric, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Chip label={metric} variant="outlined" sx={{ width: '100%', justifyContent: 'flex-start' }} />
-                  </Grid>
+                  <Chip key={index} label={metric} size="small" variant="outlined" />
                 ))}
-              </Grid>
+              </Box>
             </CardContent>
           </DashboardCard>
         </Grid>
@@ -313,72 +410,74 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="User Research & Insights">
             <CardContent>
-              <Grid container spacing={2} mb={3}>
-                <Grid item xs={6} md={3}>
-                  <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                    <Typography variant="h4">{caseStudy.userResearch.interviews.operationsStaff}</Typography>
-                    <Typography variant="body2">Operations Staff</Typography>
+              <Grid container spacing={1} mb={2}>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                    <Typography variant="h5">{caseStudy.userResearch.interviews.operationsStaff}</Typography>
+                    <Typography variant="caption">Operations Staff</Typography>
                   </Paper>
                 </Grid>
-                <Grid item xs={6} md={3}>
-                  <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                    <Typography variant="h4">{caseStudy.userResearch.interviews.customerService}</Typography>
-                    <Typography variant="body2">Customer Service</Typography>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                    <Typography variant="h5">{caseStudy.userResearch.interviews.customerService}</Typography>
+                    <Typography variant="caption">Customer Service</Typography>
                   </Paper>
                 </Grid>
-                <Grid item xs={6} md={3}>
-                  <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                    <Typography variant="h4">{caseStudy.userResearch.interviews.management}</Typography>
-                    <Typography variant="body2">Management</Typography>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                    <Typography variant="h5">{caseStudy.userResearch.interviews.management}</Typography>
+                    <Typography variant="caption">Management</Typography>
                   </Paper>
                 </Grid>
-                <Grid item xs={6} md={3}>
-                  <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                    <Typography variant="h4">{caseStudy.userResearch.interviews.customerSurveys}+</Typography>
-                    <Typography variant="body2">Customer Surveys</Typography>
+                <Grid item xs={6} sm={3}>
+                  <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                    <Typography variant="h5">{caseStudy.userResearch.interviews.customerSurveys}+</Typography>
+                    <Typography variant="caption">Customer Surveys</Typography>
                   </Paper>
                 </Grid>
               </Grid>
 
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Key Insights
-              </Typography>
-              <List>
-                {caseStudy.userResearch.keyInsights.map((insight, index) => (
-                  <ListItem key={index}>
-                    <ListItemIcon>
-                      <IconChartBar size={20} color="#1976d2" />
-                    </ListItemIcon>
-                    <ListItemText primary={insight} />
-                  </ListItem>
-                ))}
-              </List>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                User Personas
-              </Typography>
               <Grid container spacing={2}>
-                {caseStudy.userResearch.personas.map((persona, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Paper elevation={2} sx={{ p: 2 }}>
-                      <Typography variant="h6" gutterBottom>{persona.name}</Typography>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>{persona.role}</Typography>
-                      <Typography variant="subtitle2" fontWeight="bold" mt={2}>Goals:</Typography>
-                      <List dense>
-                        {persona.goals.map((goal, gIndex) => (
-                          <ListItem key={gIndex} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconCheck size={14} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={goal} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Paper>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Key Insights
+                  </Typography>
+                  <List dense>
+                    {caseStudy.userResearch.keyInsights.map((insight, index) => (
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconChartBar size={16} color="#1976d2" />
+                        </ListItemIcon>
+                        <ListItemText primary={insight} primaryTypographyProps={{ variant: 'body2' }} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    User Personas
+                  </Typography>
+                  <Grid container spacing={1}>
+                    {caseStudy.userResearch.personas.map((persona, index) => (
+                      <Grid item xs={12} sm={6} key={index}>
+                        <Paper elevation={1} sx={{ p: 1.5 }}>
+                          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>{persona.name}</Typography>
+                          <Typography variant="caption" color="text.secondary" display="block" mb={1}>{persona.role}</Typography>
+                          <List dense>
+                            {persona.goals.slice(0, 2).map((goal, gIndex) => (
+                              <ListItem key={gIndex} disablePadding sx={{ py: 0.25 }}>
+                                <ListItemIcon sx={{ minWidth: 20 }}>
+                                  <IconCheck size={12} color="green" />
+                                </ListItemIcon>
+                                <ListItemText primary={goal} primaryTypographyProps={{ variant: 'caption' }} />
+                              </ListItem>
+                            ))}
+                          </List>
+                        </Paper>
+                      </Grid>
+                    ))}
                   </Grid>
-                ))}
+                </Grid>
               </Grid>
             </CardContent>
           </DashboardCard>
@@ -706,103 +805,98 @@ const AirOpsPage = () => {
           </DashboardCard>
         </Grid>
 
-        {/* Risk Assessment */}
+        {/* Risk Assessment & Go-to-Market Strategy */}
         <Grid item xs={12}>
-          <DashboardCard title="Risk Assessment & Mitigation">
+          <DashboardCard title="Risk Assessment & Go-to-Market Strategy">
             <CardContent>
               <Grid container spacing={2}>
-                {caseStudy.riskAssessment.map((risk, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Paper elevation={2} sx={{ p: 2 }}>
-                      <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                        <Typography variant="subtitle1" fontWeight="bold">{risk.risk}</Typography>
-                        <Box display="flex" gap={1}>
-                          <Chip 
-                            label={`${risk.probability} Probability`} 
-                            size="small" 
-                            color={risk.probability === 'High' ? 'error' : risk.probability === 'Medium' ? 'warning' : 'default'}
-                          />
-                          <Chip 
-                            label={`${risk.impact} Impact`} 
-                            size="small" 
-                            color={risk.impact === 'High' ? 'error' : 'default'}
-                          />
-                        </Box>
-                      </Box>
-                      <Typography variant="body2" color="text.secondary">
-                        <strong>Mitigation:</strong> {risk.mitigation}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </DashboardCard>
-        </Grid>
-
-        {/* Go-to-Market Strategy */}
-        <Grid item xs={12}>
-          <DashboardCard title="Go-to-Market Strategy">
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Launch Phases
-              </Typography>
-              <Stack spacing={2} mb={3}>
-                {caseStudy.goToMarket.launchPhases.map((phase, index) => (
-                  <Paper key={index} elevation={1} sx={{ p: 2 }}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                      <Typography variant="subtitle1" fontWeight="bold">{phase.phase}</Typography>
-                      <Chip label={phase.duration} size="small" />
-                    </Box>
-                    <Typography variant="body2" color="text.secondary" mb={1}>
-                      <strong>Scope:</strong> {phase.scope}
-                    </Typography>
-                    <Typography variant="subtitle2" fontWeight="bold" mt={1} mb={0.5}>
-                      Goals:
-                    </Typography>
-                    <List dense>
-                      {phase.goals.map((goal, gIndex) => (
-                        <ListItem key={gIndex} disablePadding>
-                          <ListItemIcon sx={{ minWidth: 32 }}>
-                            <IconCheck size={14} color="green" />
-                          </ListItemIcon>
-                          <ListItemText primary={goal} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Paper>
-                ))}
-              </Stack>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Launch Phases
+                  </Typography>
+                  <Grid container spacing={1} mb={2}>
+                    {caseStudy.goToMarket.launchPhases.map((phase, index) => (
+                      <Grid item xs={12} key={index}>
+                        <Paper elevation={1} sx={{ p: 1.5 }}>
+                          <Box display="flex" justifyContent="space-between" alignItems="center" mb={0.5}>
+                            <Typography variant="subtitle2" fontWeight="bold">{phase.phase}</Typography>
+                            <Chip label={phase.duration} size="small" />
+                          </Box>
+                          <Typography variant="caption" color="text.secondary" display="block" mb={0.5}>
+                            {phase.scope}
+                          </Typography>
+                          <Box display="flex" flexWrap="wrap" gap={0.5}>
+                            {phase.goals.map((goal, gIndex) => (
+                              <Chip key={gIndex} label={goal} size="small" variant="outlined" />
+                            ))}
+                          </Box>
+                        </Paper>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Risk Assessment
+                  </Typography>
+                  <Grid container spacing={1}>
+                    {caseStudy.riskAssessment.map((risk, index) => (
+                      <Grid item xs={12} key={index}>
+                        <Paper elevation={1} sx={{ p: 1.5 }}>
+                          <Box display="flex" justifyContent="space-between" alignItems="start" mb={0.5}>
+                            <Typography variant="subtitle2" fontWeight="bold">{risk.risk}</Typography>
+                            <Box display="flex" gap={0.5}>
+                              <Chip 
+                                label={risk.probability} 
+                                size="small" 
+                                color={risk.probability === 'High' ? 'error' : risk.probability === 'Medium' ? 'warning' : 'default'}
+                              />
+                              <Chip 
+                                label={risk.impact} 
+                                size="small" 
+                                color={risk.impact === 'High' ? 'error' : 'default'}
+                              />
+                            </Box>
+                          </Box>
+                          <Typography variant="caption" color="text.secondary">
+                            <strong>Mitigation:</strong> {risk.mitigation}
+                          </Typography>
+                        </Paper>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              <Divider sx={{ my: 2 }} />
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                     Communication Plan
                   </Typography>
                   <List dense>
                     {caseStudy.goToMarket.communicationPlan.map((item, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconCheck size={16} color="green" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconCheck size={14} color="green" />
                         </ListItemIcon>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                <Grid item xs={12} sm={6}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                     Training Strategy
                   </Typography>
                   <List dense>
                     {caseStudy.goToMarket.trainingStrategy.map((item, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconCheck size={16} color="green" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconCheck size={14} color="green" />
                         </ListItemIcon>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
@@ -816,52 +910,62 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Lessons Learned & Reflections">
             <CardContent>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Product Strategy Insights
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Insights
                   </Typography>
-                  <List>
+                  <List dense>
                     {caseStudy.lessonsLearned.insights.map((insight, index) => (
-                      <ListItem key={index}>
-                        <ListItemIcon>
-                          <IconChartBar size={20} color="#1976d2" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconChartBar size={14} color="#1976d2" />
                         </ListItemIcon>
-                        <ListItemText primary={insight} />
+                        <ListItemText primary={insight} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                     What I'd Do Differently
                   </Typography>
-                  <List>
+                  <List dense>
                     {caseStudy.lessonsLearned.whatWouldDoDifferently.map((item, index) => (
-                      <ListItem key={index}>
-                        <ListItemIcon>
-                          <IconAlertTriangle size={20} color="#ed6c02" />
+                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconAlertTriangle size={14} color="#ed6c02" />
                         </ListItemIcon>
-                        <ListItemText primary={item} />
+                        <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2' }} />
                       </ListItem>
                     ))}
                   </List>
                 </Grid>
-              </Grid>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Key Takeaways
-              </Typography>
-              <Grid container spacing={2}>
-                {caseStudy.lessonsLearned.keyTakeaways.map((takeaway, index) => (
-                  <Grid item xs={12} sm={6} key={index}>
-                    <Paper elevation={1} sx={{ p: 2 }}>
-                      <Typography variant="body2">{takeaway}</Typography>
-                    </Paper>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                    Key Takeaways
+                  </Typography>
+                  <Grid container spacing={1}>
+                    {caseStudy.lessonsLearned.keyTakeaways.map((takeaway, index) => {
+                      const colors = ['primary', 'secondary', 'success', 'info', 'warning'];
+                      const color = colors[index % colors.length];
+                      return (
+                        <Grid item xs={12} key={index}>
+                          <Paper 
+                            elevation={1} 
+                            sx={{ 
+                              p: 1.5,
+                              bgcolor: `${color}.light`,
+                              color: `${color}.contrastText`
+                            }}
+                          >
+                            <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>{takeaway}</Typography>
+                          </Paper>
+                        </Grid>
+                      );
+                    })}
                   </Grid>
-                ))}
+                </Grid>
               </Grid>
             </CardContent>
           </DashboardCard>
@@ -871,10 +975,10 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Strategy Document Preview">
             <CardContent>
-              <Typography variant="body1" paragraph>
-                Below are summaries of 5 key sections from the comprehensive 194-page AirOps Digital Transformation Strategy document.
+              <Typography variant="body2" paragraph mb={2}>
+                Summaries of 5 key sections from the comprehensive 194-page strategy document.
               </Typography>
-              <Grid container spacing={3}>
+              <Grid container spacing={2}>
                 {[
                   {
                     title: 'Executive Summary',
@@ -928,43 +1032,25 @@ const AirOpsPage = () => {
                   }
                 ].map((section, index) => (
                   <Grid item xs={12} md={6} key={index}>
-                    <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
-                      <Typography variant="h6" gutterBottom color="primary">
+                    <Paper elevation={1} sx={{ p: 2, height: '100%' }}>
+                      <Typography variant="subtitle1" gutterBottom color="primary" fontWeight="bold">
                         {index + 1}. {section.title}
                       </Typography>
-                      <Typography variant="body2" paragraph color="text.secondary">
+                      <Typography variant="body2" paragraph color="text.secondary" sx={{ mb: 1, fontSize: '0.875rem' }}>
                         {section.summary}
                       </Typography>
-                      <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                        Key Points:
-                      </Typography>
-                      <List dense>
+                      <Box display="flex" flexWrap="wrap" gap={0.5}>
                         {section.keyPoints.map((point, pIndex) => (
-                          <ListItem key={pIndex} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconCheck size={14} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={point} />
-                          </ListItem>
+                          <Chip key={pIndex} label={point} size="small" variant="outlined" />
                         ))}
-                      </List>
+                      </Box>
                     </Paper>
                   </Grid>
                 ))}
               </Grid>
               <Box mt={3} p={2} bgcolor="info.light" borderRadius={1}>
                 <Typography variant="body2">
-                  <strong>Full Document:</strong> The complete 194-page strategy document includes additional sections on user research findings, detailed requirements, security architecture, change management plan, and comprehensive risk assessment. 
-                  <Button
-                    variant="text"
-                    size="small"
-                    href="https://docs.google.com/document/d/14m9lwPWDC4cN3LnkGNcUpE4KIPc4WGCx4W641AVQ4Y0/edit"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    sx={{ ml: 1 }}
-                  >
-                    View Full Document →
-                  </Button>
+                  <strong>Full Document:</strong> The complete 194-page strategy document includes additional sections on user research findings, detailed requirements, security architecture, change management plan, and comprehensive risk assessment.
                 </Typography>
               </Box>
             </CardContent>
