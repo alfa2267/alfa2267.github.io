@@ -3,6 +3,8 @@ import ReadmeParser from './readmeParser.js';
 import { uniqueId } from 'lodash';
 import { IconBrandGithub, IconLayoutDashboard, IconChecks, IconMoodHappy } from '@tabler/icons';
 import { getMockProjectBySlug, getAllMockProjects } from '../mock/mockProjectData';
+import { airopsProjectData } from '../data/projects/airops.js';
+import { reloamProjectData } from '../data/projects/reloam.js';
 
 const isDevelopment = false; // Use real GitHub data - set to true for testing with mock data
 
@@ -39,13 +41,17 @@ class ProjectService {
    * Fetch and parse all projects with caching
    */
   async fetchProjects(forceRefresh = false) {
+    // Always include custom case study projects
+    const customProjects = [airopsProjectData, reloamProjectData];
+    
     // Use mock data in development
     if (isDevelopment) {
       console.log('Development mode: Using mock project data');
       const mockProjects = getAllMockProjects();
-      this.cache.projects = mockProjects;
+      const allProjects = [...customProjects, ...mockProjects];
+      this.cache.projects = allProjects;
       this.cache.lastFetch = Date.now();
-      return mockProjects;
+      return allProjects;
     }
 
     // Check cache
@@ -63,29 +69,32 @@ class ProjectService {
       console.log('Parsing project metadata...');
       const projects = this.readmeParser.parseRepositoriesMetadata(repositories);
       
-      // If no projects found from GitHub, fall back to mock data
+      // Combine custom projects with GitHub projects
+      const allProjects = [...customProjects, ...projects];
+      
+      // If no projects found from GitHub, still include custom projects
       if (projects.length === 0) {
-        console.log('No projects found from GitHub, falling back to mock data');
-        const mockProjects = getAllMockProjects();
-        this.cache.projects = mockProjects;
+        console.log('No projects found from GitHub, using custom projects only');
+        this.cache.projects = allProjects;
         this.cache.lastFetch = Date.now();
-        return mockProjects;
+        return allProjects;
       }
       
       // Update cache
-      this.cache.projects = projects;
+      this.cache.projects = allProjects;
       this.cache.lastFetch = Date.now();
       
-      console.log(`Found ${projects.length} projects with metadata`);
-      return projects;
+      console.log(`Found ${allProjects.length} projects (${customProjects.length} custom + ${projects.length} from GitHub)`);
+      return allProjects;
     } catch (error) {
       console.error('Error fetching projects:', error);
-      // Fall back to mock data if GitHub API fails
-      console.log('GitHub API failed, falling back to mock data');
+      // Fall back to custom projects + mock data if GitHub API fails
+      console.log('GitHub API failed, falling back to custom and mock data');
       const mockProjects = getAllMockProjects();
-      this.cache.projects = mockProjects;
+      const allProjects = [...customProjects, ...mockProjects];
+      this.cache.projects = allProjects;
       this.cache.lastFetch = Date.now();
-      return mockProjects;
+      return allProjects;
     }
   }
 
@@ -180,6 +189,14 @@ class ProjectService {
    * @returns {Promise<Object>} Project data
    */
   async getProjectBySlug(slug) {
+    // Check for custom case study projects first
+    if (slug === 'airops') {
+      return airopsProjectData;
+    }
+    if (slug === 'reloam') {
+      return reloamProjectData;
+    }
+    
     // Use mock data in development
     if (isDevelopment) {
       console.log(`Development mode: Getting mock project with slug ${slug}`);

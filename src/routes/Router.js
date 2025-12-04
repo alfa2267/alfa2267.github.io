@@ -16,6 +16,8 @@ const Error = Loadable(lazy(() => import('../views/authentication/Error')));
 const Register = Loadable(lazy(() => import('../views/authentication/Register')));
 const Login = Loadable(lazy(() => import('../views/authentication/Login')));
 const ProjectPage = Loadable(lazy(() => import('../views/projects/ProjectPage')));
+const AirOpsPage = Loadable(lazy(() => import('../views/projects/airops/AirOpsPage')));
+const ReloamPage = Loadable(lazy(() => import('../views/projects/reloam/ReloamPage')));
 const SampleProjectsPage = Loadable(lazy(() => import('../views/sample/SampleProjectsPage')));
 
 const Router = [
@@ -27,6 +29,8 @@ const Router = [
       { path: '/dashboard', exact: true, element: <Dashboard /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
       { path: '/sample-projects', exact: true, element: <SampleProjectsPage /> },
+      { path: '/projects/airops', exact: true, element: <AirOpsPage /> },
+      { path: '/projects/reloam', exact: true, element: <ReloamPage /> },
       { path: '/projects/:slug', exact: true, element: <ProjectPage /> },
       { path: '/icons', exact: true, element: <Icons /> },
       { path: '/ui/typography', exact: true, element: <TypographyPage /> },
