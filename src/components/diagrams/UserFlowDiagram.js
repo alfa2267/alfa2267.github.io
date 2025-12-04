@@ -58,13 +58,23 @@ const UserFlowDiagram = ({ steps = [], title = "User Flow" }) => {
               )}
             </Paper>
             {index < flowSteps.length - 1 && (
-              <IconArrowRight
-                size={32}
-                style={{
-                  color: '#1976d2',
-                  transform: { xs: 'rotate(90deg)', sm: 'none' }
+              <Box
+                sx={{
+                  display: { xs: 'none', sm: 'block' }
                 }}
-              />
+              >
+                <IconArrowRight size={32} style={{ color: '#1976d2' }} />
+              </Box>
+            )}
+            {index < flowSteps.length - 1 && (
+              <Box
+                sx={{
+                  display: { xs: 'block', sm: 'none' },
+                  transform: 'rotate(90deg)'
+                }}
+              >
+                <IconArrowRight size={32} style={{ color: '#1976d2' }} />
+              </Box>
             )}
           </React.Fragment>
         ))}

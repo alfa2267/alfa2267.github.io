@@ -36,6 +36,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
+import ScreenshotGallery from '../../../components/gallery/ScreenshotGallery.js';
+import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
@@ -527,6 +529,173 @@ const ReloamPage = () => {
                   </ListItem>
                 ))}
               </List>
+            </CardContent>
+          </DashboardCard>
+        </Grid>
+
+        {/* Screenshots & Wireframes */}
+        <Grid item xs={12}>
+          <DashboardCard title="Screenshots & Wireframes">
+            <CardContent>
+              <ScreenshotGallery
+                title="Live Application Screenshots"
+                screenshots={[
+                  {
+                    url: null, // Placeholder - replace with actual screenshot URL
+                    title: 'Landlord Dashboard',
+                    description: 'Main dashboard view showing tenant overview and financial summary from https://ld.ainaeco.uk/',
+                    type: 'screenshot',
+                    link: 'https://ld.ainaeco.uk/'
+                  },
+                  {
+                    url: null, // Placeholder - replace with actual screenshot URL
+                    title: 'Tenant Management',
+                    description: 'Tenant list and profile management interface from https://tn.ainaeco.uk/',
+                    type: 'screenshot',
+                    link: 'https://tn.ainaeco.uk/'
+                  },
+                  {
+                    url: null,
+                    title: 'Financial Tracking',
+                    description: 'Rent collection and payment history tracking',
+                    type: 'placeholder'
+                  },
+                  {
+                    url: null,
+                    title: 'Activity Log',
+                    description: 'Property activity logging and timeline view',
+                    type: 'placeholder'
+                  },
+                  {
+                    url: null,
+                    title: 'Reports Dashboard',
+                    description: 'Financial summaries and analytics',
+                    type: 'placeholder'
+                  }
+                ]}
+              />
+              <Box mt={2} p={2} bgcolor="info.light" borderRadius={1}>
+                <Typography variant="body2">
+                  <strong>Live Sites:</strong>{' '}
+                  <Button
+                    variant="text"
+                    size="small"
+                    href="https://ld.ainaeco.uk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Landlord Dashboard →
+                  </Button>
+                  {' | '}
+                  <Button
+                    variant="text"
+                    size="small"
+                    href="https://tn.ainaeco.uk/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Tenant Management →
+                  </Button>
+                </Typography>
+                <Typography variant="caption" color="text.secondary" display="block" mt={1}>
+                  Note: Screenshots will be updated once the sites are fully functional. Currently showing placeholder images.
+                </Typography>
+              </Box>
+              
+              <Divider sx={{ my: 4 }} />
+              
+              <Typography variant="h6" gutterBottom>
+                Wireframes & Mockups
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                  <Paper elevation={2} sx={{ p: 2 }}>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      Initial Wireframes
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: 300,
+                        bgcolor: 'grey.100',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 1,
+                        border: '2px dashed',
+                        borderColor: 'grey.400'
+                      }}
+                    >
+                      <Box textAlign="center">
+                        <IconDeviceDesktop size={48} style={{ color: '#999', marginBottom: 8 }} />
+                        <Typography variant="body2" color="text.secondary">
+                          Wireframe: Dashboard Layout
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Paper elevation={2} sx={{ p: 2 }}>
+                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                      User Flow Mockups
+                    </Typography>
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: 300,
+                        bgcolor: 'grey.100',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 1,
+                        border: '2px dashed',
+                        borderColor: 'grey.400'
+                      }}
+                    >
+                      <Box textAlign="center">
+                        <IconFileText size={48} style={{ color: '#999', marginBottom: 8 }} />
+                        <Typography variant="body2" color="text.secondary">
+                          Mockup: Tenant Onboarding Flow
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </Paper>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </DashboardCard>
+        </Grid>
+
+        {/* User Flow Diagram */}
+        <Grid item xs={12}>
+          <DashboardCard title="User Flow Diagram">
+            <CardContent>
+              <UserFlowDiagram
+                title="Reloam User Journey"
+                steps={[
+                  {
+                    name: 'Login',
+                    description: 'Landlord authentication'
+                  },
+                  {
+                    name: 'Dashboard',
+                    description: 'Overview of tenants and finances'
+                  },
+                  {
+                    name: 'Manage Tenants',
+                    description: 'Add/edit tenant profiles'
+                  },
+                  {
+                    name: 'Track Payments',
+                    description: 'Record and monitor rent collection'
+                  },
+                  {
+                    name: 'View Reports',
+                    description: 'Financial summaries and insights'
+                  }
+                ]}
+              />
             </CardContent>
           </DashboardCard>
         </Grid>

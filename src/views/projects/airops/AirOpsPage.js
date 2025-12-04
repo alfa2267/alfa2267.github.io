@@ -32,6 +32,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
+import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
+import RoadmapTimeline from '../../../components/diagrams/RoadmapTimeline.js';
+import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
 import { airopsProjectData } from '../../../data/projects/airops.js';
 
 const AirOpsPage = () => {
@@ -398,6 +401,20 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Product Roadmap">
             <CardContent>
+              {/* Visual Roadmap Timeline */}
+              <Box mb={4}>
+                <RoadmapTimeline
+                  title="Implementation Timeline"
+                  phases={caseStudy.roadmap}
+                />
+              </Box>
+
+              <Divider sx={{ my: 3 }} />
+
+              {/* Detailed Roadmap */}
+              <Typography variant="h6" gutterBottom>
+                Detailed Phase Breakdown
+              </Typography>
               <Stack spacing={2}>
                 {caseStudy.roadmap.map((phase, index) => (
                   <Paper key={index} elevation={2} sx={{ p: 3 }}>
@@ -505,6 +522,27 @@ const AirOpsPage = () => {
                 {caseStudy.technicalArchitecture.overview}
               </Typography>
               
+              {/* System Architecture Diagram */}
+              <Box mb={4}>
+                <SystemArchitecture
+                  title="System Architecture Overview"
+                  components={[
+                    { name: 'Web App', type: 'client', layer: 'client', color: '#1976d2' },
+                    { name: 'Mobile App', type: 'client', layer: 'client', color: '#1976d2' },
+                    { name: 'API Gateway', type: 'gateway', layer: 'gateway', color: '#2e7d32' },
+                    { name: 'Booking Service', type: 'service', layer: 'service', color: '#ed6c02' },
+                    { name: 'Operations Service', type: 'service', layer: 'service', color: '#ed6c02' },
+                    { name: 'Analytics Service', type: 'service', layer: 'service', color: '#ed6c02' },
+                    { name: 'PostgreSQL', type: 'database', layer: 'database', color: '#9c27b0' },
+                    { name: 'Redis Cache', type: 'database', layer: 'database', color: '#9c27b0' },
+                    { name: 'Payment Gateway', type: 'external', layer: 'external', color: '#d32f2f' },
+                    { name: 'Legacy Systems', type: 'external', layer: 'external', color: '#d32f2f' }
+                  ]}
+                />
+              </Box>
+
+              <Divider sx={{ my: 3 }} />
+              
               <Grid container spacing={3} mt={1}>
                 {Object.entries(caseStudy.technicalArchitecture.technologyStack).map(([category, techs]) => (
                   <Grid item xs={12} md={6} key={category}>
@@ -543,6 +581,22 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Business Case & ROI Analysis">
             <CardContent>
+              {/* Business Case Infographic */}
+              <Box mb={4}>
+                <BusinessCaseInfographic
+                  title="ROI Overview"
+                  data={{
+                    investment: caseStudy.businessCase.investment.total,
+                    totalBenefit: caseStudy.businessCase.projectedReturns.threeYear.totalBenefit,
+                    roi: caseStudy.businessCase.projectedReturns.threeYear.totalROI,
+                    breakEven: caseStudy.businessCase.projectedReturns.threeYear.breakEvenMonth,
+                    costSavings: caseStudy.businessCase.projectedReturns.threeYear.costSavings,
+                    revenueIncrease: caseStudy.businessCase.projectedReturns.threeYear.revenueIncrease
+                  }}
+                />
+              </Box>
+
+              <Divider sx={{ my: 3 }} />
               <Typography variant="h6" gutterBottom>
                 Investment Breakdown: $2.9M over 12 months
               </Typography>
@@ -822,6 +876,110 @@ const AirOpsPage = () => {
                   </Grid>
                 ))}
               </Grid>
+            </CardContent>
+          </DashboardCard>
+        </Grid>
+
+        {/* Strategy Document Preview */}
+        <Grid item xs={12}>
+          <DashboardCard title="Strategy Document Preview">
+            <CardContent>
+              <Typography variant="body1" paragraph>
+                Below are summaries of 5 key sections from the comprehensive 194-page AirOps Digital Transformation Strategy document.
+              </Typography>
+              <Grid container spacing={3}>
+                {[
+                  {
+                    title: 'Executive Summary',
+                    summary: 'Overview of the digital transformation initiative, problem statement, solution approach, and expected business impact. Highlights the $2.9M investment and 285% ROI projection over 3 years.',
+                    keyPoints: [
+                      '40% operational cost reduction',
+                      '60% customer satisfaction improvement',
+                      '25% booking conversion increase',
+                      'Real-time operational visibility'
+                    ]
+                  },
+                  {
+                    title: 'Current State Analysis',
+                    summary: 'Comprehensive assessment of existing systems, processes, and pain points. Includes stakeholder interviews with 78+ participants across operations, customer service, management, and customers.',
+                    keyPoints: [
+                      'Fragmented legacy systems identified',
+                      'Manual processes causing inefficiencies',
+                      'Data silos preventing integrated decision-making',
+                      'Poor customer experience across touchpoints'
+                    ]
+                  },
+                  {
+                    title: 'Technical Architecture Design',
+                    summary: 'Detailed system architecture using microservices approach with API-first design. Includes technology stack recommendations, integration points, security considerations, and scalability approach.',
+                    keyPoints: [
+                      'Cloud-native architecture (AWS)',
+                      'Microservices for scalability',
+                      'API-first for future integrations',
+                      'Event-driven real-time updates'
+                    ]
+                  },
+                  {
+                    title: 'Implementation Roadmap',
+                    summary: '4-phase implementation plan spanning 12 months with detailed deliverables, timelines, and success metrics for each phase. Includes risk mitigation strategies and go-to-market approach.',
+                    keyPoints: [
+                      'Phase 1: Foundation (Months 1-3)',
+                      'Phase 2: Operations & Mobile (Months 4-6)',
+                      'Phase 3: Analytics & UX (Months 7-9)',
+                      'Phase 4: Advanced Features (Months 10-12)'
+                    ]
+                  },
+                  {
+                    title: 'Business Case & Financial Analysis',
+                    summary: 'Detailed ROI analysis with investment breakdown, 3-year financial projections, break-even analysis, and risk assessment. Includes cost-benefit analysis and value proposition for stakeholders.',
+                    keyPoints: [
+                      '$2.9M total investment',
+                      '$9.7M total 3-year benefit',
+                      '285% ROI',
+                      '18-month break-even period'
+                    ]
+                  }
+                ].map((section, index) => (
+                  <Grid item xs={12} md={6} key={index}>
+                    <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
+                      <Typography variant="h6" gutterBottom color="primary">
+                        {index + 1}. {section.title}
+                      </Typography>
+                      <Typography variant="body2" paragraph color="text.secondary">
+                        {section.summary}
+                      </Typography>
+                      <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
+                        Key Points:
+                      </Typography>
+                      <List dense>
+                        {section.keyPoints.map((point, pIndex) => (
+                          <ListItem key={pIndex} disablePadding>
+                            <ListItemIcon sx={{ minWidth: 32 }}>
+                              <IconCheck size={14} color="green" />
+                            </ListItemIcon>
+                            <ListItemText primary={point} />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Paper>
+                  </Grid>
+                ))}
+              </Grid>
+              <Box mt={3} p={2} bgcolor="info.light" borderRadius={1}>
+                <Typography variant="body2">
+                  <strong>Full Document:</strong> The complete 194-page strategy document includes additional sections on user research findings, detailed requirements, security architecture, change management plan, and comprehensive risk assessment. 
+                  <Button
+                    variant="text"
+                    size="small"
+                    href="https://docs.google.com/document/d/14m9lwPWDC4cN3LnkGNcUpE4KIPc4WGCx4W641AVQ4Y0/edit"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{ ml: 1 }}
+                  >
+                    View Full Document →
+                  </Button>
+                </Typography>
+              </Box>
             </CardContent>
           </DashboardCard>
         </Grid>
