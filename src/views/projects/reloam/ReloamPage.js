@@ -10,15 +10,11 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
   Divider,
   Paper,
   Stack
 } from '@mui/material';
 import {
-  IconChevronDown,
   IconCheck,
   IconCalendar,
   IconChartBar,
@@ -37,13 +33,8 @@ import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
-  const [expandedSection, setExpandedSection] = useState('problem-discovery');
   const project = reloamProjectData;
   const caseStudy = project.caseStudy;
-
-  const handleSectionChange = (section) => (event, isExpanded) => {
-    setExpandedSection(isExpanded ? section : false);
-  };
 
   return (
     <PageContainer 
@@ -103,59 +94,48 @@ const ReloamPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Problem Discovery">
             <CardContent>
-              <Accordion expanded={expandedSection === 'problem-discovery'} onChange={handleSectionChange('problem-discovery')}>
-                <AccordionSummary expandIcon={<IconChevronDown />}>
-                  <Typography variant="h6">Initial Research & Market Gap</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Box mb={3}>
-                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      Initial Insight (Q3 2024)
-                    </Typography>
-                    <Paper elevation={1} sx={{ p: 2, mb: 2, bgcolor: 'grey.50' }}>
-                      <Typography variant="body2" paragraph>
-                        Met with a <strong>{caseStudy.problemDiscovery.initialResearch.interviewSubject}</strong> divided among 20+ tenant farmers. Key frustrations:
-                      </Typography>
-                      {caseStudy.problemDiscovery.initialResearch.quotes && caseStudy.problemDiscovery.initialResearch.quotes.map((quote, index) => (
-                        <Box key={index} mb={2} p={1.5} bgcolor="white" borderRadius={1}>
-                          <Typography variant="body2" fontStyle="italic" color="text.secondary">
-                            {quote}
-                          </Typography>
-                        </Box>
-                      ))}
-                      <Box mt={2} p={1.5} bgcolor="info.light" borderRadius={1}>
-                        <Typography variant="body2">
-                          <strong>Key Insight:</strong> {caseStudy.problemDiscovery.initialResearch.insight}
-                        </Typography>
-                      </Box>
-                    </Paper>
-                  </Box>
-
-                  <Divider sx={{ my: 3 }} />
-
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Market Research
+              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                Initial Insight (Q3 2024)
+              </Typography>
+              <Typography variant="body2" paragraph>
+                Met with a <strong>{caseStudy.problemDiscovery.initialResearch.interviewSubject}</strong> divided among 20+ tenant farmers. Key frustrations:
+              </Typography>
+              {caseStudy.problemDiscovery.initialResearch.quotes && caseStudy.problemDiscovery.initialResearch.quotes.map((quote, index) => (
+                <Box key={index} mb={1.5} p={1.5} bgcolor="grey.50" borderRadius={1}>
+                  <Typography variant="body2" fontStyle="italic" color="text.secondary">
+                    {quote}
                   </Typography>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} md={6}>
-                      <Paper elevation={1} sx={{ p: 2 }}>
-                        <Typography variant="h6">{caseStudy.problemDiscovery.marketResearch.platformsAnalyzed}</Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Existing platforms analyzed
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Paper elevation={1} sx={{ p: 2 }}>
-                        <Typography variant="body2" color="text.secondary" gutterBottom>
-                          Finding
-                        </Typography>
-                        <Typography variant="body1">{caseStudy.problemDiscovery.marketResearch.finding}</Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-                </AccordionDetails>
-              </Accordion>
+                </Box>
+              ))}
+              <Box mt={2} mb={2} p={1.5} bgcolor="info.light" borderRadius={1}>
+                <Typography variant="body2">
+                  <strong>Key Insight:</strong> {caseStudy.problemDiscovery.initialResearch.insight}
+                </Typography>
+              </Box>
+
+              <Divider sx={{ my: 2 }} />
+
+              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                Market Research
+              </Typography>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={6}>
+                  <Paper elevation={1} sx={{ p: 1.5 }}>
+                    <Typography variant="h6">{caseStudy.problemDiscovery.marketResearch.platformsAnalyzed}</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Existing platforms analyzed
+                    </Typography>
+                  </Paper>
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Paper elevation={1} sx={{ p: 1.5 }}>
+                    <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                      Finding
+                    </Typography>
+                    <Typography variant="body2">{caseStudy.problemDiscovery.marketResearch.finding}</Typography>
+                  </Paper>
+                </Grid>
+              </Grid>
             </CardContent>
           </DashboardCard>
         </Grid>
@@ -811,73 +791,77 @@ const ReloamPage = () => {
               <Typography variant="h6" gutterBottom>
                 What I Learned
               </Typography>
-              <Stack spacing={2} mb={3}>
+              <Grid container spacing={2} mb={3}>
                 {caseStudy.lessonsLearned.whatILearned.map((lesson, index) => (
-                  <Paper key={index} elevation={1} sx={{ p: 2 }}>
-                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      {index + 1}. {lesson.title}
-                    </Typography>
-                    <Box mb={1}>
-                      <Typography variant="body2" color="error">
-                        <strong>Mistake:</strong> {lesson.mistake}
-                      </Typography>
-                    </Box>
-                    <Box mb={1}>
-                      <Typography variant="body2" color="info.main">
-                        <strong>Lesson:</strong> {lesson.lesson}
-                      </Typography>
-                    </Box>
-                    <Box mb={1}>
-                      <Typography variant="body2" color="text.secondary">
-                        <strong>Impact:</strong> {lesson.impact}
-                      </Typography>
-                    </Box>
-                    <Box mt={2}>
+                  <Grid item xs={12} md={6} key={index}>
+                    <Paper elevation={1} sx={{ p: 1.5, height: '100%' }}>
                       <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                        Going Forward:
+                        {index + 1}. {lesson.title}
                       </Typography>
-                      <List dense>
-                        {lesson.goingForward.map((item, gIndex) => (
-                          <ListItem key={gIndex} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconCheck size={14} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={item} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                  </Paper>
+                      <Box mb={0.5}>
+                        <Typography variant="body2" color="error" sx={{ fontSize: '0.875rem' }}>
+                          <strong>Mistake:</strong> {lesson.mistake}
+                        </Typography>
+                      </Box>
+                      <Box mb={0.5}>
+                        <Typography variant="body2" color="info.main" sx={{ fontSize: '0.875rem' }}>
+                          <strong>Lesson:</strong> {lesson.lesson}
+                        </Typography>
+                      </Box>
+                      <Box mb={1}>
+                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>
+                          <strong>Impact:</strong> {lesson.impact}
+                        </Typography>
+                      </Box>
+                      <Box mt={1.5}>
+                        <Typography variant="caption" fontWeight="bold" gutterBottom display="block">
+                          Going Forward:
+                        </Typography>
+                        <List dense>
+                          {lesson.goingForward.map((item, gIndex) => (
+                            <ListItem key={gIndex} disablePadding sx={{ py: 0.25 }}>
+                              <ListItemIcon sx={{ minWidth: 20 }}>
+                                <IconCheck size={12} color="green" />
+                              </ListItemIcon>
+                              <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2', sx={{ fontSize: '0.875rem' } }} />
+                            </ListItem>
+                          ))}
+                        </List>
+                      </Box>
+                    </Paper>
+                  </Grid>
                 ))}
-              </Stack>
+              </Grid>
 
               <Divider sx={{ my: 3 }} />
 
               <Typography variant="h6" gutterBottom>
                 What I'd Do Differently
               </Typography>
-              <Stack spacing={2}>
+              <Grid container spacing={2}>
                 {caseStudy.lessonsLearned.whatWouldDoDifferently.timeline.map((phase, index) => (
-                  <Paper key={index} elevation={1} sx={{ p: 2 }}>
-                    <Box display="flex" alignItems="center" mb={1}>
-                      <Chip label={phase.week} size="small" color="primary" sx={{ mr: 1 }} />
-                      <Typography variant="subtitle1" fontWeight="bold">
-                        {phase.activity}
-                      </Typography>
-                    </Box>
-                    <List dense>
-                      {phase.tasks.map((task, tIndex) => (
-                        <ListItem key={tIndex} disablePadding>
-                          <ListItemIcon sx={{ minWidth: 32 }}>
-                            <IconCheck size={14} color="green" />
-                          </ListItemIcon>
-                          <ListItemText primary={task} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </Paper>
+                  <Grid item xs={12} sm={6} md={4} key={index}>
+                    <Paper elevation={1} sx={{ p: 1.5, height: '100%' }}>
+                      <Box display="flex" alignItems="center" mb={1}>
+                        <Chip label={phase.week} size="small" color="primary" sx={{ mr: 1 }} />
+                        <Typography variant="subtitle2" fontWeight="bold">
+                          {phase.activity}
+                        </Typography>
+                      </Box>
+                      <List dense>
+                        {phase.tasks.map((task, tIndex) => (
+                          <ListItem key={tIndex} disablePadding sx={{ py: 0.25 }}>
+                            <ListItemIcon sx={{ minWidth: 24 }}>
+                              <IconCheck size={12} color="green" />
+                            </ListItemIcon>
+                            <ListItemText primary={task} primaryTypographyProps={{ variant: 'body2', sx={{ fontSize: '0.875rem' } }} />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Paper>
+                  </Grid>
                 ))}
-              </Stack>
+              </Grid>
 
               <Divider sx={{ my: 3 }} />
 
