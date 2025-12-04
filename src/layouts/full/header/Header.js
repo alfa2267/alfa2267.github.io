@@ -129,7 +129,47 @@ const Header = (props) => {
              </Button>
            )}
         
-          {showDemoButton && (
+          {/* Special handling for Reloam with multiple portals */}
+          {currentProject?.slug === 'reloam' && (
+            <>
+              <Button
+                variant="contained"
+                size="small"
+                color="primary"
+                startIcon={<IconExternalLink size={16} />}
+                href="https://ld.reloam.ainaeco.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  '& .MuiButton-startIcon': {
+                    mr: 0.5
+                  }
+                }}
+              >
+                Landlord Portal
+              </Button>
+              <Button
+                variant="outlined"
+                size="small"
+                color="primary"
+                startIcon={<IconExternalLink size={16} />}
+                href="https://tn.reloam.ainaeco.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                sx={{
+                  whiteSpace: 'nowrap',
+                  '& .MuiButton-startIcon': {
+                    mr: 0.5
+                  }
+                }}
+              >
+                Tenant Portal
+              </Button>
+            </>
+          )}
+        
+          {showDemoButton && currentProject?.slug !== 'reloam' && (
             <Button
               variant="contained"
               size="small"

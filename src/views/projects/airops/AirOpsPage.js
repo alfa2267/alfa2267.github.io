@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Box,
   Typography,
   CardContent,
   Chip,
-  Button,
   Grid,
   List,
   ListItem,
@@ -37,13 +36,8 @@ import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseIn
 import { airopsProjectData } from '../../../data/projects/airops.js';
 
 const AirOpsPage = () => {
-  const [expandedSection, setExpandedSection] = useState('executive-summary');
   const project = airopsProjectData;
   const caseStudy = project.caseStudy;
-
-  const handleSectionChange = (section) => (event, isExpanded) => {
-    setExpandedSection(isExpanded ? section : false);
-  };
 
   const renderRepoInfo = () => {
     if (!project.github_data) return null;

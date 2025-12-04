@@ -49,6 +49,30 @@ const ReloamPage = () => {
     <PageContainer 
       title={project.name} 
       description={project.description}
+      action={
+        <Box display="flex" gap={1}>
+          <Button
+            variant="contained"
+            startIcon={<IconExternalLink size={16} />}
+            href="https://ld.reloam.ainaeco.uk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            size="small"
+          >
+            Landlord Portal
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<IconExternalLink size={16} />}
+            href="https://tn.reloam.ainaeco.uk/"
+            target="_blank"
+            rel="noopener noreferrer"
+            size="small"
+          >
+            Tenant Portal
+          </Button>
+        </Box>
+      }
     >
       <Grid container spacing={3}>
         {/* Hero Section */}
@@ -63,31 +87,11 @@ const ReloamPage = () => {
                   <Typography variant="body1" color="text.secondary" paragraph>
                     {project.description}
                   </Typography>
-                  <Box display="flex" gap={1} flexWrap="wrap" mt={2} mb={2}>
+                  <Box display="flex" gap={1} flexWrap="wrap" mt={2}>
                     <Chip label={project.role} color="primary" variant="outlined" />
                     <Chip label={project.timeline} icon={<IconCalendar size={16} />} />
                     <Chip label={project.status.toUpperCase()} color="success" />
                     <Chip label={project.technology} />
-                  </Box>
-                  <Box display="flex" gap={1} flexWrap="wrap" mt={1}>
-                    <Button
-                      variant="contained"
-                      startIcon={<IconExternalLink size={16} />}
-                      href="https://ld.reloam.ainaeco.uk/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Landlord Portal
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      startIcon={<IconExternalLink size={16} />}
-                      href="https://tn.reloam.ainaeco.uk/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Tenant Portal
-                    </Button>
                   </Box>
                 </Box>
               </Box>
