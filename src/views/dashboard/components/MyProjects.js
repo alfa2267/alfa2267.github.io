@@ -25,27 +25,72 @@ const MyProjects = () => {
                 const fetchedProjects = await projectService.fetchProjects();
                 setProjects(fetchedProjects);
                 
+                // Helper function to extract date from project (check multiple fields)
+                const getProjectDate = (project) => {
+                    // Check various date fields
+                    if (project.updated_at) return project.updated_at;
+                    if (project.updated_date) return project.updated_date;
+                    if (project.github_data?.updated_at) return project.github_data.updated_at;
+                    if (project.created_at) return project.created_at;
+                    if (project.created_date) return project.created_date;
+                    if (project.github_data?.created_at) return project.github_data.created_at;
+                    return null;
+                };
+
                 // Extract unique update dates and sort them
-                const dates = fetchedProjects
-                    .filter(project => project.updated_at) // Only projects with update dates
-                    .map(project => ({
-                        value: project.updated_at,
-                        label: new Date(project.updated_at).toLocaleDateString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric'
-                        }),
-                        projectName: project.name
-                    }))
+                const dateMap = new Map();
+                
+                fetchedProjects.forEach(project => {
+                    const dateValue = getProjectDate(project);
+                    if (dateValue) {
+                        // Use date as key to ensure uniqueness
+                        if (!dateMap.has(dateValue)) {
+                            try {
+                                const dateObj = new Date(dateValue);
+                                if (!isNaN(dateObj.getTime())) {
+                                    dateMap.set(dateValue, {
+                                        value: dateValue,
+                                        label: dateObj.toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric'
+                                        }),
+                                        projectName: project.name
+                                    });
+                                }
+                            } catch (e) {
+                                console.warn('Invalid date format:', dateValue, e);
+                            }
+                        }
+                    }
+                });
+
+                const dates = Array.from(dateMap.values())
                     .sort((a, b) => new Date(b.value) - new Date(a.value)) // Sort by newest first
                     .slice(0, 10); // Limit to 10 most recent dates
 
-                setAvailableDates(dates);
+                // If we have dates, set them; otherwise provide a default "All Projects" option
                 if (dates.length > 0) {
-                    setSelectedDate(dates[0].value); // Set most recent as default
+                    setAvailableDates(dates);
+                    setSelectedDate(dates[0].value);
+                } else {
+                    // Fallback: show "All Projects" option
+                    setAvailableDates([{
+                        value: 'all',
+                        label: 'All Projects',
+                        projectName: 'All'
+                    }]);
+                    setSelectedDate('all');
                 }
             } catch (error) {
                 console.error('Error fetching project dates:', error);
+                // On error, still provide a fallback
+                setAvailableDates([{
+                    value: 'all',
+                    label: 'All Projects',
+                    projectName: 'All'
+                }]);
+                setSelectedDate('all');
             }
         };
 
@@ -143,24 +188,22 @@ const MyProjects = () => {
     return (
 
         <DashboardCard title="My Projects" action={
-            <Select
-                labelId="date-dd"
-                id="date-dd"
-                value={selectedDate}
-                size="small"
-                onChange={handleChange}
-                displayEmpty
-            >
-                {availableDates.length === 0 ? (
-                    <MenuItem value="" disabled>Loading...</MenuItem>
-                ) : (
-                    availableDates.map((dateItem, index) => (
+            availableDates.length > 0 ? (
+                <Select
+                    labelId="date-dd"
+                    id="date-dd"
+                    value={selectedDate || ''}
+                    size="small"
+                    onChange={handleChange}
+                    displayEmpty
+                >
+                    {availableDates.map((dateItem, index) => (
                         <MenuItem key={index} value={dateItem.value}>
                             {dateItem.label}
                         </MenuItem>
-                    ))
-                )}
-            </Select>
+                    ))}
+                </Select>
+            ) : null
         }>
             <Chart
                 options={optionscolumnchart}

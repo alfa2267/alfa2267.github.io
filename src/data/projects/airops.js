@@ -6,6 +6,7 @@
 export const airopsProjectData = {
   id: 'airops',
   name: 'AirOps: Digital Transformation Strategy for Air Peace Airline',
+  menuTitle: 'AirOps',
   slug: 'airops',
   description: 'A comprehensive $2.9M digital transformation initiative to modernize Nigerian aviation operations through integrated booking, operations, and customer service platforms.',
   repo_url: null, // Private repository

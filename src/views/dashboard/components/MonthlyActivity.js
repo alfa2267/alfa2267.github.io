@@ -4,8 +4,34 @@ import { useTheme } from '@mui/material/styles';
 import { Stack, Typography, Avatar, Fab } from '@mui/material';
 import { IconArrowUpRight, IconGitBranch } from '@tabler/icons';
 import DashboardCard from '../../../components/shared/DashboardCard';
+import GitHubService from '../../../services/github';
 
 const MonthlyEarnings = () => {
+  const githubService = new GitHubService();
+  const [commitStats, setCommitStats] = React.useState({
+    currentMonth: 0,
+    lastMonth: 0,
+    percentageChange: 0
+  });
+  const [loading, setLoading] = React.useState(true);
+
+  // Fetch commit statistics
+  React.useEffect(() => {
+    const fetchCommitStats = async () => {
+      try {
+        setLoading(true);
+        const stats = await githubService.getMonthlyCommitStats();
+        setCommitStats(stats);
+      } catch (error) {
+        console.error('Error fetching commit stats:', error);
+        // Keep default values on error
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCommitStats();
+  }, []);
+
   // chart color
   const theme = useTheme();
   const secondary = theme.palette.secondary.main;
@@ -65,19 +91,21 @@ const MonthlyEarnings = () => {
     >
       <>
         <Typography variant="h3" fontWeight="700" mt="-20px">
-          62 commits
+          {loading ? '...' : `${commitStats.currentMonth} commit${commitStats.currentMonth !== 1 ? 's' : ''}`}
         </Typography>
-        <Stack direction="row" spacing={1} my={1} alignItems="center">
-          <Avatar sx={{ bgcolor: errorlight, width: 27, height: 27 }}>
-            <IconArrowUpRight width={20} color="#FA896B" />
-          </Avatar>
-          <Typography variant="subtitle2" fontWeight="600">
-            +14%
-          </Typography>
-          <Typography variant="subtitle2" color="textSecondary">
-            vs last month
-          </Typography>
-        </Stack>
+        {!loading && commitStats.lastMonth > 0 && (
+          <Stack direction="row" spacing={1} my={1} alignItems="center">
+            <Avatar sx={{ bgcolor: commitStats.percentageChange >= 0 ? errorlight : '#e8f5e9', width: 27, height: 27 }}>
+              <IconArrowUpRight width={20} color={commitStats.percentageChange >= 0 ? "#FA896B" : "#4caf50"} />
+            </Avatar>
+            <Typography variant="subtitle2" fontWeight="600">
+              {commitStats.percentageChange > 0 ? '+' : ''}{commitStats.percentageChange}%
+            </Typography>
+            <Typography variant="subtitle2" color="textSecondary">
+              vs last month
+            </Typography>
+          </Stack>
+        )}
       </>
     </DashboardCard>
   );

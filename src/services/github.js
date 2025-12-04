@@ -99,6 +99,72 @@ class GitHubService {
 
     return reposWithReadme;
   }
+
+  /**
+   * Get commit statistics for the current month
+   * Returns commit count for current month and previous month for comparison
+   */
+  async getMonthlyCommitStats() {
+    try {
+      const repos = await this.fetchRepositories();
+      const now = new Date();
+      const currentMonth = now.getMonth();
+      const currentYear = now.getFullYear();
+      const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+      const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+      let currentMonthCommits = 0;
+      let lastMonthCommits = 0;
+
+      // Fetch commits for each repository
+      for (const repo of repos) {
+        try {
+          // Get commits for current month
+          const currentMonthStart = new Date(currentYear, currentMonth, 1).toISOString();
+          const currentMonthEnd = new Date(currentYear, currentMonth + 1, 0, 23, 59, 59).toISOString();
+          
+          const currentMonthUrl = `${this.baseUrl}/repos/${this.username}/${repo.name}/commits?since=${currentMonthStart}&until=${currentMonthEnd}&per_page=100`;
+          const currentResponse = await fetch(currentMonthUrl);
+          if (currentResponse.ok) {
+            const currentCommits = await currentResponse.json();
+            currentMonthCommits += currentCommits.length;
+          }
+
+          // Get commits for last month
+          const lastMonthStart = new Date(lastMonthYear, lastMonth, 1).toISOString();
+          const lastMonthEnd = new Date(lastMonthYear, lastMonth + 1, 0, 23, 59, 59).toISOString();
+          
+          const lastMonthUrl = `${this.baseUrl}/repos/${this.username}/${repo.name}/commits?since=${lastMonthStart}&until=${lastMonthEnd}&per_page=100`;
+          const lastResponse = await fetch(lastMonthUrl);
+          if (lastResponse.ok) {
+            const lastCommits = await lastResponse.json();
+            lastMonthCommits += lastCommits.length;
+          }
+        } catch (error) {
+          console.error(`Error fetching commits for ${repo.name}:`, error);
+          // Continue with other repos
+        }
+      }
+
+      // Calculate percentage change
+      const percentageChange = lastMonthCommits > 0 
+        ? Math.round(((currentMonthCommits - lastMonthCommits) / lastMonthCommits) * 100)
+        : currentMonthCommits > 0 ? 100 : 0;
+
+      return {
+        currentMonth: currentMonthCommits,
+        lastMonth: lastMonthCommits,
+        percentageChange: percentageChange
+      };
+    } catch (error) {
+      console.error('Error fetching commit stats:', error);
+      return {
+        currentMonth: 0,
+        lastMonth: 0,
+        percentageChange: 0
+      };
+    }
+  }
 }
 
 export default GitHubService;

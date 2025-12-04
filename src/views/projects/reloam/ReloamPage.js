@@ -25,13 +25,11 @@ import {
   IconRocket,
   IconAlertTriangle,
   IconFileText,
-  IconArrowLeft,
   IconExternalLink,
   IconCode,
   IconDeviceDesktop,
   IconBulb
 } from '@tabler/icons';
-import { useNavigate } from 'react-router-dom';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import ScreenshotGallery from '../../../components/gallery/ScreenshotGallery.js';
@@ -39,7 +37,6 @@ import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
-  const navigate = useNavigate();
   const [expandedSection, setExpandedSection] = useState('problem-discovery');
   const project = reloamProjectData;
   const caseStudy = project.caseStudy;
@@ -53,16 +50,6 @@ const ReloamPage = () => {
       title={project.name} 
       description={project.description}
     >
-      <Box mb={3}>
-        <Button
-          startIcon={<IconArrowLeft size={16} />}
-          onClick={() => navigate('/dashboard')}
-          sx={{ mb: 2 }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
-
       <Grid container spacing={3}>
         {/* Hero Section */}
         <Grid item xs={12}>

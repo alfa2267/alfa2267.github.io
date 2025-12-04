@@ -130,7 +130,7 @@ class ProjectService {
       for (const project of navigationProjects) {
         projectMenuItems.push({
           id: uniqueId(),
-          title: project.name,
+          title: project.menuTitle || project.name,
           href: `/projects/${project.slug}`,
           external: false,
           icon: this.getIconComponent('folder'),

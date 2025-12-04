@@ -78,9 +78,6 @@ const ProjectPage = () => {
             <Typography variant="h6" color="error">
               {error || 'Project not found'}
             </Typography>
-            <Button href="/dashboard" sx={{ mt: 2 }}>
-              Back to Dashboard
-            </Button>
           </Box>
         </DashboardCard>
       </PageContainer>

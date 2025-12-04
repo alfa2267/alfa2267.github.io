@@ -26,10 +26,8 @@ import {
   IconChartBar,
   IconRocket,
   IconAlertTriangle,
-  IconFileText,
-  IconArrowLeft
+  IconFileText
 } from '@tabler/icons';
-import { useNavigate } from 'react-router-dom';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
@@ -38,7 +36,6 @@ import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseIn
 import { airopsProjectData } from '../../../data/projects/airops.js';
 
 const AirOpsPage = () => {
-  const navigate = useNavigate();
   const [expandedSection, setExpandedSection] = useState('executive-summary');
   const project = airopsProjectData;
   const caseStudy = project.caseStudy;
@@ -64,16 +61,6 @@ const AirOpsPage = () => {
       title={project.name} 
       description={project.description}
     >
-      <Box mb={3}>
-        <Button
-          startIcon={<IconArrowLeft size={16} />}
-          onClick={() => navigate('/dashboard')}
-          sx={{ mb: 2 }}
-        >
-          Back to Dashboard
-        </Button>
-      </Box>
-
       <Grid container spacing={3}>
         {/* Hero Section */}
         <Grid item xs={12}>

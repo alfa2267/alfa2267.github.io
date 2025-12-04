@@ -6,6 +6,7 @@
 export const reloamProjectData = {
   id: 'reloam',
   name: 'Reloam: PropTech for Agricultural Landlords',
+  menuTitle: 'Reloam',
   slug: 'reloam',
   description: 'A digital platform empowering agricultural landlords across Africa to efficiently manage large-scale properties through tenant relationship management, financial operations, and activity tracking.',
   repo_url: null, // Private repository
