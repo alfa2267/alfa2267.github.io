@@ -785,7 +785,7 @@ const ReloamPage = () => {
                               <ListItemIcon sx={{ minWidth: 20 }}>
                                 <IconCheck size={12} color="green" />
                               </ListItemIcon>
-                              <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2', sx={{ fontSize: '0.875rem' } }} />
+                              <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
                             </ListItem>
                           ))}
                         </List>
@@ -816,7 +816,7 @@ const ReloamPage = () => {
                             <ListItemIcon sx={{ minWidth: 24 }}>
                               <IconCheck size={12} color="green" />
                             </ListItemIcon>
-                            <ListItemText primary={task} primaryTypographyProps={{ variant: 'body2', sx={{ fontSize: '0.875rem' } }} />
+                            <ListItemText primary={task} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
                           </ListItem>
                         ))}
                       </List>
