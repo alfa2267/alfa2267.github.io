@@ -191,6 +191,18 @@ class ProjectService {
   async getProjectBySlug(slug) {
     // Check for custom case study projects first
     if (slug === 'airops') {
+      // Try to fetch GitHub data for air-ops repository
+      try {
+        const githubData = await this.githubService.fetchRepository('air-ops');
+        if (githubData) {
+          return {
+            ...airopsProjectData,
+            github_data: githubData
+          };
+        }
+      } catch (error) {
+        console.log('Could not fetch GitHub data for air-ops:', error);
+      }
       return airopsProjectData;
     }
     if (slug === 'reloam') {

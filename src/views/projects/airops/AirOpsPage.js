@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -14,7 +14,8 @@ import {
   AccordionDetails,
   Divider,
   Paper,
-  Stack
+  Stack,
+  Skeleton
 } from '@mui/material';
 import {
   IconChevronDown,
@@ -33,10 +34,42 @@ import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
 import RoadmapTimeline from '../../../components/diagrams/RoadmapTimeline.js';
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
-import { airopsProjectData } from '../../../data/projects/airops.js';
+import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
-  const project = airopsProjectData;
+  const [project, setProject] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadProject = async () => {
+      try {
+        setLoading(true);
+        const projectService = new ProjectService();
+        const projectData = await projectService.getProjectBySlug('airops');
+        setProject(projectData);
+      } catch (err) {
+        console.error('Error loading project:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProject();
+  }, []);
+
+  if (loading || !project) {
+    return (
+      <PageContainer title="Loading..." description="">
+        <DashboardCard title="">
+          <Box p={3}>
+            <Skeleton variant="text" height={60} />
+            <Skeleton variant="text" height={30} />
+          </Box>
+        </DashboardCard>
+      </PageContainer>
+    );
+  }
+
   const caseStudy = project.caseStudy;
 
   const renderRepoInfo = () => {
@@ -214,6 +247,7 @@ const AirOpsPage = () => {
               height: 'auto',
               borderRadius: 1,
               boxShadow: 2,
+              display: 'block',
               '&:hover': {
                 boxShadow: 4,
                 transition: 'box-shadow 0.3s ease-in-out'
@@ -221,7 +255,10 @@ const AirOpsPage = () => {
             }}
             onError={(e) => {
               e.target.style.display = 'none';
-              e.target.parentNode.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Demo image not available</p>';
+              const errorBox = document.createElement('div');
+              errorBox.style.cssText = 'text-align: center; color: #666; padding: 2rem;';
+              errorBox.textContent = 'Demo image not available';
+              e.target.parentNode.appendChild(errorBox);
             }}
           />
         </Grid>
@@ -232,10 +269,10 @@ const AirOpsPage = () => {
             <CardContent>
                   <Grid container spacing={3}>
                     <Grid item xs={12} md={6}>
-                      <Typography variant="subtitle1" gutterBottom fontWeight="bold" color="error">
+                      <Typography variant="subtitle1" fontWeight="bold" gutterBottom color="error">
                         Problem Statement
                       </Typography>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
+                      <Typography variant="body1" paragraph>
                         Nigerian aviation industry challenges:
                       </Typography>
                       <List dense>
@@ -248,14 +285,14 @@ const AirOpsPage = () => {
                           </ListItem>
                         ))}
                       </List>
-                      <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
+                      <Typography variant="subtitle1" fontWeight="bold" mt={2} mb={1}>
                         Impact:
                       </Typography>
                       <List dense>
                         {caseStudy.executiveSummary.problemStatement.impact.map((item, index) => (
                           <ListItem key={index} disablePadding>
                             <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconAlertTriangle size={14} color="orange" />
+                              <IconAlertTriangle size={16} color="orange" />
                             </ListItemIcon>
                             <ListItemText primary={item} />
                           </ListItem>
@@ -541,55 +578,57 @@ const AirOpsPage = () => {
         <Grid item xs={12}>
           <DashboardCard title="Requirements Documentation">
             <CardContent>
-              <Stack spacing={3}>
+              <Grid container spacing={2}>
                 {caseStudy.requirements.epics.map((epic, epicIndex) => (
-                  <Accordion key={epicIndex}>
-                    <AccordionSummary expandIcon={<IconChevronDown />}>
-                      <Box>
-                        <Typography variant="h6">{epic.name}</Typography>
-                        <Typography variant="body2" color="text.secondary">{epic.description}</Typography>
-                      </Box>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Stack spacing={2}>
-                        {epic.userStories.map((story, storyIndex) => (
-                          <Paper key={storyIndex} elevation={1} sx={{ p: 2 }}>
-                            <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
-                              <Typography variant="subtitle1" fontWeight="bold">
-                                {story.title} ({story.id})
+                  <Grid item xs={12} md={6} key={epicIndex}>
+                    <Accordion>
+                      <AccordionSummary expandIcon={<IconChevronDown />}>
+                        <Box>
+                          <Typography variant="h6">{epic.name}</Typography>
+                          <Typography variant="body2" color="text.secondary">{epic.description}</Typography>
+                        </Box>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Stack spacing={2}>
+                          {epic.userStories.map((story, storyIndex) => (
+                            <Paper key={storyIndex} elevation={1} sx={{ p: 2 }}>
+                              <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
+                                <Typography variant="subtitle1" fontWeight="bold">
+                                  {story.title} ({story.id})
+                                </Typography>
+                                <Chip 
+                                  label={story.priority} 
+                                  size="small" 
+                                  color={story.priority === 'P0' ? 'error' : 'default'}
+                                />
+                              </Box>
+                              <Typography variant="body2" fontStyle="italic" mb={1}>
+                                As a <strong>{story.as}</strong>, I want <strong>{story.want}</strong>, so that <strong>{story.so}</strong>.
                               </Typography>
-                              <Chip 
-                                label={story.priority} 
-                                size="small" 
-                                color={story.priority === 'P0' ? 'error' : 'default'}
-                              />
-                            </Box>
-                            <Typography variant="body2" fontStyle="italic" mb={1}>
-                              As a <strong>{story.as}</strong>, I want <strong>{story.want}</strong>, so that <strong>{story.so}</strong>.
-                            </Typography>
-                            <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                              Acceptance Criteria:
-                            </Typography>
-                            <List dense>
-                              {story.acceptanceCriteria.map((criteria, cIndex) => (
-                                <ListItem key={cIndex} disablePadding>
-                                  <ListItemIcon sx={{ minWidth: 32 }}>
-                                    <IconCheck size={14} color="green" />
-                                  </ListItemIcon>
-                                  <ListItemText primary={criteria} />
-                                </ListItem>
-                              ))}
-                            </List>
-                            <Box mt={1}>
-                              <Chip label={`Effort: ${story.effort}`} size="small" variant="outlined" />
-                            </Box>
-                          </Paper>
-                        ))}
-                      </Stack>
-                    </AccordionDetails>
-                  </Accordion>
+                              <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
+                                Acceptance Criteria:
+                              </Typography>
+                              <List dense>
+                                {story.acceptanceCriteria.map((criteria, cIndex) => (
+                                  <ListItem key={cIndex} disablePadding>
+                                    <ListItemIcon sx={{ minWidth: 32 }}>
+                                      <IconCheck size={14} color="green" />
+                                    </ListItemIcon>
+                                    <ListItemText primary={criteria} />
+                                  </ListItem>
+                                ))}
+                              </List>
+                              <Box mt={1}>
+                                <Chip label={`Effort: ${story.effort}`} size="small" variant="outlined" />
+                              </Box>
+                            </Paper>
+                          ))}
+                        </Stack>
+                      </AccordionDetails>
+                    </Accordion>
+                  </Grid>
                 ))}
-              </Stack>
+              </Grid>
             </CardContent>
           </DashboardCard>
         </Grid>
