@@ -390,10 +390,11 @@ const ReloamPage = () => {
 
         {/* Product Decisions & Trade-offs */}
         <Grid item xs={12}>
-          <DashboardCard title="Product Decisions & Trade-offs">
-            <CardContent>
-              <Stack spacing={3}>
-                {caseStudy.productDecisions.map((decision, index) => (
+          <Typography variant="h5" gutterBottom>
+            Product Decisions & Trade-offs
+          </Typography>
+          <Stack spacing={2}>
+            {caseStudy.productDecisions.map((decision, index) => (
                   <Paper key={index} elevation={2} sx={{ p: 3 }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                       <Typography variant="h6">{decision.decision}</Typography>
@@ -462,8 +463,6 @@ const ReloamPage = () => {
                   </Paper>
                 ))}
               </Stack>
-            </CardContent>
-          </DashboardCard>
         </Grid>
 
         {/* Technical Implementation */}
@@ -558,42 +557,6 @@ const ReloamPage = () => {
                   }
                 ]}
               />
-              <Box mt={2} p={2} bgcolor="info.light" borderRadius={1}>
-                <Typography variant="body2">
-                  <strong>Live Sites:</strong>{' '}
-                  <Button
-                    variant="text"
-                    size="small"
-                    href="https://ld.reloam.ainaeco.uk/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Landlord Portal →
-                  </Button>
-                  {' | '}
-                  <Button
-                    variant="text"
-                    size="small"
-                    href="https://tn.reloam.ainaeco.uk/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Tenant Portal →
-                  </Button>
-                </Typography>
-                <Typography variant="caption" color="text.secondary" display="block" mt={1}>
-                  Screenshots from the live application. Additional images available in the{' '}
-                  <Button
-                    variant="text"
-                    size="small"
-                    href="https://github.com/alfa2267/reloam-landing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    reloam-landing repository
-                  </Button>
-                </Typography>
-              </Box>
               
               <Divider sx={{ my: 4 }} />
               
@@ -695,37 +658,36 @@ const ReloamPage = () => {
 
         {/* Feature Showcase */}
         <Grid item xs={12}>
-          <DashboardCard title="What I Built - Feature Showcase">
-            <CardContent>
-              <Grid container spacing={3}>
-                {Object.entries(caseStudy.features).map(([key, feature]) => (
-                  <Grid item xs={12} md={6} key={key}>
-                    <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                      <Typography variant="h6" gutterBottom>
-                        {feature.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" paragraph>
-                        {feature.description}
-                      </Typography>
-                      <Typography variant="subtitle2" fontWeight="bold" mt={1} mb={1}>
-                        Highlights:
-                      </Typography>
-                      <List dense>
-                        {feature.highlights.map((highlight, index) => (
-                          <ListItem key={index} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconCheck size={14} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={highlight} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Paper>
-                  </Grid>
-                ))}
+          <Typography variant="h5" gutterBottom>
+            What I Built - Feature Showcase
+          </Typography>
+          <Grid container spacing={2}>
+            {Object.entries(caseStudy.features).map(([key, feature]) => (
+              <Grid item xs={12} md={6} key={key}>
+                <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+                  <Typography variant="h6" gutterBottom>
+                    {feature.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {feature.description}
+                  </Typography>
+                  <Typography variant="subtitle2" fontWeight="bold" mt={1} mb={1}>
+                    Highlights:
+                  </Typography>
+                  <List dense>
+                    {feature.highlights.map((highlight, index) => (
+                      <ListItem key={index} disablePadding>
+                        <ListItemIcon sx={{ minWidth: 32 }}>
+                          <IconCheck size={14} color="green" />
+                        </ListItemIcon>
+                        <ListItemText primary={highlight} />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Paper>
               </Grid>
-            </CardContent>
-          </DashboardCard>
+            ))}
+          </Grid>
         </Grid>
 
         {/* Validation & Next Steps */}
