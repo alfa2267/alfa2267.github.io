@@ -82,18 +82,26 @@ const ReloamPage = () => {
                     <Chip label={project.status.toUpperCase()} color="success" />
                     <Chip label={project.technology} />
                   </Box>
-                  {project.project_url && (
+                  <Box display="flex" gap={1} flexWrap="wrap" mt={1}>
                     <Button
                       variant="contained"
                       startIcon={<IconExternalLink size={16} />}
-                      href={project.project_url}
+                      href="https://ld.reloam.ainaeco.uk/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      sx={{ mt: 1 }}
                     >
-                      View Live Demo
+                      Landlord Portal
                     </Button>
-                  )}
+                    <Button
+                      variant="outlined"
+                      startIcon={<IconExternalLink size={16} />}
+                      href="https://tn.reloam.ainaeco.uk/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Tenant Portal
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
             </CardContent>
@@ -539,36 +547,43 @@ const ReloamPage = () => {
                 title="Live Application Screenshots"
                 screenshots={[
                   {
-                    url: null, // Placeholder - replace with actual screenshot URL
+                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/login-landlord.png',
+                    title: 'Landlord Login Page',
+                    description: 'Sign-in interface for landlords at https://ld.reloam.ainaeco.uk/',
+                    type: 'screenshot',
+                    link: 'https://ld.reloam.ainaeco.uk/'
+                  },
+                  {
+                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/dashboard.png',
                     title: 'Landlord Dashboard',
-                    description: 'Main dashboard view showing tenant overview and financial summary from https://ld.ainaeco.uk/',
+                    description: 'Main dashboard view showing tenant overview and financial summary',
                     type: 'screenshot',
-                    link: 'https://ld.ainaeco.uk/'
+                    link: 'https://ld.reloam.ainaeco.uk/'
                   },
                   {
-                    url: null, // Placeholder - replace with actual screenshot URL
+                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/tenant-management.png',
                     title: 'Tenant Management',
-                    description: 'Tenant list and profile management interface from https://tn.ainaeco.uk/',
+                    description: 'Tenant list and profile management interface',
                     type: 'screenshot',
-                    link: 'https://tn.ainaeco.uk/'
+                    link: 'https://ld.reloam.ainaeco.uk/'
                   },
                   {
-                    url: null,
+                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/financial-tracking.png',
                     title: 'Financial Tracking',
                     description: 'Rent collection and payment history tracking',
-                    type: 'placeholder'
+                    type: 'screenshot'
                   },
                   {
-                    url: null,
+                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/activity-log.png',
                     title: 'Activity Log',
                     description: 'Property activity logging and timeline view',
-                    type: 'placeholder'
+                    type: 'screenshot'
                   },
                   {
-                    url: null,
+                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/reports.png',
                     title: 'Reports Dashboard',
                     description: 'Financial summaries and analytics',
-                    type: 'placeholder'
+                    type: 'screenshot'
                   }
                 ]}
               />
@@ -578,25 +593,34 @@ const ReloamPage = () => {
                   <Button
                     variant="text"
                     size="small"
-                    href="https://ld.ainaeco.uk/"
+                    href="https://ld.reloam.ainaeco.uk/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Landlord Dashboard →
+                    Landlord Portal →
                   </Button>
                   {' | '}
                   <Button
                     variant="text"
                     size="small"
-                    href="https://tn.ainaeco.uk/"
+                    href="https://tn.reloam.ainaeco.uk/"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Tenant Management →
+                    Tenant Portal →
                   </Button>
                 </Typography>
                 <Typography variant="caption" color="text.secondary" display="block" mt={1}>
-                  Note: Screenshots will be updated once the sites are fully functional. Currently showing placeholder images.
+                  Screenshots from the live application. Additional images available in the{' '}
+                  <Button
+                    variant="text"
+                    size="small"
+                    href="https://github.com/alfa2267/reloam-landing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    reloam-landing repository
+                  </Button>
                 </Typography>
               </Box>
               

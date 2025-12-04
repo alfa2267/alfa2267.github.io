@@ -9,7 +9,7 @@ export const reloamProjectData = {
   slug: 'reloam',
   description: 'A digital platform empowering agricultural landlords across Africa to efficiently manage large-scale properties through tenant relationship management, financial operations, and activity tracking.',
   repo_url: null, // Private repository
-  project_url: 'https://reloam.ainaeco.uk/',
+  project_url: 'https://ld.reloam.ainaeco.uk/',
   tech_stack: ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'Product Management'],
   features: [
     'Tenant database and profile management',
@@ -595,10 +595,24 @@ export const reloamProjectData = {
     artifacts: [
       {
         type: 'demo',
-        title: 'Live Demo',
+        title: 'Live Demo - Landlord Portal',
         description: 'Functional MVP deployed and accessible',
-        url: 'https://reloam.ainaeco.uk/',
+        url: 'https://ld.reloam.ainaeco.uk/',
         preview: 'Interactive prototype demonstrating core tenant management and financial tracking features'
+      },
+      {
+        type: 'demo',
+        title: 'Live Demo - Tenant Portal',
+        description: 'Tenant-facing portal for property management',
+        url: 'https://tn.reloam.ainaeco.uk/',
+        preview: 'Tenant interface for viewing property information and making payments'
+      },
+      {
+        type: 'repository',
+        title: 'Reloam Landing Repository',
+        description: 'Source code and screenshots repository',
+        url: 'https://github.com/alfa2267/reloam-landing',
+        preview: 'Contains UI mockups, screenshots, and landing page assets'
       },
       {
         type: 'document',
