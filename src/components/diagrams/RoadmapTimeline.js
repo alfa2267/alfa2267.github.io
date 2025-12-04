@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, Paper, Chip } from '@mui/material';
-import { IconCalendar, IconCheck } from '@tabler/icons';
+import { IconCalendar } from '@tabler/icons';
 
 /**
  * Visual Roadmap Timeline Component
