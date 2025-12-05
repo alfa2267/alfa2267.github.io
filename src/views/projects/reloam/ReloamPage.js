@@ -20,15 +20,12 @@ import {
   IconChartBar,
   IconRocket,
   IconAlertTriangle,
-  IconFileText,
   IconExternalLink,
   IconCode,
-  IconDeviceDesktop,
   IconBulb
 } from '@tabler/icons';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
-import ScreenshotGallery from '../../../components/gallery/ScreenshotGallery.js';
 import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
 import ProblemStatementSection from '../../../components/sections/ProblemStatementSection.js';
 import FeatureShowcaseSection from '../../../components/sections/FeatureShowcaseSection.js';
@@ -425,118 +422,80 @@ const ReloamPage = () => {
           </DashboardCard>
         </Grid>
 
-        {/* Screenshots & Wireframes */}
+        {/* Project Showcase */}
         <Grid item xs={12}>
-          <DashboardCard title="Screenshots & Wireframes">
-            <CardContent>
-              <ScreenshotGallery
-                title="Live Application Screenshots"
-                screenshots={[
-                  {
-                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/login-landlord.png',
-                    title: 'Landlord Login Page',
-                    description: 'Sign-in interface for landlords at https://ld.reloam.ainaeco.uk/',
-                    type: 'screenshot',
-                    link: 'https://ld.reloam.ainaeco.uk/'
-                  },
-                  {
-                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/dashboard.png',
-                    title: 'Landlord Dashboard',
-                    description: 'Main dashboard view showing tenant overview and financial summary',
-                    type: 'screenshot',
-                    link: 'https://ld.reloam.ainaeco.uk/'
-                  },
-                  {
-                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/tenant-management.png',
-                    title: 'Tenant Management',
-                    description: 'Tenant list and profile management interface',
-                    type: 'screenshot',
-                    link: 'https://ld.reloam.ainaeco.uk/'
-                  },
-                  {
-                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/financial-tracking.png',
-                    title: 'Financial Tracking',
-                    description: 'Rent collection and payment history tracking',
-                    type: 'screenshot'
-                  },
-                  {
-                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/activity-log.png',
-                    title: 'Activity Log',
-                    description: 'Property activity logging and timeline view',
-                    type: 'screenshot'
-                  },
-                  {
-                    url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/reports.png',
-                    title: 'Reports Dashboard',
-                    description: 'Financial summaries and analytics',
-                    type: 'screenshot'
-                  }
-                ]}
-              />
-              
-              <Divider sx={{ my: 4 }} />
-              
-              <Typography variant="h6" gutterBottom>
-                Wireframes & Mockups
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
-                  <Paper elevation={2} sx={{ p: 2 }}>
-                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      Initial Wireframes
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: '100%',
-                        height: 300,
-                        bgcolor: 'grey.100',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: 1,
-                        border: '2px dashed',
-                        borderColor: 'grey.400'
-                      }}
-                    >
-                      <Box textAlign="center">
-                        <IconDeviceDesktop size={48} style={{ color: '#999', marginBottom: 8 }} />
-                        <Typography variant="body2" color="text.secondary">
-                          Wireframe: Dashboard Layout
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Paper elevation={2} sx={{ p: 2 }}>
-                    <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                      User Flow Mockups
-                    </Typography>
-                    <Box
-                      sx={{
-                        width: '100%',
-                        height: 300,
-                        bgcolor: 'grey.100',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        borderRadius: 1,
-                        border: '2px dashed',
-                        borderColor: 'grey.400'
-                      }}
-                    >
-                      <Box textAlign="center">
-                        <IconFileText size={48} style={{ color: '#999', marginBottom: 8 }} />
-                        <Typography variant="body2" color="text.secondary">
-                          Mockup: Tenant Onboarding Flow
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Paper>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </DashboardCard>
+          <ProjectShowcaseSection
+            title="Project Showcase"
+            repository={{
+              name: 'reloam-landing',
+              url: 'https://github.com/alfa2267/reloam-landing',
+              tech_stack: project.tech_stack
+            }}
+            demoImage={{
+              url: `https://raw.githubusercontent.com/alfa2267/reloam-landing/main/demo.png`,
+              alt: 'Reloam Demo',
+              description: 'Overview of the Reloam platform'
+            }}
+            screenshots={[
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/login-landlord.png',
+                title: 'Landlord Login Page',
+                description: 'Sign-in interface for landlords at https://ld.reloam.ainaeco.uk/',
+                type: 'screenshot',
+                link: 'https://ld.reloam.ainaeco.uk/'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/dashboard.png',
+                title: 'Landlord Dashboard',
+                description: 'Main dashboard view showing tenant overview and financial summary',
+                type: 'screenshot',
+                link: 'https://ld.reloam.ainaeco.uk/'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/tenant-management.png',
+                title: 'Tenant Management',
+                description: 'Tenant list and profile management interface',
+                type: 'screenshot',
+                link: 'https://ld.reloam.ainaeco.uk/'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/financial-tracking.png',
+                title: 'Financial Tracking',
+                description: 'Rent collection and payment history tracking',
+                type: 'screenshot'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/activity-log.png',
+                title: 'Activity Log',
+                description: 'Property activity logging and timeline view',
+                type: 'screenshot'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/reports.png',
+                title: 'Reports Dashboard',
+                description: 'Financial summaries and analytics',
+                type: 'screenshot'
+              }
+            ]}
+            wireframes={[
+              {
+                title: 'Initial Wireframes',
+                description: 'Wireframe: Dashboard Layout',
+                icon: 'desktop',
+                type: 'wireframe'
+              },
+              {
+                title: 'User Flow Mockups',
+                description: 'Mockup: Tenant Onboarding Flow',
+                icon: 'document',
+                type: 'mockup'
+              }
+            ]}
+            showRepository={true}
+            showDemoImage={true}
+            showScreenshots={true}
+            showWireframes={true}
+          />
         </Grid>
 
         {/* User Flow Diagram */}
