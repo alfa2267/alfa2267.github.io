@@ -2,7 +2,6 @@ import React from 'react';
 import {
   Box,
   Typography,
-  Grid,
   Paper,
   List,
   ListItem,

@@ -34,8 +34,6 @@ import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
 import RoadmapTimeline from '../../../components/diagrams/RoadmapTimeline.js';
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
-import ProblemStatementSection from '../../../components/sections/ProblemStatementSection.js';
-import RequirementsSection from '../../../components/sections/RequirementsSection.js';
 import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
 import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
 import ProjectService from '../../../services/projectService.js';

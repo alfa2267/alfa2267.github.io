@@ -614,24 +614,6 @@ export const reloamProjectData = {
         description: 'Source code and screenshots repository',
         url: 'https://github.com/alfa2267/reloam-landing',
         preview: 'Contains UI mockups, screenshots, and landing page assets'
-      },
-      {
-        type: 'document',
-        title: 'Requirements Document',
-        description: 'Comprehensive requirements documentation with user stories',
-        url: null
-      },
-      {
-        type: 'diagram',
-        title: 'Product Roadmap',
-        description: 'Visual roadmap showing MVP and future phases',
-        url: null
-      },
-      {
-        type: 'document',
-        title: 'Decision Log',
-        description: 'Documentation of key product decisions and rationale',
-        url: null
       }
     ]
   }

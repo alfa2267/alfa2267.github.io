@@ -9,7 +9,7 @@ import {
   ListItemIcon,
   ListItemText
 } from '@mui/material';
-import { IconCheck, IconFileText } from '@tabler/icons';
+import { IconCheck } from '@tabler/icons';
 
 /**
  * Reusable Feature Showcase Section Component
