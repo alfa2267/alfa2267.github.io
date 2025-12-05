@@ -1,7 +1,7 @@
 import GitHubService from './github.js';
 import ReadmeParser from './readmeParser.js';
 import { uniqueId } from 'lodash';
-import { IconBrandGithub, IconLayoutDashboard, IconChecks, IconMoodHappy } from '@tabler/icons';
+import { IconBrandGithub, IconLayoutDashboard, IconChecks, IconMoodHappy, IconNews } from '@tabler/icons';
 import { getMockProjectBySlug, getAllMockProjects } from '../mock/mockProjectData';
 import { airopsProjectData } from '../data/projects/airops.js';
 import { reloamProjectData } from '../data/projects/reloam.js';
@@ -30,6 +30,7 @@ class ProjectService {
       'dashboard': IconLayoutDashboard,
       'voice': IconChecks,
       'github': IconBrandGithub,
+      'blog': IconNews,
       'folder': IconMoodHappy, // fallback icon
       'default': IconMoodHappy
     };
@@ -115,6 +116,12 @@ class ProjectService {
         title: 'Dashboard',
         href: '/dashboard',
         icon: this.getIconComponent('dashboard'),
+      },
+      {
+        id: uniqueId(),
+        title: 'Blog',
+        href: '/blog',
+        icon: this.getIconComponent('blog'),
       }
     ];
 

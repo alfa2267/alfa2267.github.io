@@ -19,6 +19,7 @@ const ProjectPage = Loadable(lazy(() => import('../views/projects/ProjectPage'))
 const AirOpsPage = Loadable(lazy(() => import('../views/projects/airops/AirOpsPage')));
 const ReloamPage = Loadable(lazy(() => import('../views/projects/reloam/ReloamPage')));
 const SampleProjectsPage = Loadable(lazy(() => import('../views/sample/SampleProjectsPage')));
+const BlogPage = Loadable(lazy(() => import('../views/blog/BlogPage')));
 
 const Router = [
   {
@@ -27,6 +28,7 @@ const Router = [
     children: [
       { path: '/', element: <Navigate to="/dashboard" /> },
       { path: '/dashboard', exact: true, element: <Dashboard /> },
+      { path: '/blog', exact: true, element: <BlogPage /> },
       { path: '/sample-page', exact: true, element: <SamplePage /> },
       { path: '/sample-projects', exact: true, element: <SampleProjectsPage /> },
       { path: '/projects/airops', exact: true, element: <AirOpsPage /> },

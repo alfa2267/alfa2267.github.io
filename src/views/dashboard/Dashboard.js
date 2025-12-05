@@ -7,6 +7,8 @@ import WorkCapacity from './components/WorkCapacity';
 import RecentActivity from './components/RecentAcitvity';
 import MonthlyActivity from './components/MonthlyActivity';
 import AboutMe from './components/AboutMe';
+import Testimonials from './components/Testimonials';
+import Newsletter from './components/Newsletter';
 
 const Dashboard = () => {
   return (
@@ -50,6 +52,21 @@ const Dashboard = () => {
           </div>
           <div style={{ flex: '1', height: '100%' }}>
             <AboutMe />
+          </div>
+        </div>
+
+        {/* Testimonials and Newsletter row */}
+        <div style={{ 
+          display: 'flex', 
+          gap: '24px',
+          flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+          alignItems: 'stretch'
+        }}>
+          <div style={{ flex: '1', height: '100%' }}>
+            <Testimonials />
+          </div>
+          <div style={{ flex: '1', height: '100%' }}>
+            <Newsletter />
           </div>
         </div>
       </div>
