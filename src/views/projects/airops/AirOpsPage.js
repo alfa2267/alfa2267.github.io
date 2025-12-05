@@ -32,10 +32,9 @@ import {
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
-import RoadmapTimeline from '../../../components/diagrams/RoadmapTimeline.js';
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
 import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
-import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
+import RoadmapSection from '../../../components/sections/RoadmapSection.js';
 import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
@@ -518,64 +517,15 @@ const AirOpsPage = () => {
 
         {/* Product Roadmap */}
         <Grid item xs={12}>
-          <DashboardCard title="Product Roadmap">
-            <CardContent>
-              {/* Visual Roadmap Timeline */}
-              <Box mb={4}>
-                <RoadmapTimeline
-                  title="Implementation Timeline"
-                  phases={caseStudy.roadmap}
-                />
-              </Box>
-
-              <Divider sx={{ my: 3 }} />
-
-              {/* Detailed Roadmap */}
-              <Typography variant="h6" gutterBottom>
-                Detailed Phase Breakdown
-              </Typography>
-              <Grid container spacing={2}>
-                {caseStudy.roadmap.map((phase, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                      <Typography variant="h6">{phase.phase}</Typography>
-                      <Chip label={phase.duration} color="primary" size="small" />
-                    </Box>
-                    <Typography variant="body2" color="text.secondary" gutterBottom>
-                      <strong>Focus:</strong> {phase.focus}
-                    </Typography>
-                    <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                      Deliverables:
-                    </Typography>
-                    <List dense>
-                      {phase.deliverables.map((deliverable, dIndex) => (
-                        <ListItem key={dIndex} disablePadding>
-                          <ListItemIcon sx={{ minWidth: 32 }}>
-                            <IconCheck size={16} color="green" />
-                          </ListItemIcon>
-                          <ListItemText primary={deliverable} />
-                        </ListItem>
-                      ))}
-                    </List>
-                    {phase.keyMetrics && (
-                      <>
-                        <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                          Key Metrics:
-                        </Typography>
-                        <Box display="flex" flexWrap="wrap" gap={1}>
-                          {phase.keyMetrics.map((metric, mIndex) => (
-                            <Chip key={mIndex} label={metric} size="small" variant="outlined" />
-                          ))}
-                        </Box>
-                      </>
-                    )}
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </DashboardCard>
+          <RoadmapSection
+            title="Product Roadmap"
+            phases={caseStudy.roadmap}
+            showTimeline={true}
+            showDetailedBreakdown={true}
+            timelineTitle="Implementation Timeline"
+            breakdownTitle="Detailed Phase Breakdown"
+            columnsPerRow={2}
+          />
         </Grid>
 
         {/* Requirements Documentation */}
@@ -1043,13 +993,6 @@ const AirOpsPage = () => {
           </DashboardCard>
         </Grid>
 
-        {/* Artifacts */}
-        <Grid item xs={12}>
-          <ArtifactsSection
-            title="Artifacts"
-            artifacts={caseStudy.artifacts}
-          />
-        </Grid>
       </Grid>
     </PageContainer>
   );

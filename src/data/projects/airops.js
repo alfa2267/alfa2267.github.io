@@ -582,33 +582,7 @@ export const airopsProjectData = {
       ]
     },
     
-    artifacts: [
-      {
-        type: 'document',
-        title: 'Full Strategy Document',
-        description: '194-page comprehensive digital transformation strategy document',
-        url: null, // Would link to actual document
-        preview: 'Includes executive summary, detailed requirements, technical architecture, business case, and implementation roadmap'
-      },
-      {
-        type: 'diagram',
-        title: 'System Architecture Mindmap',
-        description: 'Visual representation of system components and integrations',
-        url: null
-      },
-      {
-        type: 'diagram',
-        title: 'User Journey Maps',
-        description: 'Customer journey maps for key personas',
-        url: null
-      },
-      {
-        type: 'presentation',
-        title: 'Stakeholder Presentation Deck',
-        description: 'Executive presentation summarizing key findings and recommendations',
-        url: null
-      }
-    ]
+    artifacts: []
   }
 };
 
