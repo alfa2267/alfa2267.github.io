@@ -230,54 +230,9 @@ const AirOpsPage = () => {
           />
         </Grid>
 
-        {/* Repository Info */}
-        {project.github_data && (
-          <Grid item xs={12} md={4}>
-            <DashboardCard title="Repository Info">
-              {renderRepoInfo()}
-            </DashboardCard>
-          </Grid>
-        )}
-
-        {/* Demo Image */}
-        <Grid item xs={12} md={project.github_data ? 8 : 12}>
-          <Box
-            component="img"
-            src={`https://raw.githubusercontent.com/alfa2267/${project.github_data?.name || project.slug}/main/demo.png`}
-            alt={`${project.name} Demo`}
-            sx={{
-              width: '100%',
-              height: 'auto',
-              borderRadius: 1,
-              boxShadow: 2,
-              display: 'block',
-              '&:hover': {
-                boxShadow: 4,
-                transition: 'box-shadow 0.3s ease-in-out'
-              }
-            }}
-            onError={(e) => {
-              e.target.style.display = 'none';
-              const errorBox = document.createElement('div');
-              errorBox.style.cssText = 'text-align: center; color: #666; padding: 2rem;';
-              errorBox.textContent = 'Demo image not available';
-              e.target.parentNode.appendChild(errorBox);
-            }}
-          />
-        </Grid>
-
-        {/* Design Process */}
-        <Grid item xs={12}>
-          <DesignProcessSection
-            title="Design Process"
-            designProcess={caseStudy.designProcess}
-          />
-        </Grid>
-
         {/* Project Showcase */}
         <Grid item xs={12}>
           <ProjectShowcaseSection
-            title="Project Showcase"
             repository={{
               name: 'alfa2267/airops-strategy',
               full_name: 'alfa2267/airops-strategy',
@@ -294,6 +249,15 @@ const AirOpsPage = () => {
             showDemoImage={false}
             showScreenshots={false}
             showWireframes={false}
+            showTitle={false}
+          />
+        </Grid>
+
+        {/* Design Process */}
+        <Grid item xs={12}>
+          <DesignProcessSection
+            title="Design Process"
+            designProcess={caseStudy.designProcess}
           />
         </Grid>
 

@@ -4,10 +4,7 @@ import {
   Typography,
   Grid,
   Paper,
-  List,
-  ListItem,
   ListItemIcon,
-  ListItemText,
   Divider
 } from '@mui/material';
 import {

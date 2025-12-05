@@ -95,6 +95,88 @@ const ReloamPage = () => {
           </DashboardCard>
         </Grid>
 
+        {/* Project Showcase */}
+        <Grid item xs={12}>
+          <ProjectShowcaseSection
+            repository={{
+              name: 'alfa2267/reloam-landing',
+              full_name: 'alfa2267/reloam-landing',
+              url: 'https://github.com/alfa2267/reloam-landing',
+              stars: 0,
+              stargazers_count: 0,
+              language: 'TypeScript',
+              updated_at: '2024-12-15T00:00:00Z',
+              tech_stack: project.tech_stack,
+              features: project.features
+            }}
+            demoImage={{
+              url: `https://raw.githubusercontent.com/alfa2267/reloam-landing/main/demo.png`,
+              alt: 'Reloam Demo',
+              description: 'Overview of the Reloam platform'
+            }}
+            screenshots={[
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/login-landlord.png',
+                title: 'Landlord Login Page',
+                description: 'Sign-in interface for landlords at https://ld.reloam.ainaeco.uk/',
+                type: 'screenshot',
+                link: 'https://ld.reloam.ainaeco.uk/'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/dashboard.png',
+                title: 'Landlord Dashboard',
+                description: 'Main dashboard view showing tenant overview and financial summary',
+                type: 'screenshot',
+                link: 'https://ld.reloam.ainaeco.uk/'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/tenant-management.png',
+                title: 'Tenant Management',
+                description: 'Tenant list and profile management interface',
+                type: 'screenshot',
+                link: 'https://ld.reloam.ainaeco.uk/'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/financial-tracking.png',
+                title: 'Financial Tracking',
+                description: 'Rent collection and payment history tracking',
+                type: 'screenshot'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/activity-log.png',
+                title: 'Activity Log',
+                description: 'Property activity logging and timeline view',
+                type: 'screenshot'
+              },
+              {
+                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/reports.png',
+                title: 'Reports Dashboard',
+                description: 'Financial summaries and analytics',
+                type: 'screenshot'
+              }
+            ]}
+            wireframes={[
+              {
+                title: 'Initial Wireframes',
+                description: 'Wireframe: Dashboard Layout',
+                icon: 'desktop',
+                type: 'wireframe'
+              },
+              {
+                title: 'User Flow Mockups',
+                description: 'Mockup: Tenant Onboarding Flow',
+                icon: 'document',
+                type: 'mockup'
+              }
+            ]}
+            showRepository={true}
+            showDemoImage={true}
+            showScreenshots={true}
+            showWireframes={true}
+            showTitle={false}
+          />
+        </Grid>
+
         {/* Problem Discovery */}
         <Grid item xs={12}>
           <DashboardCard title="Problem Discovery">
@@ -430,87 +512,6 @@ const ReloamPage = () => {
           />
         </Grid>
 
-        {/* Project Showcase */}
-        <Grid item xs={12}>
-          <ProjectShowcaseSection
-            title="Project Showcase"
-            repository={{
-              name: 'alfa2267/reloam-landing',
-              full_name: 'alfa2267/reloam-landing',
-              url: 'https://github.com/alfa2267/reloam-landing',
-              stars: 0,
-              stargazers_count: 0,
-              language: 'TypeScript',
-              updated_at: '2024-12-15T00:00:00Z',
-              tech_stack: project.tech_stack,
-              features: project.features
-            }}
-            demoImage={{
-              url: `https://raw.githubusercontent.com/alfa2267/reloam-landing/main/demo.png`,
-              alt: 'Reloam Demo',
-              description: 'Overview of the Reloam platform'
-            }}
-            screenshots={[
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/login-landlord.png',
-                title: 'Landlord Login Page',
-                description: 'Sign-in interface for landlords at https://ld.reloam.ainaeco.uk/',
-                type: 'screenshot',
-                link: 'https://ld.reloam.ainaeco.uk/'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/dashboard.png',
-                title: 'Landlord Dashboard',
-                description: 'Main dashboard view showing tenant overview and financial summary',
-                type: 'screenshot',
-                link: 'https://ld.reloam.ainaeco.uk/'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/tenant-management.png',
-                title: 'Tenant Management',
-                description: 'Tenant list and profile management interface',
-                type: 'screenshot',
-                link: 'https://ld.reloam.ainaeco.uk/'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/financial-tracking.png',
-                title: 'Financial Tracking',
-                description: 'Rent collection and payment history tracking',
-                type: 'screenshot'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/activity-log.png',
-                title: 'Activity Log',
-                description: 'Property activity logging and timeline view',
-                type: 'screenshot'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/reports.png',
-                title: 'Reports Dashboard',
-                description: 'Financial summaries and analytics',
-                type: 'screenshot'
-              }
-            ]}
-            wireframes={[
-              {
-                title: 'Initial Wireframes',
-                description: 'Wireframe: Dashboard Layout',
-                icon: 'desktop',
-                type: 'wireframe'
-              },
-              {
-                title: 'User Flow Mockups',
-                description: 'Mockup: Tenant Onboarding Flow',
-                icon: 'document',
-                type: 'mockup'
-              }
-            ]}
-            showRepository={true}
-            showDemoImage={true}
-            showScreenshots={true}
-            showWireframes={true}
-          />
-        </Grid>
 
         {/* User Flow Diagram */}
         <Grid item xs={12}>

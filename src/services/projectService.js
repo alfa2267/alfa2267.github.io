@@ -38,11 +38,30 @@ class ProjectService {
   }
 
   /**
+   * Ensure all projects have metrics (generate if missing)
+   */
+  ensureProjectMetrics(project) {
+    if (!project.metrics || 
+        typeof project.metrics.business_value !== 'number' ||
+        typeof project.metrics.complexity !== 'number' ||
+        typeof project.metrics.time_spent !== 'number' ||
+        typeof project.metrics.fun_rating !== 'number') {
+      // Generate default metrics using the parser's method
+      const githubData = project.github_data || null;
+      project.metrics = this.readmeParser.generateDefaultMetrics(project, githubData);
+    }
+    return project;
+  }
+
+  /**
    * Fetch and parse all projects with caching
    */
   async fetchProjects(forceRefresh = false) {
-    // Always include custom case study projects
-    const customProjects = [airopsProjectData, reloamProjectData];
+    // Always include custom case study projects (ensure they have metrics)
+    const customProjects = [
+      this.ensureProjectMetrics({ ...airopsProjectData }),
+      this.ensureProjectMetrics({ ...reloamProjectData })
+    ];
     
     // Use mock data in development
     if (isDevelopment) {
@@ -69,8 +88,11 @@ class ProjectService {
       console.log('Parsing project metadata...');
       const projects = this.readmeParser.parseRepositoriesMetadata(repositories);
       
+      // Ensure all GitHub projects have metrics
+      const projectsWithMetrics = projects.map(p => this.ensureProjectMetrics(p));
+      
       // Combine custom projects with GitHub projects
-      const allProjects = [...customProjects, ...projects];
+      const allProjects = [...customProjects, ...projectsWithMetrics];
       
       // If no projects found from GitHub, still include custom projects
       if (projects.length === 0) {
@@ -90,7 +112,7 @@ class ProjectService {
       console.error('Error fetching projects:', error);
       // Fall back to custom projects + mock data if GitHub API fails
       console.log('GitHub API failed, falling back to custom and mock data');
-      const mockProjects = getAllMockProjects();
+      const mockProjects = getAllMockProjects().map(p => this.ensureProjectMetrics(p));
       const allProjects = [...customProjects, ...mockProjects];
       this.cache.projects = allProjects;
       this.cache.lastFetch = Date.now();
