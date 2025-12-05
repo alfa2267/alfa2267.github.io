@@ -72,7 +72,7 @@ const RoadmapTimeline = ({ phases = [], title = "Product Roadmap" }) => {
                   p: 3,
                   maxWidth: { xs: '100%', md: '45%' },
                   bgcolor: index % 2 === 0 ? 'primary.light' : 'secondary.light',
-                  color: index % 2 === 0 ? 'primary.contrastText' : 'secondary.contrastText'
+                  color: 'text.primary'
                 }}
               >
                 <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>

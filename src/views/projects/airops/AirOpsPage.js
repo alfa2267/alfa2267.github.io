@@ -532,9 +532,10 @@ const AirOpsPage = () => {
               <Typography variant="h6" gutterBottom>
                 Detailed Phase Breakdown
               </Typography>
-              <Stack spacing={2}>
+              <Grid container spacing={2}>
                 {caseStudy.roadmap.map((phase, index) => (
-                  <Paper key={index} elevation={2} sx={{ p: 3 }}>
+                  <Grid item xs={12} md={6} key={index}>
+                    <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
                       <Typography variant="h6">{phase.phase}</Typography>
                       <Chip label={phase.duration} color="primary" size="small" />
@@ -567,9 +568,10 @@ const AirOpsPage = () => {
                         </Box>
                       </>
                     )}
-                  </Paper>
+                    </Paper>
+                  </Grid>
                 ))}
-              </Stack>
+              </Grid>
             </CardContent>
           </DashboardCard>
         </Grid>
@@ -698,24 +700,25 @@ const AirOpsPage = () => {
 
         {/* Business Case & ROI */}
         <Grid item xs={12}>
-          <DashboardCard title="Business Case & ROI Analysis">
-            <CardContent>
-              {/* Business Case Infographic */}
-              <Box mb={4}>
-                <BusinessCaseInfographic
-                  title="ROI Overview"
-                  data={{
-                    investment: caseStudy.businessCase.investment.total,
-                    totalBenefit: caseStudy.businessCase.projectedReturns.threeYear.totalBenefit,
-                    roi: caseStudy.businessCase.projectedReturns.threeYear.totalROI,
-                    breakEven: caseStudy.businessCase.projectedReturns.threeYear.breakEvenMonth,
-                    costSavings: caseStudy.businessCase.projectedReturns.threeYear.costSavings,
-                    revenueIncrease: caseStudy.businessCase.projectedReturns.threeYear.revenueIncrease
-                  }}
-                />
-              </Box>
+          <Typography variant="h5" gutterBottom>
+            Business Case & ROI Analysis
+          </Typography>
+          {/* Business Case Infographic */}
+          <Box mb={4}>
+            <BusinessCaseInfographic
+              title="ROI Overview"
+              data={{
+                investment: caseStudy.businessCase.investment.total,
+                totalBenefit: caseStudy.businessCase.projectedReturns.threeYear.totalBenefit,
+                roi: caseStudy.businessCase.projectedReturns.threeYear.totalROI,
+                breakEven: caseStudy.businessCase.projectedReturns.threeYear.breakEvenMonth,
+                costSavings: caseStudy.businessCase.projectedReturns.threeYear.costSavings,
+                revenueIncrease: caseStudy.businessCase.projectedReturns.threeYear.revenueIncrease
+              }}
+            />
+          </Box>
 
-              <Divider sx={{ my: 3 }} />
+          <Divider sx={{ my: 3 }} />
               <Typography variant="h6" gutterBottom>
                 Investment Breakdown: $2.9M over 12 months
               </Typography>
@@ -834,8 +837,6 @@ const AirOpsPage = () => {
                   <strong>Break-even Point:</strong> Month {caseStudy.businessCase.projectedReturns.threeYear.breakEvenMonth}
                 </Typography>
               </Box>
-            </CardContent>
-          </DashboardCard>
         </Grid>
 
         {/* Risk Assessment & Go-to-Market Strategy */}
