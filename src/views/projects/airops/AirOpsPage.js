@@ -34,6 +34,10 @@ import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
 import RoadmapTimeline from '../../../components/diagrams/RoadmapTimeline.js';
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
+import ProblemStatementSection from '../../../components/sections/ProblemStatementSection.js';
+import RequirementsSection from '../../../components/sections/RequirementsSection.js';
+import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
+import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
 import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
@@ -942,67 +946,12 @@ const AirOpsPage = () => {
 
         {/* Lessons Learned */}
         <Grid item xs={12}>
-          <DashboardCard title="Lessons Learned & Reflections">
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    Insights
-                  </Typography>
-                  <List dense>
-                    {caseStudy.lessonsLearned.insights.map((insight, index) => (
-                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
-                        <ListItemIcon sx={{ minWidth: 24 }}>
-                          <IconChartBar size={14} color="#1976d2" />
-                        </ListItemIcon>
-                        <ListItemText primary={insight} primaryTypographyProps={{ variant: 'body2' }} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    What I'd Do Differently
-                  </Typography>
-                  <List dense>
-                    {caseStudy.lessonsLearned.whatWouldDoDifferently.map((item, index) => (
-                      <ListItem key={index} disablePadding sx={{ py: 0.25 }}>
-                        <ListItemIcon sx={{ minWidth: 24 }}>
-                          <IconAlertTriangle size={14} color="#ed6c02" />
-                        </ListItemIcon>
-                        <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2' }} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                    Key Takeaways
-                  </Typography>
-                  <Grid container spacing={1}>
-                    {caseStudy.lessonsLearned.keyTakeaways.map((takeaway, index) => {
-                      const colors = ['primary', 'secondary', 'success', 'info', 'warning'];
-                      const color = colors[index % colors.length];
-                      return (
-                        <Grid item xs={12} key={index}>
-                          <Paper 
-                            elevation={1} 
-                            sx={{ 
-                              p: 1.5,
-                              bgcolor: `${color}.light`,
-                              color: `${color}.contrastText`
-                            }}
-                          >
-                            <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>{takeaway}</Typography>
-                          </Paper>
-                        </Grid>
-                      );
-                    })}
-                  </Grid>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </DashboardCard>
+          <LessonsLearnedSection
+            title="Lessons Learned & Reflections"
+            whatILearned={caseStudy.lessonsLearned.insights}
+            whatWouldDoDifferently={{ items: caseStudy.lessonsLearned.whatWouldDoDifferently }}
+            keyTakeaways={caseStudy.lessonsLearned.keyTakeaways}
+          />
         </Grid>
 
         {/* Strategy Document Preview */}
@@ -1098,31 +1047,10 @@ const AirOpsPage = () => {
 
         {/* Artifacts */}
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>
-            Artifacts
-          </Typography>
-          <Grid container spacing={2}>
-            {caseStudy.artifacts.map((artifact, index) => (
-              <Grid item xs={12} sm={6} md={4} key={index}>
-                <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                  <Box display="flex" alignItems="center" mb={1}>
-                    <IconFileText size={24} style={{ marginRight: 8 }} />
-                    <Typography variant="subtitle1" fontWeight="bold">
-                      {artifact.title}
-                    </Typography>
-                  </Box>
-                  <Typography variant="body2" color="text.secondary" paragraph>
-                    {artifact.description}
-                  </Typography>
-                  {artifact.preview && (
-                    <Typography variant="caption" color="text.secondary">
-                      {artifact.preview}
-                    </Typography>
-                  )}
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
+          <ArtifactsSection
+            title="Artifacts"
+            artifacts={caseStudy.artifacts}
+          />
         </Grid>
       </Grid>
     </PageContainer>

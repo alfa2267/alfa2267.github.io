@@ -30,6 +30,11 @@ import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import ScreenshotGallery from '../../../components/gallery/ScreenshotGallery.js';
 import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
+import ProblemStatementSection from '../../../components/sections/ProblemStatementSection.js';
+import FeatureShowcaseSection from '../../../components/sections/FeatureShowcaseSection.js';
+import RequirementsSection from '../../../components/sections/RequirementsSection.js';
+import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
+import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
@@ -142,75 +147,34 @@ const ReloamPage = () => {
 
         {/* Problem Statement */}
         <Grid item xs={12}>
-          <DashboardCard title="Problem Statement">
-            <CardContent>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Target User
-              </Typography>
-              <Typography variant="body1" paragraph>
-                {caseStudy.problemStatement.targetUser}
-              </Typography>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom color="error">
-                    1. Tenant Relationship Management
-                  </Typography>
-                  <List dense>
-                    {caseStudy.problemStatement.painPoints.tenantManagement.map((point, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconAlertTriangle size={16} color="red" />
-                        </ListItemIcon>
-                        <ListItemText primary={point} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom color="warning.main">
-                    2. Financial Visibility
-                  </Typography>
-                  <List dense>
-                    {caseStudy.problemStatement.painPoints.financialVisibility.map((point, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconAlertTriangle size={16} color="orange" />
-                        </ListItemIcon>
-                        <ListItemText primary={point} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-                <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom color="info.main">
-                    3. Property Operations
-                  </Typography>
-                  <List dense>
-                    {caseStudy.problemStatement.painPoints.propertyOperations.map((point, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconAlertTriangle size={16} color="#1976d2" />
-                        </ListItemIcon>
-                        <ListItemText primary={point} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-              </Grid>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Paper elevation={1} sx={{ p: 2, bgcolor: 'success.light' }}>
-                <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                  Opportunity
-                </Typography>
-                <Typography variant="body1">{caseStudy.problemStatement.opportunity}</Typography>
-              </Paper>
-            </CardContent>
-          </DashboardCard>
+          <ProblemStatementSection
+            title="Problem Statement"
+            targetUser={caseStudy.problemStatement.targetUser}
+            painPoints={[
+              {
+                number: 1,
+                title: 'Tenant Relationship Management',
+                items: caseStudy.problemStatement.painPoints.tenantManagement,
+                color: 'error',
+                iconColor: 'red'
+              },
+              {
+                number: 2,
+                title: 'Financial Visibility',
+                items: caseStudy.problemStatement.painPoints.financialVisibility,
+                color: 'warning.main',
+                iconColor: 'orange'
+              },
+              {
+                number: 3,
+                title: 'Property Operations',
+                items: caseStudy.problemStatement.painPoints.propertyOperations,
+                color: 'info.main',
+                iconColor: '#1976d2'
+              }
+            ]}
+            opportunity={caseStudy.problemStatement.opportunity}
+          />
         </Grid>
 
         {/* Product Vision & MVP Strategy */}
@@ -333,54 +297,10 @@ const ReloamPage = () => {
 
         {/* Requirements & User Stories */}
         <Grid item xs={12}>
-          <DashboardCard title="Requirements & User Stories">
-            <CardContent>
-              <Stack spacing={2}>
-                {caseStudy.requirements.epics.map((epic, epicIndex) => (
-                  <Box key={epicIndex}>
-                    <Typography variant="h6" gutterBottom>{epic.name}</Typography>
-                    <Typography variant="body2" color="text.secondary" paragraph>{epic.description}</Typography>
-                    <Stack spacing={1.5}>
-                      {epic.userStories.map((story, storyIndex) => (
-                        <Paper key={storyIndex} elevation={1} sx={{ p: 1.5 }}>
-                          <Box display="flex" justifyContent="space-between" alignItems="start" mb={1}>
-                            <Typography variant="subtitle2" fontWeight="bold">
-                              {story.title} ({story.id})
-                            </Typography>
-                            <Chip 
-                              label={story.priority} 
-                              size="small" 
-                              color={story.priority === 'P0' ? 'error' : 'default'}
-                            />
-                          </Box>
-                          <Typography variant="body2" fontStyle="italic" mb={1} sx={{ fontSize: '0.875rem' }}>
-                            As a <strong>{story.as}</strong>, I want <strong>{story.want}</strong>, so that <strong>{story.so}</strong>.
-                          </Typography>
-                          <Typography variant="caption" fontWeight="bold" display="block" mb={0.5}>
-                            Acceptance Criteria:
-                          </Typography>
-                          <List dense>
-                            {story.acceptanceCriteria.map((criteria, cIndex) => (
-                              <ListItem key={cIndex} disablePadding sx={{ py: 0.25 }}>
-                                <ListItemIcon sx={{ minWidth: 24 }}>
-                                  <IconCheck size={12} color="green" />
-                                </ListItemIcon>
-                                <ListItemText primary={criteria} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
-                              </ListItem>
-                            ))}
-                          </List>
-                          <Box mt={1}>
-                            <Chip label={`Effort: ${story.effort}`} size="small" variant="outlined" />
-                          </Box>
-                        </Paper>
-                      ))}
-                    </Stack>
-                    {epicIndex < caseStudy.requirements.epics.length - 1 && <Divider sx={{ my: 2 }} />}
-                  </Box>
-                ))}
-              </Stack>
-            </CardContent>
-          </DashboardCard>
+          <RequirementsSection
+            title="Requirements & User Stories"
+            epics={caseStudy.requirements.epics}
+          />
         </Grid>
 
         {/* Product Decisions & Trade-offs */}
@@ -653,36 +573,10 @@ const ReloamPage = () => {
 
         {/* Feature Showcase */}
         <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>
-            What I Built - Feature Showcase
-          </Typography>
-          <Grid container spacing={2}>
-            {Object.entries(caseStudy.features).map(([key, feature]) => (
-              <Grid item xs={12} md={6} key={key}>
-                <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                  <Typography variant="h6" gutterBottom>
-                    {feature.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary" paragraph>
-                    {feature.description}
-                  </Typography>
-                  <Typography variant="subtitle2" fontWeight="bold" mt={1} mb={1}>
-                    Highlights:
-                  </Typography>
-                  <List dense>
-                    {feature.highlights.map((highlight, index) => (
-                      <ListItem key={index} disablePadding>
-                        <ListItemIcon sx={{ minWidth: 32 }}>
-                          <IconCheck size={14} color="green" />
-                        </ListItemIcon>
-                        <ListItemText primary={highlight} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Paper>
-              </Grid>
-            ))}
-          </Grid>
+          <FeatureShowcaseSection
+            title="What I Built - Feature Showcase"
+            features={caseStudy.features}
+          />
         </Grid>
 
         {/* Validation & Next Steps */}
@@ -743,154 +637,21 @@ const ReloamPage = () => {
 
         {/* Lessons Learned */}
         <Grid item xs={12}>
-          <DashboardCard title="Product Owner Lessons">
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                What I Learned
-              </Typography>
-              <Grid container spacing={2} mb={3}>
-                {caseStudy.lessonsLearned.whatILearned.map((lesson, index) => (
-                  <Grid item xs={12} md={6} key={index}>
-                    <Paper elevation={1} sx={{ p: 1.5, height: '100%' }}>
-                      <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                        {index + 1}. {lesson.title}
-                      </Typography>
-                      <Box mb={0.5}>
-                        <Typography variant="body2" color="error" sx={{ fontSize: '0.875rem' }}>
-                          <strong>Mistake:</strong> {lesson.mistake}
-                        </Typography>
-                      </Box>
-                      <Box mb={0.5}>
-                        <Typography variant="body2" color="info.main" sx={{ fontSize: '0.875rem' }}>
-                          <strong>Lesson:</strong> {lesson.lesson}
-                        </Typography>
-                      </Box>
-                      <Box mb={1}>
-                        <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.875rem' }}>
-                          <strong>Impact:</strong> {lesson.impact}
-                        </Typography>
-                      </Box>
-                      <Box mt={1.5}>
-                        <Typography variant="caption" fontWeight="bold" gutterBottom display="block">
-                          Going Forward:
-                        </Typography>
-                        <List dense>
-                          {lesson.goingForward.map((item, gIndex) => (
-                            <ListItem key={gIndex} disablePadding sx={{ py: 0.25 }}>
-                              <ListItemIcon sx={{ minWidth: 20 }}>
-                                <IconCheck size={12} color="green" />
-                              </ListItemIcon>
-                              <ListItemText primary={item} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
-                            </ListItem>
-                          ))}
-                        </List>
-                      </Box>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Typography variant="h6" gutterBottom>
-                What I'd Do Differently
-              </Typography>
-              <Grid container spacing={2}>
-                {caseStudy.lessonsLearned.whatWouldDoDifferently.timeline.map((phase, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Paper elevation={1} sx={{ p: 1.5, height: '100%' }}>
-                      <Box display="flex" alignItems="center" mb={1}>
-                        <Chip label={phase.week} size="small" color="primary" sx={{ mr: 1 }} />
-                        <Typography variant="subtitle2" fontWeight="bold">
-                          {phase.activity}
-                        </Typography>
-                      </Box>
-                      <List dense>
-                        {phase.tasks.map((task, tIndex) => (
-                          <ListItem key={tIndex} disablePadding sx={{ py: 0.25 }}>
-                            <ListItemIcon sx={{ minWidth: 24 }}>
-                              <IconCheck size={12} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={task} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Typography variant="h6" gutterBottom>
-                Product Owner Skills Demonstrated
-              </Typography>
-              <Grid container spacing={2}>
-                {caseStudy.lessonsLearned.skillsDemonstrated.map((skill, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Paper elevation={1} sx={{ p: 2 }}>
-                      <Box display="flex" alignItems="center" mb={1}>
-                        <IconCheck size={20} color="green" style={{ marginRight: 8 }} />
-                        <Typography variant="subtitle2" fontWeight="bold">
-                          {skill.skill}
-                        </Typography>
-                      </Box>
-                      <Typography variant="body2" color="text.secondary">
-                        {skill.description}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </DashboardCard>
+          <LessonsLearnedSection
+            title="Product Owner Lessons"
+            whatILearned={caseStudy.lessonsLearned.whatILearned}
+            whatWouldDoDifferently={caseStudy.lessonsLearned.whatWouldDoDifferently}
+            skillsDemonstrated={caseStudy.lessonsLearned.skillsDemonstrated}
+            keyTakeaways={caseStudy.lessonsLearned.keyTakeaways}
+          />
         </Grid>
 
         {/* Artifacts */}
         <Grid item xs={12}>
-          <DashboardCard title="Artifacts">
-            <CardContent>
-              <Grid container spacing={2}>
-                {caseStudy.artifacts.map((artifact, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                      <Box display="flex" alignItems="center" mb={1}>
-                        {artifact.type === 'demo' ? (
-                          <IconExternalLink size={24} style={{ marginRight: 8 }} />
-                        ) : (
-                          <IconFileText size={24} style={{ marginRight: 8 }} />
-                        )}
-                        <Typography variant="subtitle1" fontWeight="bold">
-                          {artifact.title}
-                        </Typography>
-                      </Box>
-                      <Typography variant="body2" color="text.secondary" paragraph>
-                        {artifact.description}
-                      </Typography>
-                      {artifact.url && (
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          startIcon={<IconExternalLink size={16} />}
-                          href={artifact.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          fullWidth
-                        >
-                          View {artifact.type === 'demo' ? 'Live Demo' : 'Document'}
-                        </Button>
-                      )}
-                      {artifact.preview && (
-                        <Typography variant="caption" color="text.secondary" display="block" mt={1}>
-                          {artifact.preview}
-                        </Typography>
-                      )}
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </CardContent>
-          </DashboardCard>
+          <ArtifactsSection
+            title="Artifacts"
+            artifacts={caseStudy.artifacts}
+          />
         </Grid>
       </Grid>
     </PageContainer>
