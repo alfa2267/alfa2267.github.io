@@ -1073,11 +1073,16 @@ const AirOpsPage = () => {
                       <Typography variant="body2" paragraph color="text.secondary" sx={{ mb: 1, fontSize: '0.875rem' }}>
                         {section.summary}
                       </Typography>
-                      <Box display="flex" flexWrap="wrap" gap={0.5}>
+                      <List dense>
                         {section.keyPoints.map((point, pIndex) => (
-                          <Chip key={pIndex} label={point} size="small" variant="outlined" />
+                          <ListItem key={pIndex} disablePadding sx={{ py: 0.25 }}>
+                            <ListItemIcon sx={{ minWidth: 24 }}>
+                              <IconCheck size={12} color="green" />
+                            </ListItemIcon>
+                            <ListItemText primary={point} primaryTypographyProps={{ variant: 'body2', fontSize: '0.875rem' }} />
+                          </ListItem>
                         ))}
-                      </Box>
+                      </List>
                     </Paper>
                   </Grid>
                 ))}
@@ -1093,32 +1098,31 @@ const AirOpsPage = () => {
 
         {/* Artifacts */}
         <Grid item xs={12}>
-          <DashboardCard title="Artifacts">
-            <CardContent>
-              <Grid container spacing={2}>
-                {caseStudy.artifacts.map((artifact, index) => (
-                  <Grid item xs={12} sm={6} md={4} key={index}>
-                    <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                      <Box display="flex" alignItems="center" mb={1}>
-                        <IconFileText size={24} style={{ marginRight: 8 }} />
-                        <Typography variant="subtitle1" fontWeight="bold">
-                          {artifact.title}
-                        </Typography>
-                      </Box>
-                      <Typography variant="body2" color="text.secondary" paragraph>
-                        {artifact.description}
-                      </Typography>
-                      {artifact.preview && (
-                        <Typography variant="caption" color="text.secondary">
-                          {artifact.preview}
-                        </Typography>
-                      )}
-                    </Paper>
-                  </Grid>
-                ))}
+          <Typography variant="h5" gutterBottom>
+            Artifacts
+          </Typography>
+          <Grid container spacing={2}>
+            {caseStudy.artifacts.map((artifact, index) => (
+              <Grid item xs={12} sm={6} md={4} key={index}>
+                <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+                  <Box display="flex" alignItems="center" mb={1}>
+                    <IconFileText size={24} style={{ marginRight: 8 }} />
+                    <Typography variant="subtitle1" fontWeight="bold">
+                      {artifact.title}
+                    </Typography>
+                  </Box>
+                  <Typography variant="body2" color="text.secondary" paragraph>
+                    {artifact.description}
+                  </Typography>
+                  {artifact.preview && (
+                    <Typography variant="caption" color="text.secondary">
+                      {artifact.preview}
+                    </Typography>
+                  )}
+                </Paper>
               </Grid>
-            </CardContent>
-          </DashboardCard>
+            ))}
+          </Grid>
         </Grid>
       </Grid>
     </PageContainer>
