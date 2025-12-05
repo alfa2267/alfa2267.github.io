@@ -22,6 +22,7 @@ import {
 import ProjectService from '../../services/projectService.js';
 import PageContainer from '../../components/container/PageContainer.js';
 import DashboardCard from '../../components/shared/DashboardCard.js';
+import DesignProcessSection from '../../components/sections/DesignProcessSection.js';
 
 const ProjectPage = () => {
   const { slug } = useParams();
@@ -237,6 +238,16 @@ const ProjectPage = () => {
             <DashboardCard title="Repository Info">
               {renderRepoInfo()}
             </DashboardCard>
+          </Grid>
+        )}
+
+        {/* Design Process */}
+        {project.caseStudy?.designProcess && (
+          <Grid item xs={12}>
+            <DesignProcessSection
+              title="Design Process"
+              designProcess={project.caseStudy.designProcess}
+            />
           </Grid>
         )}
 

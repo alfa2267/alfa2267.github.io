@@ -36,6 +36,7 @@ import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseIn
 import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
 import RoadmapSection from '../../../components/sections/RoadmapSection.js';
 import ProjectShowcaseSection from '../../../components/sections/ProjectShowcaseSection.js';
+import DesignProcessSection from '../../../components/sections/DesignProcessSection.js';
 import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
@@ -262,6 +263,14 @@ const AirOpsPage = () => {
               errorBox.textContent = 'Demo image not available';
               e.target.parentNode.appendChild(errorBox);
             }}
+          />
+        </Grid>
+
+        {/* Design Process */}
+        <Grid item xs={12}>
+          <DesignProcessSection
+            title="Design Process"
+            designProcess={caseStudy.designProcess}
           />
         </Grid>
 

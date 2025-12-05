@@ -34,6 +34,7 @@ import RequirementsSection from '../../../components/sections/RequirementsSectio
 import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
 import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
 import ProjectShowcaseSection from '../../../components/sections/ProjectShowcaseSection.js';
+import DesignProcessSection from '../../../components/sections/DesignProcessSection.js';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
@@ -419,6 +420,14 @@ const ReloamPage = () => {
               </List>
             </CardContent>
           </DashboardCard>
+        </Grid>
+
+        {/* Design Process */}
+        <Grid item xs={12}>
+          <DesignProcessSection
+            title="Design Process"
+            designProcess={caseStudy.designProcess}
+          />
         </Grid>
 
         {/* Project Showcase */}

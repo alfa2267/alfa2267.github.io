@@ -5,4 +5,5 @@ export { default as LessonsLearnedSection } from './LessonsLearnedSection.js';
 export { default as ArtifactsSection } from './ArtifactsSection.js';
 export { default as RoadmapSection } from './RoadmapSection.js';
 export { default as ProjectShowcaseSection } from './ProjectShowcaseSection.js';
+export { default as DesignProcessSection } from './DesignProcessSection.js';
 

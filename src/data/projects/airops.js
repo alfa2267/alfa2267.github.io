@@ -558,6 +558,26 @@ export const airopsProjectData = {
       ]
     },
     
+    designProcess: {
+      principles: [
+        'User-centric design with focus on operational efficiency and customer experience',
+        'Mobile-first approach for customer-facing features, desktop-optimized for operations',
+        'Accessibility and multi-language support for diverse African markets',
+        'Real-time data synchronization across all systems',
+        'Scalable architecture to support growth across multiple African countries',
+        'Security and compliance with aviation regulations (IATA, ICAO standards)',
+        'Intuitive interfaces reducing training time for operations staff'
+      ],
+      userFlows: [
+        'Customer booking flow: Search → Compare → Select → Payment → Confirmation',
+        'Operations dashboard: Real-time monitoring → Status updates → Resource allocation',
+        'Crew management flow: Schedule view → Assignment → Availability tracking',
+        'Customer service flow: Ticket lookup → Issue resolution → Follow-up',
+        'Mobile check-in flow: Booking retrieval → Seat selection → Boarding pass',
+        'Analytics flow: Data aggregation → Report generation → Decision support'
+      ]
+    },
+    
     lessonsLearned: {
       insights: [
         'Importance of stakeholder buy-in at all levels - early engagement is critical',
