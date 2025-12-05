@@ -20,6 +20,7 @@ import {
   IconChartBar,
   IconRocket,
   IconAlertTriangle,
+  IconFileText,
   IconExternalLink,
   IconCode,
   IconBulb
@@ -183,11 +184,9 @@ const ReloamPage = () => {
                 <Typography variant="h6" gutterBottom>
                   Vision Statement
                 </Typography>
-                <Paper elevation={1} sx={{ p: 2, bgcolor: 'primary.light', color: 'primary.contrastText' }}>
-                  <Typography variant="body1" fontStyle="italic">
-                    "{caseStudy.productVision.visionStatement}"
-                  </Typography>
-                </Paper>
+                <Typography variant="body1" fontStyle="italic" color="black">
+                  "{caseStudy.productVision.visionStatement}"
+                </Typography>
               </Box>
 
               <Divider sx={{ my: 3 }} />
@@ -427,9 +426,15 @@ const ReloamPage = () => {
           <ProjectShowcaseSection
             title="Project Showcase"
             repository={{
-              name: 'reloam-landing',
+              name: 'alfa2267/reloam-landing',
+              full_name: 'alfa2267/reloam-landing',
               url: 'https://github.com/alfa2267/reloam-landing',
-              tech_stack: project.tech_stack
+              stars: 0,
+              stargazers_count: 0,
+              language: 'TypeScript',
+              updated_at: '2024-12-15T00:00:00Z',
+              tech_stack: project.tech_stack,
+              features: project.features
             }}
             demoImage={{
               url: `https://raw.githubusercontent.com/alfa2267/reloam-landing/main/demo.png`,

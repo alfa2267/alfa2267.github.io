@@ -7,14 +7,16 @@ import {
   Chip,
   Button,
   Divider,
-  ImageList,
-  ImageListItem
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText
 } from '@mui/material';
 import {
   IconBrandGithub,
   IconCalendar,
   IconExternalLink,
-  IconPhoto,
+  IconCheck,
   IconDeviceDesktop,
   IconFileText
 } from '@tabler/icons';
@@ -111,6 +113,24 @@ const ProjectShowcaseSection = ({
                       <Chip key={index} label={tech} size="small" />
                     ))}
                   </Box>
+                </Box>
+              )}
+
+              {repository.features && repository.features.length > 0 && (
+                <Box mb={2}>
+                  <Typography variant="subtitle1" gutterBottom>
+                    Key Features
+                  </Typography>
+                  <List dense>
+                    {repository.features.map((feature, index) => (
+                      <ListItem key={index} disablePadding>
+                        <ListItemIcon sx={{ minWidth: 32 }}>
+                          <IconCheck size={16} color="green" />
+                        </ListItemIcon>
+                        <ListItemText primary={feature} />
+                      </ListItem>
+                    ))}
+                  </List>
                 </Box>
               )}
 

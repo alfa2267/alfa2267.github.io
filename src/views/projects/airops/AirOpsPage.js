@@ -35,6 +35,7 @@ import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
 import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
 import RoadmapSection from '../../../components/sections/RoadmapSection.js';
+import ProjectShowcaseSection from '../../../components/sections/ProjectShowcaseSection.js';
 import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
@@ -261,6 +262,29 @@ const AirOpsPage = () => {
               errorBox.textContent = 'Demo image not available';
               e.target.parentNode.appendChild(errorBox);
             }}
+          />
+        </Grid>
+
+        {/* Project Showcase */}
+        <Grid item xs={12}>
+          <ProjectShowcaseSection
+            title="Project Showcase"
+            repository={{
+              name: 'alfa2267/airops-strategy',
+              full_name: 'alfa2267/airops-strategy',
+              url: null, // Private repository
+              stars: 0,
+              stargazers_count: 0,
+              language: 'Markdown',
+              updated_at: '2024-12-15T00:00:00Z',
+              tech_stack: project.tech_stack,
+              features: project.features
+            }}
+            demoImage={null}
+            showRepository={true}
+            showDemoImage={false}
+            showScreenshots={false}
+            showWireframes={false}
           />
         </Grid>
 
