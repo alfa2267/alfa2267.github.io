@@ -35,6 +35,7 @@ import FeatureShowcaseSection from '../../../components/sections/FeatureShowcase
 import RequirementsSection from '../../../components/sections/RequirementsSection.js';
 import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
 import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
+import ProjectShowcaseSection from '../../../components/sections/ProjectShowcaseSection.js';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
