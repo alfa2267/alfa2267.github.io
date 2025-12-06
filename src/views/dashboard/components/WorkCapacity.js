@@ -20,10 +20,10 @@ const YearlyBreakup = () => {
         const stats = await projectService.getProjectStats();
         setProjectCount(stats.total);
         
-        // Calculate project breakdown by category
-        const openSource = stats.by_category['Open Source'] || 0;
-        const personal = stats.by_category['Personal'] || stats.by_category['Portfolio'] || 0;
-        const experiments = stats.by_category['Experiments'] || stats.by_category['Experimental'] || 0;
+        // Calculate project breakdown by type (Open Source, Personal, Experiments)
+        const openSource = stats.by_type?.['Open Source'] || 0;
+        const personal = stats.by_type?.['Personal'] || 0;
+        const experiments = stats.by_type?.['Experiments'] || 0;
         
         // Calculate percentages
         const total = openSource + personal + experiments;

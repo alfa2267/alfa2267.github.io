@@ -258,6 +258,53 @@ class ProjectService {
   }
 
   /**
+   * Determine project type (Open Source, Personal, Experiments)
+   * Based on repository visibility, category, and other indicators
+   */
+  determineProjectType(project) {
+    // Check if explicitly set in category
+    const category = (project.category || '').toLowerCase();
+    if (category.includes('open-source') || category.includes('opensource')) {
+      return 'Open Source';
+    }
+    if (category.includes('personal') || category.includes('portfolio')) {
+      return 'Personal';
+    }
+    if (category.includes('experiment') || category.includes('poc') || category.includes('prototype')) {
+      return 'Experiments';
+    }
+
+    // Infer from repository visibility
+    // If repo_url exists and is public GitHub repo, likely open source
+    if (project.repo_url && project.repo_url.includes('github.com')) {
+      // Check if it's a portfolio/personal site
+      if (project.name.toLowerCase().includes('portfolio') || 
+          project.name.toLowerCase().includes('personal') ||
+          project.slug === 'alfa2267.github.io') {
+        return 'Personal';
+      }
+      // If it has stars or is actively maintained, likely open source
+      if (project.github_data?.stargazers_count > 0 || 
+          (project.status === 'active' && project.repo_url)) {
+        return 'Open Source';
+      }
+    }
+
+    // Check if it's a case study/product management project (likely personal/portfolio)
+    if (category.includes('product-management') || category.includes('case-study')) {
+      return 'Personal';
+    }
+
+    // Default: if no repo_url, likely personal/experimental
+    if (!project.repo_url) {
+      return 'Personal';
+    }
+
+    // Default fallback
+    return 'Personal';
+  }
+
+  /**
    * Get project statistics
    */
   async getProjectStats() {
@@ -267,6 +314,11 @@ class ProjectService {
       total: projects.length,
       by_status: {},
       by_category: {},
+      by_type: {
+        'Open Source': 0,
+        'Personal': 0,
+        'Experiments': 0
+      },
       technologies: {}
     };
 
@@ -276,6 +328,10 @@ class ProjectService {
       
       // Count by category
       stats.by_category[project.category] = (stats.by_category[project.category] || 0) + 1;
+      
+      // Count by project type (Open Source, Personal, Experiments)
+      const projectType = this.determineProjectType(project);
+      stats.by_type[projectType] = (stats.by_type[projectType] || 0) + 1;
       
       // Count technologies
       for (const tech of project.tech_stack) {

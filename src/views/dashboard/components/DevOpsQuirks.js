@@ -3,10 +3,8 @@ import { Box, Typography, Stack, Chip, Paper, LinearProgress } from '@mui/materi
 import {
   IconBrandGit,
   IconCoffee,
-  IconMoodSmile,
   IconCode,
-  IconBug,
-  IconRocket
+  IconBug
 } from '@tabler/icons-react';
 import DashboardCard from '../../../components/shared/DashboardCard';
 import GitHubService from '../../../services/github';
@@ -16,8 +14,7 @@ const DevOpsQuirks = () => {
   const githubService = new GitHubService();
   const projectService = new ProjectService();
   const [weeklyCommits, setWeeklyCommits] = React.useState(0);
-  const [prStats, setPrStats] = React.useState({ total: 0, merged: 0 });
-  const [repoStats, setRepoStats] = React.useState({ totalRepos: 0, totalStars: 0 });
+  const [repoStats, setRepoStats] = React.useState({ totalRepos: 0 });
   const [projectCount, setProjectCount] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
 
@@ -86,11 +83,6 @@ const DevOpsQuirks = () => {
     }
   ];
 
-  const funFacts = [
-    { icon: IconRocket, text: `Total stars: ${loading ? '...' : repoStats.totalStars}`, color: '#13DEB9' },
-    { icon: IconMoodSmile, text: `Active projects: ${loading ? '...' : projectCount}`, color: '#FFAE1F' },
-    { icon: IconBrandGit, text: `Pull requests merged: ${loading ? '...' : prStats.merged}`, color: '#5D87FF' }
-  ];
 
   return (
     <DashboardCard title="DevOps DNA" subtitle="The numbers behind the hustle">
@@ -135,28 +127,6 @@ const DevOpsQuirks = () => {
                     {metric.subtitle}
                   </Typography>
                 </Box>
-              );
-            })}
-          </Stack>
-        </Box>
-
-        {/* Fun Facts */}
-        <Box>
-          <Typography variant="subtitle2" fontWeight={700} mb={1.5}>
-            Fun Facts
-          </Typography>
-          <Stack spacing={1}>
-            {funFacts.map((fact, index) => {
-              const Icon = fact.icon;
-              return (
-                <Paper key={index} elevation={0} sx={{ p: 1.5, backgroundColor: '#F2F6FA' }}>
-                  <Box display="flex" alignItems="center" gap={1}>
-                    <Icon size={16} color={fact.color} />
-                    <Typography variant="caption" color="text.secondary">
-                      {fact.text}
-                    </Typography>
-                  </Box>
-                </Paper>
               );
             })}
           </Stack>
