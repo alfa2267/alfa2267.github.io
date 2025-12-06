@@ -196,6 +196,29 @@ const AirOpsPage = () => {
           </DashboardCard>
         </Grid>
 
+        {/* Project Showcase */}
+        <Grid item xs={12}>
+          <ProjectShowcaseSection
+            repository={{
+              name: 'alfa2267/airops-strategy',
+              full_name: 'alfa2267/airops-strategy',
+              url: null, // Private repository
+              stars: 0,
+              stargazers_count: 0,
+              language: 'Markdown',
+              updated_at: '2024-12-15T00:00:00Z',
+              tech_stack: project.tech_stack,
+              features: project.features
+            }}
+            demoImage={null}
+            showRepository={true}
+            showDemoImage={false}
+            showScreenshots={false}
+            showWireframes={false}
+            showTitle={false}
+          />
+        </Grid>
+
         {/* Key Stats */}
         <Grid item xs={12} md={3}>
           <StatCard 
@@ -227,29 +250,6 @@ const AirOpsPage = () => {
             label="Break-even" 
             value="Month 18" 
             color="#9c27b0"
-          />
-        </Grid>
-
-        {/* Project Showcase */}
-        <Grid item xs={12}>
-          <ProjectShowcaseSection
-            repository={{
-              name: 'alfa2267/airops-strategy',
-              full_name: 'alfa2267/airops-strategy',
-              url: null, // Private repository
-              stars: 0,
-              stargazers_count: 0,
-              language: 'Markdown',
-              updated_at: '2024-12-15T00:00:00Z',
-              tech_stack: project.tech_stack,
-              features: project.features
-            }}
-            demoImage={null}
-            showRepository={true}
-            showDemoImage={false}
-            showScreenshots={false}
-            showWireframes={false}
-            showTitle={false}
           />
         </Grid>
 

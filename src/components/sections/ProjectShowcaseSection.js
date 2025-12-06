@@ -10,7 +10,10 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
 } from '@mui/material';
 import {
   IconBrandGithub,
@@ -18,7 +21,9 @@ import {
   IconExternalLink,
   IconCheck,
   IconDeviceDesktop,
-  IconFileText
+  IconFileText,
+  IconChevronDown,
+  IconPhoto
 } from '@tabler/icons';
 import ScreenshotGallery from '../gallery/ScreenshotGallery.js';
 
@@ -36,6 +41,7 @@ const ProjectShowcaseSection = ({
   // Screenshots
   screenshots = [],
   screenshotsTitle = "Live Application Screenshots",
+  screenshotsView = "gallery", // "gallery" or "accordion"
   // Wireframes/Mockups
   wireframes = [],
   wireframesTitle = "Wireframes & Mockups",
@@ -194,10 +200,131 @@ const ProjectShowcaseSection = ({
       {/* Screenshots Section */}
       {showScreenshots && screenshots.length > 0 && (
         <Box mt={4}>
-          <ScreenshotGallery
-            title={screenshotsTitle}
-            screenshots={screenshots}
-          />
+          <Typography variant="h6" gutterBottom>
+            {screenshotsTitle}
+          </Typography>
+          {screenshotsView === "accordion" ? (
+            <Box>
+              {screenshots.map((screenshot, index) => (
+                <Accordion key={index} defaultExpanded={index === 0}>
+                  <AccordionSummary expandIcon={<IconChevronDown />}>
+                    <Box display="flex" alignItems="center" gap={2} width="100%">
+                      {screenshot.url ? (
+                        <Box
+                          component="img"
+                          src={screenshot.url}
+                          alt={screenshot.title || `Screenshot ${index + 1}`}
+                          sx={{
+                            width: 120,
+                            height: 80,
+                            objectFit: 'cover',
+                            borderRadius: 1,
+                            border: '1px solid',
+                            borderColor: 'divider'
+                          }}
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                          }}
+                        />
+                      ) : (
+                        <Box
+                          sx={{
+                            width: 120,
+                            height: 80,
+                            bgcolor: 'grey.100',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 1
+                          }}
+                        >
+                          <IconPhoto size={32} style={{ color: '#999' }} />
+                        </Box>
+                      )}
+                      <Box flex={1}>
+                        <Typography variant="subtitle1" fontWeight="bold">
+                          {screenshot.title || `Screenshot ${index + 1}`}
+                        </Typography>
+                        {screenshot.description && (
+                          <Typography variant="body2" color="text.secondary">
+                            {screenshot.description}
+                          </Typography>
+                        )}
+                      </Box>
+                    </Box>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <Box>
+                      {screenshot.url ? (
+                        <Box
+                          component="img"
+                          src={screenshot.url}
+                          alt={screenshot.title || `Screenshot ${index + 1}`}
+                          sx={{
+                            width: '100%',
+                            height: 'auto',
+                            borderRadius: 1,
+                            mb: 2
+                          }}
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            const placeholder = e.target.parentNode;
+                            placeholder.innerHTML = `
+                              <div style="padding: 2rem; text-align: center; color: #666; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-bottom: 8px;">
+                                  <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
+                                  <circle cx="8.5" cy="8.5" r="1.5" stroke-width="2"/>
+                                  <path d="M21 15l-5-5L5 21" stroke-width="2"/>
+                                </svg>
+                                <p style="margin-top: 8px; font-size: 14px;">${screenshot.title || 'Image not available'}</p>
+                              </div>
+                            `;
+                          }}
+                        />
+                      ) : (
+                        <Box
+                          sx={{
+                            width: '100%',
+                            minHeight: 200,
+                            bgcolor: 'grey.100',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            borderRadius: 1,
+                            p: 3
+                          }}
+                        >
+                          <IconPhoto size={48} style={{ color: '#999', marginBottom: 8 }} />
+                          <Typography variant="body2" color="text.secondary" textAlign="center">
+                            {screenshot.title || 'Screenshot placeholder'}
+                          </Typography>
+                        </Box>
+                      )}
+                      {screenshot.link && (
+                        <Button
+                          variant="outlined"
+                          size="small"
+                          startIcon={<IconExternalLink size={16} />}
+                          href={screenshot.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          sx={{ mt: 1 }}
+                        >
+                          View Live
+                        </Button>
+                      )}
+                    </Box>
+                  </AccordionDetails>
+                </Accordion>
+              ))}
+            </Box>
+          ) : (
+            <ScreenshotGallery
+              title=""
+              screenshots={screenshots}
+            />
+          )}
         </Box>
       )}
 

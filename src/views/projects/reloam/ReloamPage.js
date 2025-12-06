@@ -174,6 +174,7 @@ const ReloamPage = () => {
             showScreenshots={true}
             showWireframes={true}
             showTitle={false}
+            screenshotsView="gallery"
           />
         </Grid>
 
