@@ -71,12 +71,13 @@ const ProductDiscoveryPipeline = () => {
     const StageIcon = stage.icon;
 
     return (
-      <Box display="flex" alignItems="center" gap={1}>
+      <Box display="flex" alignItems="stretch" gap={1}>
         <Paper
           elevation={1}
           sx={{
             p: 2,
-            flex: 1,
+            width: '100%',
+            minHeight: '100%',
             borderTop: `3px solid ${stage.color}`,
             backgroundColor: stage.bgColor,
             transition: 'transform 0.2s, box-shadow 0.2s',
@@ -133,13 +134,14 @@ const ProductDiscoveryPipeline = () => {
     <DashboardCard title="Product Discovery Pipeline" subtitle="From Ideas to Launch">
       {/* Desktop View - Horizontal */}
       <Box sx={{ display: { xs: 'none', lg: 'block' } }}>
-        <Box display="flex" alignItems="center" gap={0}>
+        <Box display="flex" alignItems="stretch" gap={1.5} sx={{ width: '100%' }}>
           {pipelineStages.map((stage, index) => (
-            <StageCard
-              key={stage.id}
-              stage={stage}
-              showArrow={index < pipelineStages.length - 1}
-            />
+            <Box key={stage.id} sx={{ flex: 1, minWidth: 0 }}>
+              <StageCard
+                stage={stage}
+                showArrow={index < pipelineStages.length - 1}
+              />
+            </Box>
           ))}
         </Box>
       </Box>
@@ -153,47 +155,6 @@ const ProductDiscoveryPipeline = () => {
             </Grid>
           ))}
         </Grid>
-      </Box>
-
-      {/* Summary Stats */}
-      <Box
-        sx={{
-          mt: 3,
-          p: 2,
-          backgroundColor: '#F2F6FA',
-          borderRadius: 1,
-          display: 'flex',
-          justifyContent: 'space-around',
-          flexWrap: 'wrap',
-          gap: 2
-        }}
-      >
-        <Box textAlign="center">
-          <Typography variant="h6" fontWeight={700} color="primary">
-            {pipelineStages.reduce((acc, stage) => acc + stage.projects.length, 0)}
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Active Projects
-          </Typography>
-        </Box>
-
-        <Box textAlign="center">
-          <Typography variant="h6" fontWeight={700} color="success.main">
-            2
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            Ready for Launch
-          </Typography>
-        </Box>
-
-        <Box textAlign="center">
-          <Typography variant="h6" fontWeight={700} color="info.main">
-            5
-          </Typography>
-          <Typography variant="caption" color="text.secondary">
-            In Development
-          </Typography>
-        </Box>
       </Box>
     </DashboardCard>
   );

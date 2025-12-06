@@ -24,6 +24,7 @@ import {
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram';
+import PersonaCard from '../../../components/personas/PersonaCard.js';
 import PageTableOfContents from '../../../components/navigation/PageTableOfContents.js';
 import BackToTop from '../../../components/navigation/BackToTop.js';
 import {
@@ -458,22 +459,25 @@ const ReloamPage = () => {
                   </Grid>
                 </Grid>
 
-                <Divider sx={{ my: 3 }} />
-
-                      <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                  Target User Profile
-                </Typography>
-                <Paper elevation={1} sx={{ p: 2, mt: 1 }}>
-                  <Typography variant="body2" paragraph>
-                    <strong>Primary User:</strong> {caseStudy.problemDiscovery.initialResearch.interviewSubject}
-                  </Typography>
-                  <Typography variant="body2" paragraph>
-                    <strong>Target Segment:</strong> {caseStudy.problemStatement.targetUser}
-                      </Typography>
-                  <Typography variant="body2">
-                    <strong>Opportunity:</strong> {caseStudy.problemStatement.opportunity}
-                      </Typography>
-                </Paper>
+                {caseStudy.userResearch && caseStudy.userResearch.personas && caseStudy.userResearch.personas.length > 0 && (
+                  <>
+                    <Divider sx={{ my: 3 }} />
+                    <Grid container spacing={2}>
+                      <Grid item xs={12}>
+                        <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                          User Personas
+                        </Typography>
+                        <Grid container spacing={3}>
+                          {caseStudy.userResearch.personas.map((persona, index) => (
+                            <Grid item xs={12} key={index}>
+                              <PersonaCard persona={persona} index={index} />
+                            </Grid>
+                          ))}
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                  </>
+                )}
             </CardContent>
           </DashboardCard>
           </Box>

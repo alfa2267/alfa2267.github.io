@@ -9,15 +9,55 @@ import {
   IconRocket
 } from '@tabler/icons-react';
 import DashboardCard from '../../../components/shared/DashboardCard';
+import GitHubService from '../../../services/github';
+import ProjectService from '../../../services/projectService';
 
 const DevOpsQuirks = () => {
+  const githubService = new GitHubService();
+  const projectService = new ProjectService();
+  const [weeklyCommits, setWeeklyCommits] = React.useState(0);
+  const [prStats, setPrStats] = React.useState({ total: 0, merged: 0 });
+  const [repoStats, setRepoStats] = React.useState({ totalRepos: 0, totalStars: 0 });
+  const [projectCount, setProjectCount] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        setLoading(true);
+        const [commits, prs, repos, projects] = await Promise.all([
+          githubService.getWeeklyCommitStats(),
+          githubService.getPullRequestStats(),
+          githubService.getRepositoryStats(),
+          projectService.getProjectStats()
+        ]);
+        
+        setWeeklyCommits(commits);
+        setPrStats(prs);
+        setRepoStats(repos);
+        setProjectCount(projects.total);
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  // Calculate dynamic max values based on actual data
+  const weeklyCommitsMax = Math.max(weeklyCommits, 50); // At least 50, or higher if actual is more
+  const featuresShipped = projectCount; // Use project count as features shipped
+  const featuresMax = Math.max(featuresShipped, 15);
+
   // Fun, personality-driven metrics
   const quirkyMetrics = [
     {
       icon: IconBrandGit,
       label: 'Commits This Week',
-      value: 47,
-      maxValue: 50,
+      value: loading ? '...' : weeklyCommits,
+      maxValue: weeklyCommitsMax,
       color: '#5D87FF',
       subtitle: 'Keep shipping!'
     },
@@ -30,26 +70,26 @@ const DevOpsQuirks = () => {
     },
     {
       icon: IconBug,
-      label: 'Bugs Squashed',
-      value: 23,
-      maxValue: 30,
+      label: 'Projects Active',
+      value: loading ? '...' : projectCount,
+      maxValue: featuresMax,
       color: '#13DEB9',
-      subtitle: 'Clean code champion'
+      subtitle: 'Portfolio projects'
     },
     {
       icon: IconCode,
-      label: 'Features Shipped',
-      value: 12,
-      maxValue: 15,
+      label: 'Repositories',
+      value: loading ? '...' : repoStats.totalRepos,
+      maxValue: Math.max(repoStats.totalRepos, 20),
       color: '#9C27B0',
-      subtitle: 'This quarter'
+      subtitle: 'On GitHub'
     }
   ];
 
   const funFacts = [
-    { icon: IconRocket, text: 'Zero-downtime deployments: 42 days', color: '#13DEB9' },
-    { icon: IconMoodSmile, text: 'Team happiness score: 9.2/10', color: '#FFAE1F' },
-    { icon: IconBrandGit, text: 'Pull requests merged: 156', color: '#5D87FF' }
+    { icon: IconRocket, text: `Total stars: ${loading ? '...' : repoStats.totalStars}`, color: '#13DEB9' },
+    { icon: IconMoodSmile, text: `Active projects: ${loading ? '...' : projectCount}`, color: '#FFAE1F' },
+    { icon: IconBrandGit, text: `Pull requests merged: ${loading ? '...' : prStats.merged}`, color: '#5D87FF' }
   ];
 
   return (
@@ -76,7 +116,7 @@ const DevOpsQuirks = () => {
                     </Typography>
                   </Stack>
 
-                  {metric.maxValue && (
+                  {metric.maxValue && typeof metric.value === 'number' && (
                     <LinearProgress
                       variant="determinate"
                       value={percentage}

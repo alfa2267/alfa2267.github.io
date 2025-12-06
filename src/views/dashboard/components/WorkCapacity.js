@@ -11,6 +11,7 @@ const YearlyBreakup = () => {
   const projectService = new ProjectService();
   const [projectCount, setProjectCount] = React.useState(0);
   const [previousCount, setPreviousCount] = React.useState(0);
+  const [projectBreakdown, setProjectBreakdown] = React.useState([0, 0, 0]);
 
   // Fetch project stats
   React.useEffect(() => {
@@ -18,6 +19,24 @@ const YearlyBreakup = () => {
       try {
         const stats = await projectService.getProjectStats();
         setProjectCount(stats.total);
+        
+        // Calculate project breakdown by category
+        const openSource = stats.by_category['Open Source'] || 0;
+        const personal = stats.by_category['Personal'] || stats.by_category['Portfolio'] || 0;
+        const experiments = stats.by_category['Experiments'] || stats.by_category['Experimental'] || 0;
+        
+        // Calculate percentages
+        const total = openSource + personal + experiments;
+        if (total > 0) {
+          const openSourcePercent = Math.round((openSource / total) * 100);
+          const personalPercent = Math.round((personal / total) * 100);
+          const experimentsPercent = 100 - openSourcePercent - personalPercent; // Ensure it adds up to 100
+          setProjectBreakdown([openSourcePercent, personalPercent, experimentsPercent]);
+        } else {
+          // Fallback if no categories found
+          setProjectBreakdown([60, 30, 10]);
+        }
+        
         // For now, we'll calculate the change based on a stored previous count
         // In a real app, you'd store this in localStorage or a backend
         const storedPrevious = localStorage.getItem('previousProjectCount');
@@ -88,7 +107,7 @@ const YearlyBreakup = () => {
     ],
   };
   // Portfolio-oriented breakdown (e.g., Open Source / Personal / Experiments)
-  const seriescolumnchart = [60, 30, 10];
+  const seriescolumnchart = projectBreakdown;
 
   return (
     <DashboardCard title="Project Breakdown">

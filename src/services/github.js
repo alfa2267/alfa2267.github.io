@@ -165,6 +165,153 @@ class GitHubService {
       };
     }
   }
+
+  /**
+   * Get commit statistics for the current week
+   */
+  async getWeeklyCommitStats() {
+    try {
+      const repos = await this.fetchRepositories();
+      const now = new Date();
+      const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+      
+      let weeklyCommits = 0;
+
+      for (const repo of repos) {
+        try {
+          const url = `${this.baseUrl}/repos/${this.username}/${repo.name}/commits?since=${weekAgo.toISOString()}&per_page=100`;
+          const response = await fetch(url);
+          if (response.ok) {
+            const commits = await response.json();
+            weeklyCommits += commits.length;
+          }
+        } catch (error) {
+          console.error(`Error fetching commits for ${repo.name}:`, error);
+        }
+      }
+
+      return weeklyCommits;
+    } catch (error) {
+      console.error('Error fetching weekly commit stats:', error);
+      return 0;
+    }
+  }
+
+  /**
+   * Get commit history for the last 7 days for chart data
+   */
+  async getWeeklyCommitHistory() {
+    try {
+      const repos = await this.fetchRepositories();
+      const now = new Date();
+      const days = [];
+      
+      // Initialize array for last 7 days
+      for (let i = 6; i >= 0; i--) {
+        const date = new Date(now);
+        date.setDate(date.getDate() - i);
+        date.setHours(0, 0, 0, 0);
+        days.push({
+          date: date.toISOString().split('T')[0],
+          count: 0
+        });
+      }
+
+      // Fetch commits for each repo
+      for (const repo of repos) {
+        try {
+          const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+          const url = `${this.baseUrl}/repos/${this.username}/${repo.name}/commits?since=${weekAgo.toISOString()}&per_page=100`;
+          const response = await fetch(url);
+          if (response.ok) {
+            const commits = await response.json();
+            commits.forEach(commit => {
+              const commitDate = new Date(commit.commit.author.date).toISOString().split('T')[0];
+              const dayIndex = days.findIndex(d => d.date === commitDate);
+              if (dayIndex !== -1) {
+                days[dayIndex].count++;
+              }
+            });
+          }
+        } catch (error) {
+          console.error(`Error fetching commits for ${repo.name}:`, error);
+        }
+      }
+
+      return days.map(d => d.count);
+    } catch (error) {
+      console.error('Error fetching weekly commit history:', error);
+      return [0, 0, 0, 0, 0, 0, 0];
+    }
+  }
+
+  /**
+   * Get pull request statistics
+   */
+  async getPullRequestStats() {
+    try {
+      const repos = await this.fetchRepositories();
+      let totalPRs = 0;
+      let mergedPRs = 0;
+
+      for (const repo of repos) {
+        try {
+          const url = `${this.baseUrl}/repos/${this.username}/${repo.name}/pulls?state=all&per_page=100`;
+          const response = await fetch(url);
+          if (response.ok) {
+            const prs = await response.json();
+            totalPRs += prs.length;
+            mergedPRs += prs.filter(pr => pr.merged_at !== null).length;
+          }
+        } catch (error) {
+          console.error(`Error fetching PRs for ${repo.name}:`, error);
+        }
+      }
+
+      return {
+        total: totalPRs,
+        merged: mergedPRs
+      };
+    } catch (error) {
+      console.error('Error fetching PR stats:', error);
+      return { total: 0, merged: 0 };
+    }
+  }
+
+  /**
+   * Get repository statistics (stars, forks, languages)
+   */
+  async getRepositoryStats() {
+    try {
+      const repos = await this.fetchRepositories();
+      let totalStars = 0;
+      let totalForks = 0;
+      const languages = {};
+
+      repos.forEach(repo => {
+        totalStars += repo.stargazers_count || 0;
+        totalForks += repo.forks_count || 0;
+        if (repo.language) {
+          languages[repo.language] = (languages[repo.language] || 0) + 1;
+        }
+      });
+
+      return {
+        totalRepos: repos.length,
+        totalStars,
+        totalForks,
+        languages
+      };
+    } catch (error) {
+      console.error('Error fetching repository stats:', error);
+      return {
+        totalRepos: 0,
+        totalStars: 0,
+        totalForks: 0,
+        languages: {}
+      };
+    }
+  }
 }
 
 export default GitHubService;

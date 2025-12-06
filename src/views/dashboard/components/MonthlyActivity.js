@@ -6,14 +6,17 @@ import { IconArrowUpRight, IconGitBranch } from '@tabler/icons';
 import DashboardCard from '../../../components/shared/DashboardCard';
 import GitHubService from '../../../services/github';
 
+const githubService = new GitHubService();
+
 const MonthlyEarnings = () => {
-  const githubService = new GitHubService();
   const [commitStats, setCommitStats] = React.useState({
     currentMonth: 0,
     lastMonth: 0,
     percentageChange: 0
   });
   const [loading, setLoading] = React.useState(true);
+  const [commitHistory, setCommitHistory] = React.useState([0, 0, 0, 0, 0, 0, 0]);
+  const [loadingHistory, setLoadingHistory] = React.useState(true);
 
   // Fetch commit statistics
   React.useEffect(() => {
@@ -30,6 +33,23 @@ const MonthlyEarnings = () => {
       }
     };
     fetchCommitStats();
+  }, []);
+
+  // Fetch commit history for chart
+  React.useEffect(() => {
+    const fetchCommitHistory = async () => {
+      try {
+        setLoadingHistory(true);
+        const history = await githubService.getWeeklyCommitHistory();
+        setCommitHistory(history);
+      } catch (error) {
+        console.error('Error fetching commit history:', error);
+      } finally {
+        setLoadingHistory(false);
+      }
+    };
+
+    fetchCommitHistory();
   }, []);
 
   // chart color
@@ -69,11 +89,12 @@ const MonthlyEarnings = () => {
       theme: theme.palette.mode === 'dark' ? 'dark' : 'light',
     },
   };
+
   const seriescolumnchart = [
     {
       name: 'Commits',
       color: secondary,
-      data: [5, 12, 7, 10, 4, 15, 9],
+      data: loadingHistory ? [0, 0, 0, 0, 0, 0, 0] : commitHistory,
     },
   ];
 
