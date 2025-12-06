@@ -83,7 +83,7 @@ const SidebarItems = ({ isCollapsed = false }) => {
                 onClick={() => !isCollapsed && toggleSection(group.subheader)}
               >
                 {!isCollapsed && (
-                  <NavGroup item={{ subheader: group.subheader }} />
+                  <NavGroup item={{ subheader: group.subheader }} isCollapsed={isCollapsed} />
                 )}
                 {!isCollapsed && (
                   <IconButton
@@ -110,7 +110,7 @@ const SidebarItems = ({ isCollapsed = false }) => {
               </Box>
 
               {/* Section Items */}
-              <Collapse in={isExpanded || isCollapsed} timeout="auto" unmountOnExit>
+              <Collapse in={isExpanded || isCollapsed} timeout="auto" unmountOnExit={false}>
                 <List component="div" disablePadding>
                   {group.items.map((item) => (
                     <NavItem 

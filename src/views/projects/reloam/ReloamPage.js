@@ -23,11 +23,14 @@ import {
   IconFileText,
   IconExternalLink,
   IconCode,
-  IconBulb
+  IconBulb,
+  IconTrendingUp,
+  IconUsers,
+  IconWorld
 } from '@tabler/icons';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
-import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
+import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram';
 import PageTableOfContents from '../../../components/navigation/PageTableOfContents.js';
 import BackToTop from '../../../components/navigation/BackToTop.js';
 import {
@@ -52,8 +55,10 @@ const ReloamPage = () => {
   // Define table of contents sections
   const tocSections = [
     { id: 'project-showcase', title: 'Project Showcase', level: 1 },
+    { id: 'key-stats', title: 'Key Stats', level: 1 },
     { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
     { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
+    { id: 'user-research', title: 'User Research & Insights', level: 1 },
     { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
     { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
     { id: 'backlog-management', title: 'Backlog Management', level: 1 },
@@ -203,6 +208,56 @@ const ReloamPage = () => {
             showTitle={false}
             screenshotsView="gallery"
           />
+          </Box>
+
+          {/* Key Stats */}
+          <Box id="key-stats" mb={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={3}>
+                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
+                  <IconTrendingUp size={32} color="#1976d2" style={{ marginBottom: 8 }} />
+                  <Typography variant="h4" color="primary" gutterBottom>
+                    $2B
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Market Gap
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
+                  <IconRocket size={32} color="#2e7d32" style={{ marginBottom: 8 }} />
+                  <Typography variant="h4" color="success.main" gutterBottom>
+                    Beta
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Deployment Status
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
+                  <IconUsers size={32} color="#ed6c02" style={{ marginBottom: 8 }} />
+                  <Typography variant="h4" color="warning.main" gutterBottom>
+                    5-10
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Beta Landlords
+                  </Typography>
+                </Paper>
+              </Grid>
+              <Grid item xs={12} md={3}>
+                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
+                  <IconWorld size={32} color="#9c27b0" style={{ marginBottom: 8 }} />
+                  <Typography variant="h4" color="secondary" gutterBottom>
+                    2024
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Launch Year
+                  </Typography>
+                </Paper>
+              </Grid>
+            </Grid>
           </Box>
 
           {/* Problem Discovery & Solution */}
@@ -366,6 +421,110 @@ const ReloamPage = () => {
               </Grid>
             </CardContent>
           </DashboardCard>
+          </Box>
+
+          {/* User Research & Insights */}
+          <Box id="user-research" mb={3}>
+            <DashboardCard title="User Research & Insights">
+              <CardContent>
+                <Grid container spacing={1} mb={2}>
+                  <Grid item xs={6} sm={3}>
+                    <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                      <Typography variant="h5">1</Typography>
+                      <Typography variant="caption">Landlord Interview</Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                      <Typography variant="h5">5</Typography>
+                      <Typography variant="caption">Platforms Analyzed</Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                      <Typography variant="h5">4</Typography>
+                      <Typography variant="caption">Key Pain Points</Typography>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={6} sm={3}>
+                    <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
+                      <Typography variant="h5">$2B</Typography>
+                      <Typography variant="caption">Market Gap</Typography>
+                    </Paper>
+                  </Grid>
+                </Grid>
+
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={6}>
+                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                      Key Insights
+                    </Typography>
+                    <List dense>
+                      <ListItem disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconChartBar size={16} color="#1976d2" />
+                        </ListItemIcon>
+                        <ListItemText 
+                          primary={caseStudy.problemDiscovery.initialResearch.insight} 
+                          primaryTypographyProps={{ variant: 'body2' }} 
+                        />
+                      </ListItem>
+                      <ListItem disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconChartBar size={16} color="#1976d2" />
+                        </ListItemIcon>
+                        <ListItemText 
+                          primary={`Market research: ${caseStudy.problemDiscovery.marketResearch.platformsAnalyzed} platforms analyzed - ${caseStudy.problemDiscovery.marketResearch.finding}`}
+                          primaryTypographyProps={{ variant: 'body2' }} 
+                        />
+                      </ListItem>
+                      <ListItem disablePadding sx={{ py: 0.25 }}>
+                        <ListItemIcon sx={{ minWidth: 24 }}>
+                          <IconChartBar size={16} color="#1976d2" />
+                        </ListItemIcon>
+                        <ListItemText 
+                          primary={caseStudy.problemDiscovery.marketResearch.opportunity}
+                          primaryTypographyProps={{ variant: 'body2' }} 
+                        />
+                      </ListItem>
+                    </List>
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                      User Quotes
+                    </Typography>
+                    <List dense>
+                      {caseStudy.problemDiscovery.initialResearch.quotes.map((quote, index) => (
+                        <ListItem key={index} disablePadding sx={{ py: 0.5 }}>
+                          <Paper elevation={1} sx={{ p: 1.5, width: '100%' }}>
+                            <Typography variant="body2" fontStyle="italic" color="text.secondary">
+                              {quote}
+                            </Typography>
+                          </Paper>
+                        </ListItem>
+                      ))}
+                    </List>
+                  </Grid>
+                </Grid>
+
+                <Divider sx={{ my: 3 }} />
+
+                <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                  Target User Profile
+                </Typography>
+                <Paper elevation={1} sx={{ p: 2, mt: 1 }}>
+                  <Typography variant="body2" paragraph>
+                    <strong>Primary User:</strong> {caseStudy.problemDiscovery.initialResearch.interviewSubject}
+                  </Typography>
+                  <Typography variant="body2" paragraph>
+                    <strong>Target Segment:</strong> {caseStudy.problemStatement.targetUser}
+                  </Typography>
+                  <Typography variant="body2">
+                    <strong>Opportunity:</strong> {caseStudy.problemStatement.opportunity}
+                  </Typography>
+                </Paper>
+              </CardContent>
+            </DashboardCard>
           </Box>
 
           {/* Requirements & User Stories */}

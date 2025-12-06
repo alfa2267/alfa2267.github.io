@@ -56,7 +56,8 @@ const FullLayout = () => {
         {/* ------------------------------------------- */}
         <Container sx={{
           paddingTop: "20px",
-          maxWidth: '1200px',
+          maxWidth: isSidebarOpen ? '1200px' : '1400px',
+          transition: 'max-width 0.3s ease',
         }}
         >
           {/* ------------------------------------------- */}
@@ -72,7 +73,7 @@ const FullLayout = () => {
         {/* ------------------------------------------- */}
         {/* System Status Footer */}
         {/* ------------------------------------------- */}
-        <SystemStatus />
+        <SystemStatus isSidebarCollapsed={!isSidebarOpen} />
       </PageWrapper>
     </MainWrapper>
   );

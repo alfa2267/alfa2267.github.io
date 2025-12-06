@@ -43,7 +43,8 @@ import {
   SprintMetricsSection,
   QATestingSection,
   DevOpsSecuritySection,
-  BacklogManagementSection
+  BacklogManagementSection,
+  ProblemDiscoverySection
 } from '../../../components/sections';
 import ProjectService from '../../../services/projectService.js';
 
@@ -56,8 +57,9 @@ const AirOpsPage = () => {
     { id: 'project-showcase', title: 'Project Showcase', level: 1 },
     { id: 'key-stats', title: 'Key Stats', level: 1 },
     { id: 'design-process', title: 'Design Process', level: 1 },
-    { id: 'executive-summary', title: 'Executive Summary', level: 1 },
-    { id: 'product-vision', title: 'Product Vision & Strategy', level: 1 },
+    { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
+    { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
+    { id: 'user-research', title: 'User Research & Insights', level: 1 },
     { id: 'business-case', title: 'Business Case & ROI', level: 1 },
     { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
     { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
@@ -65,7 +67,8 @@ const AirOpsPage = () => {
     { id: 'qa-testing', title: 'QA & Validation Strategy', level: 1 },
     { id: 'devops-security', title: 'Process & Compliance', level: 1 },
     { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
-    { id: 'risk-assessment', title: 'Risk Assessment & Go-to-Market', level: 1 },
+    { id: 'risk-assessment', title: 'Risk Assessment & Go-to-Market Strategy', level: 1 },
+    { id: 'lessons-learned', title: 'Lessons Learned & Reflections', level: 1 },
     { id: 'strategy-document', title: 'Strategy Document Summary', level: 1 }
   ];
 
@@ -304,113 +307,33 @@ const AirOpsPage = () => {
           />
           </Box>
 
-        {/* Executive Summary */}
-          <Box id="executive-summary" mb={3}>
-          <DashboardCard title="Executive Summary">
-            <CardContent>
-                  <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      <Typography variant="subtitle1" fontWeight="bold" gutterBottom color="error">
-                        Problem Statement
-                      </Typography>
-                      <Typography variant="body1" paragraph>
-                        Nigerian aviation industry challenges:
-                      </Typography>
-                      <List dense>
-                        {caseStudy.executiveSummary.problemStatement.challenges.map((item, index) => (
-                          <ListItem key={index} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconAlertTriangle size={16} color="red" />
-                            </ListItemIcon>
-                            <ListItemText primary={item} />
-                          </ListItem>
-                        ))}
-                      </List>
-                      <Typography variant="subtitle1" fontWeight="bold" mt={2} mb={1}>
-                        Impact:
-                      </Typography>
-                      <List dense>
-                        {caseStudy.executiveSummary.problemStatement.impact.map((item, index) => (
-                          <ListItem key={index} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconAlertTriangle size={16} color="orange" />
-                            </ListItemIcon>
-                            <ListItemText primary={item} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      <Typography variant="subtitle1" gutterBottom fontWeight="bold" color="success.main">
-                        Solution Overview
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" gutterBottom>
-                        {caseStudy.executiveSummary.solutionOverview.description}
-                      </Typography>
-                      <List dense>
-                        {caseStudy.executiveSummary.solutionOverview.components.map((item, index) => (
-                          <ListItem key={index} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconCheck size={16} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={item} />
-                          </ListItem>
-                        ))}
-                      </List>
-                      <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                        Technology Approach:
-                      </Typography>
-                      <List dense>
-                        {caseStudy.executiveSummary.solutionOverview.technologyApproach.map((item, index) => (
-                          <ListItem key={index} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconRocket size={14} color="#1976d2" />
-                            </ListItemIcon>
-                            <ListItemText primary={item} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Grid>
-                  </Grid>
-                  
-                  <Divider sx={{ my: 3 }} />
-                  
-                  <Typography variant="subtitle1" gutterBottom fontWeight="bold">
-                    Business Impact
-                  </Typography>
-                  <Grid container spacing={2} mt={1}>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                        <Typography variant="h5" color="primary">40%</Typography>
-                        <Typography variant="body2">Cost Reduction</Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                        <Typography variant="h5" color="success.main">60%</Typography>
-                        <Typography variant="body2">Customer Satisfaction ↑</Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                        <Typography variant="h5" color="info.main">25%</Typography>
-                        <Typography variant="body2">Conversion Rate ↑</Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <Paper elevation={1} sx={{ p: 2, textAlign: 'center' }}>
-                        <Typography variant="h5" color="warning.main">Real-time</Typography>
-                        <Typography variant="body2">Operational Visibility</Typography>
-                      </Paper>
-                    </Grid>
-                  </Grid>
-            </CardContent>
-          </DashboardCard>
+        {/* Problem Discovery & Solution */}
+          <Box id="problem-discovery" mb={3}>
+            <ProblemDiscoverySection
+              title="Problem Discovery & Solution"
+              problemStatement={{
+                description: "Nigerian aviation industry challenges:",
+                challenges: caseStudy.executiveSummary.problemStatement.challenges,
+                impact: caseStudy.executiveSummary.problemStatement.impact
+              }}
+              solutionOverview={{
+                description: caseStudy.executiveSummary.solutionOverview.description,
+                approach: caseStudy.executiveSummary.solutionOverview.technologyApproach,
+                keyFeatures: caseStudy.executiveSummary.solutionOverview.components,
+                valueProposition: `Transform Air Peace into Africa's most digitally advanced airline, delivering seamless customer experiences while optimizing operational efficiency through integrated technology solutions.`
+              }}
+              successCriteria={[
+                { value: '40%', label: 'Cost Reduction' },
+                { value: '60%', label: 'Customer Satisfaction' },
+                { value: '25%', label: 'Conversion Rate' },
+                { value: 'Real-time', label: 'Operational Visibility' }
+              ]}
+            />
           </Box>
 
-        {/* Product Vision & Strategy */}
+        {/* Product Vision & MVP Strategy */}
           <Box id="product-vision" mb={3}>
-          <DashboardCard title="Product Vision & Strategy">
+          <DashboardCard title="Product Vision & MVP Strategy">
             <CardContent>
               <Typography variant="body1" paragraph mb={2}>
                 "{caseStudy.productVision.visionStatement}"

@@ -8,7 +8,7 @@ import {
   IconGitCommit
 } from '@tabler/icons-react';
 
-const SystemStatus = () => {
+const SystemStatus = ({ isSidebarCollapsed = false }) => {
   const [uptime, setUptime] = useState(0);
 
   useEffect(() => {
@@ -75,7 +75,10 @@ const SystemStatus = () => {
       sx={{
         position: 'fixed',
         bottom: 0,
-        left: { xs: 0, lg: '270px' }, // Start after sidebar on desktop
+        left: { 
+          xs: 0, 
+          lg: isSidebarCollapsed ? '70px' : '270px' // Adjust based on sidebar state
+        },
         right: 0,
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
