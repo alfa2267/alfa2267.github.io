@@ -136,48 +136,36 @@ const ReloamPage = () => {
               features: project.features
             }}
             demoImage={{
-              url: `https://raw.githubusercontent.com/alfa2267/reloam-landing/main/demo.png`,
+              url: '/assets/images/reloam/Overall Views.png',
               alt: 'Reloam Demo',
               description: 'Overview of the Reloam platform'
             }}
             screenshots={[
               {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/login-landlord.png',
-                title: 'Landlord Login Page',
-                description: 'Sign-in interface for landlords at https://ld.reloam.ainaeco.uk/',
+                url: '/assets/images/reloam/tenant_dashboard.png',
+                title: 'Tenant Dashboard',
+                description: 'Tenant-facing dashboard interface',
+                type: 'screenshot',
+                link: 'https://tn.reloam.ainaeco.uk/'
+              },
+              {
+                url: '/assets/images/reloam/landlord_proposals_view.png',
+                title: 'Landlord Proposals View',
+                description: 'Landlord interface for managing proposals and tenant applications',
                 type: 'screenshot',
                 link: 'https://ld.reloam.ainaeco.uk/'
               },
               {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/dashboard.png',
-                title: 'Landlord Dashboard',
-                description: 'Main dashboard view showing tenant overview and financial summary',
+                url: '/assets/images/reloam/tenant_chat_bot.png',
+                title: 'Tenant Chat Bot',
+                description: 'AI-powered chat interface for tenant support and inquiries',
                 type: 'screenshot',
-                link: 'https://ld.reloam.ainaeco.uk/'
+                link: 'https://tn.reloam.ainaeco.uk/'
               },
               {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/tenant-management.png',
-                title: 'Tenant Management',
-                description: 'Tenant list and profile management interface',
-                type: 'screenshot',
-                link: 'https://ld.reloam.ainaeco.uk/'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/financial-tracking.png',
-                title: 'Financial Tracking',
-                description: 'Rent collection and payment history tracking',
-                type: 'screenshot'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/activity-log.png',
-                title: 'Activity Log',
-                description: 'Property activity logging and timeline view',
-                type: 'screenshot'
-              },
-              {
-                url: 'https://raw.githubusercontent.com/alfa2267/reloam-landing/main/screenshots/reports.png',
-                title: 'Reports Dashboard',
-                description: 'Financial summaries and analytics',
+                url: '/assets/images/reloam/Overall Views.png',
+                title: 'Overall Platform Views',
+                description: 'Comprehensive overview of the Reloam platform features',
                 type: 'screenshot'
               }
             ]}
@@ -257,7 +245,7 @@ const ReloamPage = () => {
               title="Business Case & ROI Analysis"
               businessCase={caseStudy.businessCase}
               swot={caseStudy.swot}
-            />
+          />
           </Box>
 
         {/* Product Vision & MVP Strategy */}
@@ -402,26 +390,26 @@ const ReloamPage = () => {
                       <Typography variant="h5">1</Typography>
                       <Typography variant="caption">Landlord Interview</Typography>
                     </Paper>
-                  </Grid>
+        </Grid>
                   <Grid item xs={6} sm={3}>
                     <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
                       <Typography variant="h5">5</Typography>
                       <Typography variant="caption">Platforms Analyzed</Typography>
                     </Paper>
-                  </Grid>
+        </Grid>
                   <Grid item xs={6} sm={3}>
                     <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
                       <Typography variant="h5">4</Typography>
                       <Typography variant="caption">Key Pain Points</Typography>
                     </Paper>
-                  </Grid>
+        </Grid>
                   <Grid item xs={6} sm={3}>
                     <Paper elevation={1} sx={{ p: 1.5, textAlign: 'center' }}>
                       <Typography variant="h5">$2B</Typography>
                       <Typography variant="caption">Market Gap</Typography>
                     </Paper>
-                  </Grid>
-                </Grid>
+        </Grid>
+        </Grid>
 
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
@@ -478,7 +466,7 @@ const ReloamPage = () => {
 
                 <Divider sx={{ my: 3 }} />
 
-                <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                      <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
                   Target User Profile
                 </Typography>
                 <Paper elevation={1} sx={{ p: 2, mt: 1 }}>
@@ -487,10 +475,10 @@ const ReloamPage = () => {
                   </Typography>
                   <Typography variant="body2" paragraph>
                     <strong>Target Segment:</strong> {caseStudy.problemStatement.targetUser}
-                  </Typography>
+                      </Typography>
                   <Typography variant="body2">
                     <strong>Opportunity:</strong> {caseStudy.problemStatement.opportunity}
-                  </Typography>
+                      </Typography>
                 </Paper>
             </CardContent>
           </DashboardCard>
@@ -502,7 +490,7 @@ const ReloamPage = () => {
             title="Design Process"
             designProcess={caseStudy.designProcess}
           />
-          </Box>
+                    </Box>
 
           {/* User Flow Diagram */}
           <Box id="user-flow" mb={6}>
@@ -513,7 +501,7 @@ const ReloamPage = () => {
             <CardContent sx={{ p: 0 }}>
               <Typography variant="body1" paragraph mb={4} sx={{ px: 2, pt: 2 }}>
                 Visual representation of the key user flows in the Reloam platform:
-              </Typography>
+                          </Typography>
               
               <Grid container spacing={4} sx={{ px: 2, pb: 2 }}>
                 {/* Tenant Onboarding Flow */}
@@ -611,7 +599,7 @@ const ReloamPage = () => {
                       }
                     ]}
                   />
-                </Grid>
+                      </Grid>
                 {/* Financial Reporting Flow */}
                 <Grid item xs={12}>
                   <UserFlowDiagram
@@ -643,8 +631,8 @@ const ReloamPage = () => {
                       }
                     ]}
                   />
-                </Grid>
-              </Grid>
+                      </Grid>
+                    </Grid>
             </CardContent>
           </DashboardCard>
           </Box>
@@ -681,7 +669,7 @@ const ReloamPage = () => {
               timelineTitle=""
               columnsPerRow={2}
             />
-          </Box>
+                      </Box>
 
           {/* Requirements & User Stories */}
           <Box id="requirements" mb={6}>
