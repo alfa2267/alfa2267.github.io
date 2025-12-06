@@ -28,6 +28,8 @@ import {
 import ProjectService from '../../services/projectService.js';
 import PageContainer from '../../components/container/PageContainer.js';
 import DashboardCard from '../../components/shared/DashboardCard.js';
+import PageTableOfContents from '../../components/navigation/PageTableOfContents.js';
+import BackToTop from '../../components/navigation/BackToTop.js';
 import DesignProcessSection from '../../components/sections/DesignProcessSection.js';
 import ProjectShowcaseSection from '../../components/sections/ProjectShowcaseSection.js';
 import ProblemDiscoverySection from '../../components/sections/ProblemDiscoverySection.js';
@@ -182,6 +184,75 @@ const ProjectPage = () => {
     </Box>
   );
 
+  // Generate table of contents dynamically based on available sections
+  const generateTOCSections = () => {
+    const sections = [];
+    const caseStudy = project.caseStudy || {};
+
+    // Always include Project Showcase (it's always rendered)
+    sections.push({ id: 'project-showcase', title: 'Project Showcase', level: 1 });
+
+    if (caseStudy.problemDiscovery || caseStudy.executiveSummary) {
+      sections.push({ id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 });
+    }
+
+    if (caseStudy.businessCase) {
+      sections.push({ id: 'business-case', title: 'Business Case & ROI', level: 1 });
+    }
+
+    if (caseStudy.productVision) {
+      sections.push({ id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 });
+    }
+
+    if (caseStudy.productDecisions && caseStudy.productDecisions.length > 0) {
+      sections.push({ id: 'product-decisions', title: 'Product Decisions & Trade-offs', level: 1 });
+    }
+
+    if (caseStudy.userResearch || caseStudy.problemDiscovery) {
+      sections.push({ id: 'user-research', title: 'User Research & Insights', level: 1 });
+    }
+
+    if (caseStudy.designProcess) {
+      sections.push({ id: 'design-process', title: 'Design Process', level: 1 });
+    }
+
+    if (caseStudy.designProcess?.userFlows && caseStudy.designProcess.userFlows.length > 0) {
+      sections.push({ id: 'user-flow', title: 'User Flow Diagram', level: 1 });
+    }
+
+    if (caseStudy.roadmap || caseStudy.productVision?.mvpScope) {
+      sections.push({ id: 'product-roadmap', title: 'Product Roadmap', level: 1 });
+    }
+
+    if (caseStudy.requirements?.epics && caseStudy.requirements.epics.length > 0) {
+      sections.push({ id: 'requirements', title: 'Requirements & User Stories', level: 1 });
+    }
+
+    if (caseStudy.technicalArchitecture) {
+      sections.push({ id: 'technical-architecture', title: 'Technical Architecture', level: 1 });
+    }
+
+    if (caseStudy.sprintMetrics) {
+      sections.push({ id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 });
+    }
+
+    if (caseStudy.qaTesting) {
+      sections.push({ id: 'qa-testing', title: 'QA & Testing Strategy', level: 1 });
+    }
+
+    if (caseStudy.devOpsSecurity) {
+      sections.push({ id: 'devops-security', title: 'Process & Compliance', level: 1 });
+    }
+
+    if (caseStudy.lessonsLearned || caseStudy.retrospective) {
+      sections.push({ id: 'retrospective', title: 'Retrospective', level: 1 });
+    }
+
+    return sections;
+  };
+
+  const tocSections = generateTOCSections();
+
   return (
     <PageContainer 
       title={project.name} 
@@ -202,41 +273,49 @@ const ProjectPage = () => {
       }
     >
       <Grid container spacing={3}>
-        {/* Main Project Info */}
-        <Grid item xs={12}>
-          {/* Title - Outside Card */}
-          <Typography variant="h4" gutterBottom mb={3}>
-            {project.name}
-          </Typography>
-          
-          <DashboardCard>
-            <CardContent>
-              <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
-                <Box>
-                  <Typography variant="body1" color="text.secondary">
-                    {project.description}
-                  </Typography>
-                </Box>
-                <Box display="flex" gap={1} alignItems="center">
-                  <Chip 
-                    label={project.status} 
-                    color={getStatusColor(project.status)}
-                    size="small"
-                  />
-                  <Chip 
-                    label={project.category} 
-                    variant="outlined"
-                    size="small"
-                  />
-                </Box>
-              </Box>
-            </CardContent>
-          </DashboardCard>
-        </Grid>
+        {/* Table of Contents - Sidebar */}
+        {tocSections.length > 0 && (
+          <Grid item xs={12} md={3} sx={{ display: { xs: 'none', lg: 'block' } }}>
+            <PageTableOfContents sections={tocSections} />
+          </Grid>
+        )}
 
-        {/* Problem Discovery & Solution */}
-        {(project.caseStudy?.problemDiscovery || project.caseStudy?.executiveSummary) && (
-          <Grid item xs={12}>
+        {/* Main Content */}
+        <Grid item xs={12} md={tocSections.length > 0 ? 9 : 12}>
+          {/* Main Project Info */}
+          <Box mb={6}>
+            {/* Title - Outside Card */}
+            <Typography variant="h4" gutterBottom mb={3}>
+              {project.name}
+            </Typography>
+            
+            <DashboardCard>
+              <CardContent>
+                <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
+                  <Box>
+                    <Typography variant="body1" color="text.secondary">
+                      {project.description}
+                    </Typography>
+                  </Box>
+                  <Box display="flex" gap={1} alignItems="center">
+                    <Chip 
+                      label={project.status} 
+                      color={getStatusColor(project.status)}
+                      size="small"
+                    />
+                    <Chip 
+                      label={project.category} 
+                      variant="outlined"
+                      size="small"
+                    />
+                  </Box>
+                </Box>
+              </CardContent>
+            </DashboardCard>
+          </Box>
+
+          {/* Problem Discovery & Solution */}
+          {(project.caseStudy?.problemDiscovery || project.caseStudy?.executiveSummary) && (
             <Box id="problem-discovery" mb={6}>
               <ProblemDiscoverySection
                 title="Problem Discovery & Solution"
@@ -278,12 +357,10 @@ const ProjectPage = () => {
                 }
               />
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Product Vision & MVP Strategy */}
-        {project.caseStudy?.productVision && (
-          <Grid item xs={12}>
+          {/* Product Vision & MVP Strategy */}
+          {project.caseStudy?.productVision && (
             <Box id="product-vision" mb={6}>
               <DashboardCard title="Product Vision & MVP Strategy">
                 <CardContent>
@@ -479,24 +556,20 @@ const ProjectPage = () => {
                 </CardContent>
               </DashboardCard>
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Product Decisions & Trade-offs */}
-        {project.caseStudy?.productDecisions && project.caseStudy.productDecisions.length > 0 && (
-          <Grid item xs={12}>
+          {/* Product Decisions & Trade-offs */}
+          {project.caseStudy?.productDecisions && project.caseStudy.productDecisions.length > 0 && (
             <Box id="product-decisions" mb={6}>
               <ProductDecisionsSection
                 title="Product Decisions & Trade-offs"
                 decisions={project.caseStudy.productDecisions}
               />
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* User Research & Insights */}
-        {(project.caseStudy?.userResearch || project.caseStudy?.problemDiscovery) && (
-          <Grid item xs={12}>
+          {/* User Research & Insights */}
+          {(project.caseStudy?.userResearch || project.caseStudy?.problemDiscovery) && (
             <Box id="user-research" mb={6}>
               <DashboardCard title="User Research & Insights">
                 <CardContent>
@@ -716,24 +789,20 @@ const ProjectPage = () => {
                 </CardContent>
               </DashboardCard>
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Design Process */}
-        {project.caseStudy?.designProcess && (
-          <Grid item xs={12}>
+          {/* Design Process */}
+          {project.caseStudy?.designProcess && (
             <Box id="design-process" mb={6}>
               <DesignProcessSection
                 title="Design Process"
                 designProcess={project.caseStudy.designProcess}
-              />
-            </Box>
-          </Grid>
-        )}
+            />
+          </Box>
+          )}
 
-        {/* User Flow Diagram */}
-        {project.caseStudy?.designProcess?.userFlows && project.caseStudy.designProcess.userFlows.length > 0 && (
-          <Grid item xs={12}>
+          {/* User Flow Diagram */}
+          {project.caseStudy?.designProcess?.userFlows && project.caseStudy.designProcess.userFlows.length > 0 && (
             <Box id="user-flow" mb={6}>
               <DashboardCard title="User Flow Diagram">
                 <CardContent>
@@ -768,12 +837,10 @@ const ProjectPage = () => {
                 </CardContent>
               </DashboardCard>
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Product Roadmap */}
-        {(project.caseStudy?.roadmap || (project.caseStudy?.productVision?.mvpScope)) && (
-          <Grid item xs={12}>
+          {/* Product Roadmap */}
+          {(project.caseStudy?.roadmap || (project.caseStudy?.productVision?.mvpScope)) && (
             <Box id="product-roadmap" mb={6}>
               <RoadmapSection
                 title="Product Roadmap"
@@ -808,24 +875,20 @@ const ProjectPage = () => {
                 columnsPerRow={2}
               />
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Requirements & User Stories */}
-        {project.caseStudy?.requirements?.epics && project.caseStudy.requirements.epics.length > 0 && (
-          <Grid item xs={12}>
+          {/* Requirements & User Stories */}
+          {project.caseStudy?.requirements?.epics && project.caseStudy.requirements.epics.length > 0 && (
             <Box id="requirements" mb={6}>
               <RequirementsSection
                 title="Requirements & User Stories"
                 epics={project.caseStudy.requirements.epics}
               />
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Technical Architecture */}
-        {project.caseStudy?.technicalArchitecture && (
-          <Grid item xs={12}>
+          {/* Technical Architecture */}
+          {project.caseStudy?.technicalArchitecture && (
             <Box id="technical-architecture" mb={6}>
               <DashboardCard title="Technical Architecture">
                 <CardContent>
@@ -872,12 +935,10 @@ const ProjectPage = () => {
                 </CardContent>
               </DashboardCard>
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Sprint Metrics & Velocity */}
-        {project.caseStudy?.sprintMetrics && (
-          <Grid item xs={12}>
+          {/* Sprint Metrics & Velocity */}
+          {project.caseStudy?.sprintMetrics && (
             <Box id="sprint-metrics" mb={6}>
               <SprintMetricsSection
                 title="Sprint Metrics & Velocity"
@@ -890,12 +951,10 @@ const ProjectPage = () => {
                 backlogManagement={project.caseStudy.backlogManagement}
               />
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Process & Compliance */}
-        {project.caseStudy?.devOpsSecurity && (
-          <Grid item xs={12}>
+          {/* Process & Compliance */}
+          {project.caseStudy?.devOpsSecurity && (
             <Box id="devops-security" mb={6}>
               <DevOpsSecuritySection
                 title="Process & Compliance"
@@ -904,12 +963,11 @@ const ProjectPage = () => {
                 codeQuality={project.caseStudy.devOpsSecurity.codeQuality}
               />
             </Box>
-          </Grid>
-        )}
+          )}
 
-        {/* Project Showcase */}
-        <Grid item xs={12}>
-          <ProjectShowcaseSection
+          {/* Project Showcase */}
+          <Box id="project-showcase" mb={6}>
+            <ProjectShowcaseSection
             title=""
             showTitle={false}
             repository={project.github_data ? {
@@ -936,8 +994,47 @@ const ProjectPage = () => {
             showScreenshots={project.screenshots && project.screenshots.length > 0}
             showWireframes={project.caseStudy?.artifacts?.wireframes && project.caseStudy.artifacts.wireframes.length > 0}
               />
+          </Box>
+
+          {/* Retrospective / Lessons Learned */}
+          {(project.caseStudy?.lessonsLearned || project.caseStudy?.retrospective) && (
+            <Box>
+              <Box id="retrospective" mb={6}>
+                <DashboardCard title="Retrospective">
+                  <CardContent>
+                    {project.caseStudy.lessonsLearned?.whatILearned && (
+                      <Box mb={4}>
+                        <Typography variant="h6" gutterBottom>
+                          Lessons Learned
+                        </Typography>
+                        {project.caseStudy.lessonsLearned.whatILearned.map((lesson, index) => (
+                          <Box key={index} mb={3}>
+                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                              {lesson.title}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" paragraph>
+                              <strong>Mistake:</strong> {lesson.mistake}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary" paragraph>
+                              <strong>Lesson:</strong> {lesson.lesson}
+                            </Typography>
+                            {lesson.impact && (
+                              <Typography variant="body2" color="text.secondary" paragraph>
+                                <strong>Impact:</strong> {lesson.impact}
+                              </Typography>
+                            )}
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                  </CardContent>
+                </DashboardCard>
+              </Box>
+            )}
+          </Box>
         </Grid>
       </Grid>
+      <BackToTop />
     </PageContainer>
   );
 };

@@ -22,15 +22,13 @@ const DevOpsQuirks = () => {
     const fetchStats = async () => {
       try {
         setLoading(true);
-        const [commits, prs, repos, projects] = await Promise.all([
+        const [commits, repos, projects] = await Promise.all([
           githubService.getWeeklyCommitStats(),
-          githubService.getPullRequestStats(),
           githubService.getRepositoryStats(),
           projectService.getProjectStats()
         ]);
         
         setWeeklyCommits(commits);
-        setPrStats(prs);
         setRepoStats(repos);
         setProjectCount(projects.total);
       } catch (error) {
