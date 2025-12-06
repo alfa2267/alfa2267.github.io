@@ -423,48 +423,34 @@ const ReloamPage = () => {
               </Stack>
         </Grid>
 
-        {/* Technical Implementation */}
+        {/* Technical Architecture */}
         <Grid item xs={12}>
-          <DashboardCard title="Technical Implementation">
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Technology Choices
-              </Typography>
-              <Grid container spacing={3} mb={3}>
-                {Object.entries(caseStudy.technicalImplementation.technologyChoices).map(([category, data]) => (
-                  <Grid item xs={12} md={6} key={category}>
-                    <Paper elevation={1} sx={{ p: 2 }}>
-                      <Typography variant="subtitle1" fontWeight="bold" gutterBottom textTransform="capitalize">
-                        {category.replace(/([A-Z])/g, ' $1').trim()}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary" mb={1}>
-                        <strong>Stack:</strong> {data.stack.join(', ')}
-                      </Typography>
-                      <Typography variant="body2">
-                        <strong>Rationale:</strong> {data.rationale}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Typography variant="h6" gutterBottom>
-                Architecture Decisions
-              </Typography>
-              <List>
-                {caseStudy.technicalImplementation.architectureDecisions.map((decision, index) => (
-                  <ListItem key={index}>
-                    <ListItemIcon>
-                      <IconCode size={20} color="#1976d2" />
-                    </ListItemIcon>
-                    <ListItemText primary={decision} />
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </DashboardCard>
+          <TechnicalArchitectureSection
+            title="Technical Architecture"
+            overview="MVP architecture optimized for fast iteration and learning, with a focus on simplicity over complexity while maintaining scalability for future growth."
+            architecture={{
+              title: "MVP System Architecture",
+              components: [
+                { name: 'Web App', type: 'client', layer: 'client', color: '#1976d2' },
+                { name: 'React Frontend', type: 'gateway', layer: 'gateway', color: '#2e7d32' },
+                { name: 'LocalStorage', type: 'database', layer: 'database', color: '#9c27b0' }
+              ]
+            }}
+            technologyStack={{
+              frontend: caseStudy.technicalImplementation.technologyChoices.frontend.stack,
+              styling: caseStudy.technicalImplementation.technologyChoices.styling.stack,
+              stateManagement: caseStudy.technicalImplementation.technologyChoices.stateManagement.stack,
+              dataPersistence: caseStudy.technicalImplementation.technologyChoices.dataPersistence.stack
+            }}
+            keyDecisions={[
+              'Component-based architecture for reusability and maintainability',
+              'TypeScript for type safety and better developer experience',
+              'LocalStorage for MVP data persistence (no backend needed, fast iteration)',
+              'Web-first approach for desktop optimization (landlords spend 80% of time at desk)',
+              'Single-tenant architecture for simpler data model and better security',
+              'Modular component structure to enable future migration to multi-tenant SaaS'
+            ]}
+          />
         </Grid>
 
         {/* Design Process */}
@@ -573,24 +559,67 @@ const ReloamPage = () => {
           </DashboardCard>
         </Grid>
 
-        {/* Lessons Learned */}
+        {/* Product Owner Reflections */}
         <Grid item xs={12}>
-          <LessonsLearnedSection
-            title="Product Owner Lessons"
-            whatILearned={caseStudy.lessonsLearned.whatILearned}
-            whatWouldDoDifferently={caseStudy.lessonsLearned.whatWouldDoDifferently}
-            skillsDemonstrated={caseStudy.lessonsLearned.skillsDemonstrated}
-            keyTakeaways={caseStudy.lessonsLearned.keyTakeaways}
+          <NotebookReflections
+            title="Retrospective"
+            reflections={{
+              stickyNotes: [
+                {
+                  color: '#FFF9C4',
+                  title: 'User Research Gap',
+                  content: 'Built MVP with 1 interview. Should have done 10-15 first. Risk: building features users don\'t need.',
+                  icon: IconAlertTriangle
+                },
+                {
+                  color: '#FFCCBC',
+                  title: 'MVPs Should Be Simpler',
+                  content: 'Built more features than needed. Could have started with just tenant tracking + payment logging.',
+                  icon: IconBulb
+                },
+                {
+                  color: '#C8E6C9',
+                  title: 'What Worked',
+                  content: 'Prototyping would have saved 3 weeks of dev time. Clickable prototypes > code for early validation.',
+                  icon: IconCheck
+                },
+                {
+                  color: '#BBDEFB',
+                  title: 'Define Success Upfront',
+                  content: 'Missing validation criteria. How do I know if it\'s succeeding? Need metrics from day 1.',
+                  icon: IconChartBar
+                }
+              ],
+              sketches: [
+                {
+                  title: 'Key Product Lessons',
+                  items: [
+                    'Always do 10+ user interviews before building',
+                    'Ship fastest path to validation, add features only after users confirm value',
+                    'Define success metrics before building (e.g., "5 landlords use it weekly for 3 months")',
+                    'Start with sketches → wireframes → prototypes. Only code once validated.'
+                  ]
+                },
+                {
+                  title: 'Skills I Demonstrated',
+                  items: [
+                    'Problem Discovery - Identified market gap through user interviews',
+                    'Product Strategy - Created phased roadmap (MVP → Growth → Scale)',
+                    'Requirements Management - Translated pain points into user stories',
+                    'Technical Fluency - Built with React/TypeScript, made architecture decisions',
+                    'Self-Awareness - Honest reflection on what could be improved'
+                  ]
+                }
+              ],
+              timeline: caseStudy.lessonsLearned.whatWouldDoDifferently.timeline.map(phase => ({
+                phase: `${phase.week}: ${phase.activity}`,
+                items: phase.tasks
+              })),
+              keyTakeaway: "Building products is about learning, not just shipping. The riskiest assumption is that you know what users want. Always validate early and often. A week of user research saves months of wasted development."
+            }}
           />
         </Grid>
 
-        {/* Artifacts */}
-        <Grid item xs={12}>
-          <ArtifactsSection
-            title="Artifacts"
-            artifacts={caseStudy.artifacts}
-          />
-        </Grid>
       </Grid>
     </PageContainer>
   );
