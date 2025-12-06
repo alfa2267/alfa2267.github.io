@@ -210,7 +210,6 @@ const ProjectShowcaseSection = ({
                     {screenshotsTitle}
                   </Typography>
                 )}
-                {!screenshotsTitle && <Box />}
                 {allItems.length > 0 && (
                   <ToggleButtonGroup
                     value={viewMode}

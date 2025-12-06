@@ -57,7 +57,21 @@ const BusinessCaseSection = ({ title = "Business Case & ROI Analysis", businessC
       <Divider sx={{ my: 3 }} />
 
       {/* Investment Breakdown */}
-      <DashboardCard title="Investment Breakdown">
+      <DashboardCard 
+        title="Investment Breakdown"
+        action={
+          <Paper elevation={2} sx={{ p: 1.5, bgcolor: 'primary.main', color: 'primary.contrastText', minWidth: 150 }}>
+            <Typography variant="body2" sx={{ fontSize: '0.875rem' }}>Total Investment</Typography>
+            <Typography variant="h5" sx={{ fontSize: '1.5rem', fontWeight: 600 }}>
+              {new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0
+              }).format(investment.total)}
+            </Typography>
+          </Paper>
+        }
+      >
         <Grid container spacing={2}>
         {investment.development && (
           <Grid item xs={12} md={6}>
@@ -256,19 +270,6 @@ const BusinessCaseSection = ({ title = "Business Case & ROI Analysis", businessC
             </Paper>
           </Grid>
         )}
-
-        <Grid item xs={12}>
-          <Paper elevation={2} sx={{ p: 2, bgcolor: 'primary.main', color: 'primary.contrastText' }}>
-            <Typography variant="body2">Total Investment</Typography>
-            <Typography variant="h5">
-              {new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                minimumFractionDigits: 0
-              }).format(investment.total)}
-            </Typography>
-          </Paper>
-        </Grid>
       </Grid>
       </DashboardCard>
 
