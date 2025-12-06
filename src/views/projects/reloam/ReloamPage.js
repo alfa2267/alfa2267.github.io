@@ -28,11 +28,12 @@ import {
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
+import PageTableOfContents from '../../../components/navigation/PageTableOfContents.js';
+import BackToTop from '../../../components/navigation/BackToTop.js';
 import {
   ProjectHeroSection,
   ProblemDiscoverySection,
   TechnicalArchitectureSection,
-  FeatureShowcaseSection,
   RequirementsSection,
   NotebookReflections,
   ProjectShowcaseSection,
@@ -47,6 +48,19 @@ import { reloamProjectData } from '../../../data/projects/reloam.js';
 const ReloamPage = () => {
   const project = reloamProjectData;
   const caseStudy = project.caseStudy;
+
+  // Define table of contents sections
+  const tocSections = [
+    { id: 'project-showcase', title: 'Project Showcase', level: 1 },
+    { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
+    { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
+    { id: 'product-decisions', title: 'Product Decisions', level: 1 },
+    { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
+    { id: 'design-process', title: 'Design Process', level: 1 },
+    { id: 'user-flow', title: 'User Flow Diagram', level: 1 },
+    { id: 'validation', title: 'Validation & Next Steps', level: 1 },
+    { id: 'retrospective', title: 'Retrospective', level: 1 }
+  ];
 
   return (
     <PageContainer 
@@ -78,9 +92,16 @@ const ReloamPage = () => {
       }
     >
       <Grid container spacing={3}>
-        {/* Hero Section */}
-        <Grid item xs={12}>
-          <ProjectHeroSection
+        {/* Table of Contents - Sidebar */}
+        <Grid item xs={12} md={3} sx={{ display: { xs: 'none', lg: 'block' } }}>
+          <PageTableOfContents sections={tocSections} />
+        </Grid>
+
+        {/* Main Content */}
+        <Grid item xs={12} md={9}>
+          {/* Hero Section */}
+          <Box id="hero-section" mb={3}>
+            <ProjectHeroSection
             name={project.name}
             description={project.description}
             role={project.role}
@@ -96,9 +117,9 @@ const ReloamPage = () => {
           />
         </Grid>
 
-        {/* Project Showcase */}
-        <Grid item xs={12}>
-          <ProjectShowcaseSection
+          {/* Project Showcase */}
+          <Box id="project-showcase" mb={3}>
+            <ProjectShowcaseSection
             repository={{
               name: 'alfa2267/reloam-landing',
               full_name: 'alfa2267/reloam-landing',
@@ -177,11 +198,11 @@ const ReloamPage = () => {
             showTitle={false}
             screenshotsView="gallery"
           />
-        </Grid>
+          </Box>
 
-        {/* Problem Discovery & Solution */}
-        <Grid item xs={12}>
-          <ProblemDiscoverySection
+          {/* Problem Discovery & Solution */}
+          <Box id="problem-discovery" mb={3}>
+            <ProblemDiscoverySection
             title="Problem Discovery & Solution"
             problemStatement={{
               description: `After interviewing a ${caseStudy.problemDiscovery.initialResearch.interviewSubject}, I discovered a significant gap: existing property management tools focus on residential/commercial real estate. Agricultural properties have unique needs that aren't being served.`,
@@ -224,10 +245,10 @@ const ReloamPage = () => {
               { value: '$2B', label: 'Market Gap' }
             ]}
           />
-        </Grid>
+          </Box>
 
         {/* Product Vision & MVP Strategy */}
-        <Grid item xs={12}>
+          <Box id="product-vision" mb={3}>
           <DashboardCard title="Product Vision & MVP Strategy">
             <CardContent>
               <Box mb={3}>
@@ -235,8 +256,8 @@ const ReloamPage = () => {
                   Vision Statement
                 </Typography>
                 <Typography variant="body1" fontStyle="italic" color="black">
-                  "{caseStudy.productVision.visionStatement}"
-                </Typography>
+                    "{caseStudy.productVision.visionStatement}"
+                  </Typography>
               </Box>
 
               <Divider sx={{ my: 3 }} />
@@ -467,11 +488,11 @@ const ReloamPage = () => {
                   </Paper>
                 ))}
               </Stack>
-        </Grid>
+          </Box>
 
-        {/* Technical Architecture */}
-        <Grid item xs={12}>
-          <TechnicalArchitectureSection
+          {/* Technical Architecture */}
+          <Box id="technical-architecture" mb={3}>
+            <TechnicalArchitectureSection
             title="Technical Architecture"
             overview="MVP architecture optimized for fast iteration and learning, with a focus on simplicity over complexity while maintaining scalability for future growth."
             architecture={{
@@ -497,20 +518,19 @@ const ReloamPage = () => {
               'Modular component structure to enable future migration to multi-tenant SaaS'
             ]}
           />
-        </Grid>
+          </Box>
 
-        {/* Design Process */}
-        <Grid item xs={12}>
-          <DesignProcessSection
+          {/* Design Process */}
+          <Box id="design-process" mb={3}>
+            <DesignProcessSection
             title="Design Process"
             designProcess={caseStudy.designProcess}
           />
-        </Grid>
+          </Box>
 
-
-        {/* User Flow Diagram */}
-        <Grid item xs={12}>
-          <DashboardCard title="User Flow Diagram">
+          {/* User Flow Diagram */}
+          <Box id="user-flow" mb={3}>
+            <DashboardCard title="User Flow Diagram">
             <CardContent>
               <UserFlowDiagram
                 title="Reloam User Journey"
@@ -539,19 +559,11 @@ const ReloamPage = () => {
               />
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
-        {/* Feature Showcase */}
-        <Grid item xs={12}>
-          <FeatureShowcaseSection
-            title="What I Built - Feature Showcase"
-            features={caseStudy.features}
-          />
-        </Grid>
-
-        {/* Validation & Next Steps */}
-        <Grid item xs={12}>
-          <DashboardCard title="Validation & Next Steps">
+          {/* Validation & Next Steps */}
+          <Box id="validation" mb={3}>
+            <DashboardCard title="Validation & Next Steps">
             <CardContent>
               <Grid container spacing={3}>
                 <Grid item xs={12} md={6}>
@@ -603,11 +615,11 @@ const ReloamPage = () => {
               </List>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
-        {/* Product Owner Reflections */}
-        <Grid item xs={12}>
-          <NotebookReflections
+          {/* Product Owner Reflections */}
+          <Box id="retrospective" mb={3}>
+            <NotebookReflections
             title="Retrospective"
             reflections={{
               stickyNotes: [
@@ -664,9 +676,12 @@ const ReloamPage = () => {
               keyTakeaway: "Building products is about learning, not just shipping. The riskiest assumption is that you know what users want. Always validate early and often. A week of user research saves months of wasted development."
             }}
           />
+          </Box>
         </Grid>
-
       </Grid>
+
+      {/* Back to Top Button */}
+      <BackToTop />
     </PageContainer>
   );
 };

@@ -33,10 +33,16 @@ import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
-import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
-import RoadmapSection from '../../../components/sections/RoadmapSection.js';
-import ProjectShowcaseSection from '../../../components/sections/ProjectShowcaseSection.js';
-import DesignProcessSection from '../../../components/sections/DesignProcessSection.js';
+import {
+  LessonsLearnedSection,
+  RoadmapSection,
+  ProjectShowcaseSection,
+  DesignProcessSection,
+  SprintMetricsSection,
+  QATestingSection,
+  DevOpsSecuritySection,
+  BacklogManagementSection
+} from '../../../components/sections';
 import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
@@ -588,6 +594,48 @@ const AirOpsPage = () => {
               </Grid>
             </CardContent>
           </DashboardCard>
+        </Grid>
+
+        {/* Sprint Metrics & Velocity */}
+        <Grid item xs={12}>
+          <SprintMetricsSection
+            title="Sprint Metrics & Velocity"
+            currentSprint={caseStudy.sprintMetrics.currentSprint}
+            velocityHistory={caseStudy.sprintMetrics.velocityHistory}
+            sprintGoal={caseStudy.sprintMetrics.sprintGoal}
+          />
+        </Grid>
+
+        {/* Backlog Management */}
+        <Grid item xs={12}>
+          <BacklogManagementSection
+            title="Backlog Management & Prioritization"
+            prioritizationFramework={caseStudy.backlogManagement.prioritizationFramework}
+            backlogHealth={caseStudy.backlogManagement.backlogHealth}
+            technicalDebt={caseStudy.backlogManagement.technicalDebt}
+            refinementNotes={caseStudy.backlogManagement.refinementNotes}
+          />
+        </Grid>
+
+        {/* QA & Testing */}
+        <Grid item xs={12}>
+          <QATestingSection
+            title="QA & Validation Strategy"
+            testingApproach={caseStudy.qaAndTesting.testingApproach}
+            testScenarios={caseStudy.qaAndTesting.testScenarios}
+            bugMetrics={caseStudy.qaAndTesting.bugMetrics}
+            acceptanceCriteria={caseStudy.qaAndTesting.acceptanceCriteria}
+          />
+        </Grid>
+
+        {/* DevOps & Security */}
+        <Grid item xs={12}>
+          <DevOpsSecuritySection
+            title="Process & Compliance"
+            cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
+            securityScans={caseStudy.devOpsSecurity.securityScans}
+            codeQuality={caseStudy.devOpsSecurity.codeQuality}
+          />
         </Grid>
 
         {/* Technical Architecture */}
