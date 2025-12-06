@@ -22,7 +22,11 @@ const TechnicalArchitectureSection = ({
   showDiagram = true
 }) => {
   return (
-    <DashboardCard title={title}>
+    <Box>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title}
+      </Typography>
+    <DashboardCard>
       <Box>
         {/* Overview */}
         {overview && (
@@ -95,6 +99,7 @@ const TechnicalArchitectureSection = ({
         )}
       </Box>
     </DashboardCard>
+    </Box>
   );
 };
 

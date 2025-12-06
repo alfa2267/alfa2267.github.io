@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { IconCheck, IconCalendar } from '@tabler/icons';
 import RoadmapTimeline from '../diagrams/RoadmapTimeline.js';
+import DashboardCard from '../shared/DashboardCard';
 
 /**
  * Reusable Roadmap Section Component
@@ -30,14 +31,12 @@ const RoadmapSection = ({
   if (phases.length === 0) return null;
 
   return (
-    <Box>
-      {title && (
-        <Typography variant="h5" gutterBottom>
-          {title}
-        </Typography>
-      )}
-
-      {/* Visual Timeline */}
+    <>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title || "Product Roadmap"}
+      </Typography>
+      <DashboardCard>
+        {/* Visual Timeline */}
       {showTimeline && (
         <Box mb={4}>
           <RoadmapTimeline
@@ -105,7 +104,8 @@ const RoadmapSection = ({
           </Grid>
         </>
       )}
-    </Box>
+      </DashboardCard>
+    </>
   );
 };
 

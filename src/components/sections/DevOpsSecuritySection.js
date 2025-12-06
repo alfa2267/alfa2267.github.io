@@ -39,8 +39,12 @@ const DevOpsSecuritySection = ({
   };
 
   return (
-    <DashboardCard title={title}>
-      <Grid container spacing={3}>
+    <>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title}
+      </Typography>
+      <DashboardCard>
+        <Grid container spacing={3}>
         {/* CI/CD Pipeline Status */}
         {showPipeline && cicdPipeline && Object.keys(cicdPipeline).length > 0 && (
           <Grid item xs={12}>
@@ -274,7 +278,8 @@ const DevOpsSecuritySection = ({
           </Grid>
         )}
       </Grid>
-    </DashboardCard>
+      </DashboardCard>
+    </>
   );
 };
 

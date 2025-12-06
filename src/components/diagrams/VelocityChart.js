@@ -38,15 +38,15 @@ const VelocityChart = ({ velocityHistory = [], burnDownData = [] }) => {
       <Box sx={{ position: 'relative', height: chartHeight, mb: 2 }}>
         {/* Y-axis labels */}
         <Box sx={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 40, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', pr: 1 }}>
-          <Typography variant="caption" textAlign="right">{maxVelocity}</Typography>
-          <Typography variant="caption" textAlign="right">{Math.round(maxVelocity / 2)}</Typography>
-          <Typography variant="caption" textAlign="right">0</Typography>
+          <Typography variant="caption" textAlign="right" fontWeight={600} color="text.primary">{maxVelocity}</Typography>
+          <Typography variant="caption" textAlign="right" fontWeight={600} color="text.primary">{Math.round(maxVelocity / 2)}</Typography>
+          <Typography variant="caption" textAlign="right" fontWeight={600} color="text.primary">0</Typography>
         </Box>
 
         {/* Chart area */}
-        <Box sx={{ ml: 5, position: 'relative', height: '100%' }}>
+        <Box sx={{ ml: 5, position: 'relative', height: '100%', bgcolor: 'grey.50', borderRadius: 1, p: 1.5 }}>
           {/* Grid lines */}
-          <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
+          <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, p: 1.5 }}>
             {[0, 0.5, 1].map((ratio) => (
               <Box
                 key={ratio}
@@ -57,14 +57,73 @@ const VelocityChart = ({ velocityHistory = [], burnDownData = [] }) => {
                   top: `${ratio * 100}%`,
                   height: '1px',
                   bgcolor: 'divider',
-                  opacity: 0.3
+                  opacity: 0.6
                 }}
               />
             ))}
           </Box>
 
+          {/* Trend line connecting completed points - SVG overlay */}
+          {velocityHistory.length > 1 && (
+            <Box sx={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, p: 1.5, zIndex: 2, pointerEvents: 'none', overflow: 'visible' }}>
+              <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                <polyline
+                  points={velocityHistory.map((sprint, index) => {
+                    const completed = sprint.completed || 0;
+                    const y = 100 - ((completed / maxVelocity) * 100);
+                    // Bars are evenly distributed - center of each bar
+                    const barCount = velocityHistory.length;
+                    const x = ((index + 0.5) / barCount) * 100;
+                    return `${x},${y}`;
+                  }).join(' ')}
+                  fill="none"
+                  stroke="#1976d2"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                {/* Data points */}
+                {velocityHistory.map((sprint, index) => {
+                  const completed = sprint.completed || 0;
+                  const y = 100 - ((completed / maxVelocity) * 100);
+                  const barCount = velocityHistory.length;
+                  const x = ((index + 0.5) / barCount) * 100;
+                  return (
+                    <circle
+                      key={index}
+                      cx={x}
+                      cy={y}
+                      r="1.2"
+                      fill="#1976d2"
+                      stroke="white"
+                      strokeWidth="0.5"
+                    />
+                  );
+                })}
+              </svg>
+            </Box>
+          )}
+
+          {/* Average velocity reference line */}
+          {avgVelocity > 0 && (
+            <Box
+              sx={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                top: `${100 - (avgVelocity / maxVelocity * 100)}%`,
+                height: '1px',
+                borderTop: '2px dashed',
+                borderColor: 'primary.main',
+                opacity: 0.8,
+                zIndex: 1,
+                mx: 1.5
+              }}
+            />
+          )}
+
           {/* Velocity bars */}
-          <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: '100%', position: 'relative', zIndex: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: 2, height: '100%', position: 'relative', zIndex: 1, p: 1.5, boxSizing: 'border-box' }}>
             {velocityHistory.map((sprint, index) => {
               const committedHeight = ((sprint.committed || 0) / maxVelocity) * 100;
               const completedHeight = ((sprint.completed || 0) / maxVelocity) * 100;
@@ -80,9 +139,9 @@ const VelocityChart = ({ velocityHistory = [], burnDownData = [] }) => {
                         left: '10%',
                         right: '10%',
                         height: `${committedHeight}%`,
-                        bgcolor: 'grey.300',
+                        bgcolor: 'grey.400',
                         borderRadius: '4px 4px 0 0',
-                        opacity: 0.3
+                        opacity: 0.5
                       }}
                     />
                     {/* Completed bar */}
@@ -101,11 +160,15 @@ const VelocityChart = ({ velocityHistory = [], burnDownData = [] }) => {
                   </Box>
                   {/* Sprint label */}
                   <Box sx={{ mt: 1, textAlign: 'center' }}>
-                    <Typography variant="caption" display="block" fontWeight={600}>
+                    <Typography variant="caption" display="block" fontWeight={700} color="text.primary">
                       {sprint.completed || 0}
                     </Typography>
-                    <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.7rem' }}>
-                      {sprint.name?.split(' ')[0] || `S${index + 1}`}
+                    <Typography variant="caption" color="text.primary" sx={{ fontSize: '0.7rem', fontWeight: 500 }}>
+                      {sprint.name 
+                        ? (sprint.name.match(/Sprint\s*(\d+)/i) 
+                            ? `Sprint ${sprint.name.match(/Sprint\s*(\d+)/i)[1]}` 
+                            : sprint.name.split(':')[0].trim() || sprint.name.split(' ').slice(0, 2).join(' '))
+                        : `S${index + 1}`}
                     </Typography>
                   </Box>
                 </Box>
@@ -119,15 +182,15 @@ const VelocityChart = ({ velocityHistory = [], burnDownData = [] }) => {
       <Box display="flex" gap={3} justifyContent="center" mt={2}>
         <Box display="flex" alignItems="center" gap={1}>
           <Box sx={{ width: 16, height: 16, bgcolor: 'success.main', borderRadius: 1 }} />
-          <Typography variant="caption">Completed</Typography>
+          <Typography variant="caption" fontWeight={500}>Completed</Typography>
         </Box>
         <Box display="flex" alignItems="center" gap={1}>
-          <Box sx={{ width: 16, height: 16, bgcolor: 'grey.300', borderRadius: 1 }} />
-          <Typography variant="caption">Committed</Typography>
+          <Box sx={{ width: 16, height: 16, bgcolor: 'grey.400', borderRadius: 1 }} />
+          <Typography variant="caption" fontWeight={500}>Committed</Typography>
         </Box>
         <Box display="flex" alignItems="center" gap={1}>
-          <IconTrendingUp size={16} color="#5D87FF" />
-          <Typography variant="caption">Avg: {avgVelocity} pts</Typography>
+          <IconTrendingUp size={16} color="#1976d2" />
+          <Typography variant="caption" fontWeight={500}>Avg: {avgVelocity} pts</Typography>
         </Box>
       </Box>
 

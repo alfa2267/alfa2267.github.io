@@ -7,7 +7,6 @@ import WorkCapacity from './components/WorkCapacity';
 import RecentActivity from './components/RecentAcitvity';
 import MonthlyActivity from './components/MonthlyActivity';
 import AboutMe from './components/AboutMe';
-import Testimonials from './components/Testimonials';
 import ReleaseHealth from './components/ReleaseHealth';
 import ProductDiscoveryPipeline from './components/ProductDiscoveryPipeline';
 import DevOpsQuirks from './components/DevOpsQuirks';
@@ -16,17 +15,14 @@ const Dashboard = () => {
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-        {/* Release Health & Product Pipeline - NEW */}
+        {/* Release Health */}
         <div style={{
           display: 'flex',
-          gap: '24px',
+          gap: '32px',
           flexDirection: window.innerWidth < 1200 ? 'column' : 'row'
         }}>
-          <div style={{ flex: '1' }}>
+          <div style={{ flex: '1', minWidth: 0 }}>
             <ReleaseHealth />
-          </div>
-          <div style={{ flex: '1' }}>
-            <ProductDiscoveryPipeline />
           </div>
         </div>
 
@@ -74,7 +70,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Testimonials row */}
+        {/* Product Discovery Pipeline - Own row */}
         <div style={{
           display: 'flex',
           gap: '24px',
@@ -82,9 +78,10 @@ const Dashboard = () => {
           alignItems: 'stretch'
         }}>
           <div style={{ flex: '1', height: '100%' }}>
-            <Testimonials />
+            <ProductDiscoveryPipeline />
           </div>
         </div>
+
       </div>
     </PageContainer>
   );

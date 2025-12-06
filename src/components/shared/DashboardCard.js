@@ -62,9 +62,13 @@ const DashboardCard = ({
             </Stack>
           ) : null}
 
-          <Box sx={{ flex: fullHeight ? 1 : undefined }}>
-            {children}
-          </Box>
+          {fullHeight ? (
+            <Box sx={{ flex: 1 }}>
+              {children}
+            </Box>
+          ) : (
+            children
+          )}
         </CardContent>
       )}
 

@@ -132,28 +132,120 @@ export const airopsProjectData = {
       ],
       personas: [
         {
-          name: 'Airline Operations Manager',
-          role: 'Oversee daily flight operations',
-          goals: ['Real-time visibility into flight status', 'Efficient crew and resource management', 'Quick resolution of operational issues'],
-          painPoints: ['Manual coordination between systems', 'Delayed information updates', 'Limited reporting capabilities']
+          name: 'Sarah Chen',
+          role: 'Operations Manager',
+          occupation: 'Operations Manager',
+          age: '42',
+          location: 'Dubai, UAE',
+          techExposure: 'High',
+          devices: 'MacBook Pro, iPhone 14, iPad',
+          quote: 'Efficiency isn\'t just about speed—it\'s about having the right information at the right time.',
+          about: 'Sarah has been managing airline operations for over 15 years. She oversees a team of 25 operations staff and is responsible for coordinating daily flight schedules, crew assignments, and resource allocation. She\'s tech-savvy and always looking for tools that can help her team work more efficiently.',
+          behaviors: [
+            'Checks multiple systems simultaneously throughout the day',
+            'Relies heavily on real-time dashboards for decision-making',
+            'Prefers mobile access for urgent issues when away from desk',
+            'Uses multiple communication channels (email, Slack, phone)'
+          ],
+          goals: [
+            'Real-time visibility into flight status across all routes',
+            'Efficient crew and resource management without manual coordination',
+            'Quick resolution of operational issues before they escalate',
+            'Comprehensive reporting for management reviews'
+          ],
+          painPoints: [
+            'Manual coordination between 5+ different systems',
+            'Delayed information updates causing last-minute changes',
+            'Limited reporting capabilities requiring manual data compilation',
+            'No single source of truth for operational status'
+          ]
         },
         {
-          name: 'Customer Service Representative',
-          role: 'Handle customer inquiries and support',
-          goals: ['Quick access to customer booking information', 'Ability to resolve issues in real-time', 'Clear communication with operations'],
-          painPoints: ['Multiple systems to check', 'Outdated customer information', 'Limited self-service options for customers']
+          name: 'Marcus Johnson',
+          role: 'Customer Service Rep',
+          occupation: 'Customer Service Representative',
+          age: '28',
+          location: 'London, UK',
+          techExposure: 'Medium',
+          devices: 'Windows PC, Android Phone',
+          quote: 'Every customer interaction is an opportunity to turn a problem into a positive experience.',
+          about: 'Marcus handles customer inquiries and support requests for a major airline. He\'s been in customer service for 4 years and deals with everything from booking changes to lost luggage claims. He values tools that help him resolve issues quickly without having to transfer customers to multiple departments.',
+          behaviors: [
+            'Switches between 3-4 different systems during each customer call',
+            'Takes notes manually while talking to customers',
+            'Frequently escalates complex issues due to lack of information',
+            'Uses mobile apps to check flight status on the go'
+          ],
+          goals: [
+            'Quick access to comprehensive customer booking information',
+            'Ability to resolve issues in real-time without transfers',
+            'Clear communication channels with operations team',
+            'Access to self-service options to offer customers'
+          ],
+          painPoints: [
+            'Multiple systems to check for a single customer inquiry',
+            'Outdated customer information leading to incorrect responses',
+            'Limited self-service options to offer frustrated customers',
+            'No visibility into operational issues affecting customers'
+          ]
         },
         {
-          name: 'Frequent Business Traveler',
-          role: 'Regular airline customer',
-          goals: ['Quick and easy booking process', 'Mobile check-in and boarding passes', 'Real-time flight updates'],
-          painPoints: ['Complex booking process', 'Long check-in queues', 'Limited mobile functionality']
+          name: 'David Kim',
+          role: 'Business Traveler',
+          occupation: 'Sales Director',
+          age: '35',
+          location: 'Singapore',
+          techExposure: 'High',
+          devices: 'iPhone 15, MacBook Air, Apple Watch',
+          quote: 'Time is my most valuable asset. I need everything to work seamlessly, every time.',
+          about: 'David travels extensively for work, averaging 8-10 flights per month across Asia-Pacific. He\'s a frequent flyer with platinum status and expects a seamless travel experience. He\'s always on his phone and prefers mobile-first solutions that work reliably.',
+          behaviors: [
+            'Books flights exclusively through mobile apps',
+            'Checks in via mobile app 24 hours before departure',
+            'Monitors flight status closely, especially for connections',
+            'Uses mobile boarding passes and digital wallet for payments'
+          ],
+          goals: [
+            'Quick and easy booking process with minimal steps',
+            'Mobile check-in and digital boarding passes',
+            'Real-time flight updates and gate change notifications',
+            'Seamless experience from booking to arrival'
+          ],
+          painPoints: [
+            'Complex booking process with too many steps',
+            'Long check-in queues despite mobile check-in',
+            'Limited mobile functionality compared to desktop',
+            'Delayed notifications about flight changes or delays'
+          ]
         },
         {
-          name: 'Leisure Traveler',
-          role: 'Occasional airline customer',
-          goals: ['Simple booking experience', 'Clear pricing information', 'Easy access to travel information'],
-          painPoints: ['Confusing booking process', 'Hidden fees', 'Difficulty managing bookings']
+          name: 'Emma Rodriguez',
+          role: 'Leisure Traveler',
+          occupation: 'Marketing Coordinator',
+          age: '29',
+          location: 'Barcelona, Spain',
+          techExposure: 'Medium',
+          devices: 'iPhone 13, iPad',
+          quote: 'Travel should be exciting, not stressful. I want to focus on the destination, not the booking process.',
+          about: 'Emma travels 2-3 times per year for leisure, usually planning trips with friends or family. She\'s comfortable with technology but prefers simple, intuitive interfaces. She values transparency in pricing and clear communication throughout the travel process.',
+          behaviors: [
+            'Researches flights extensively before booking',
+            'Compares prices across multiple platforms',
+            'Prefers booking through airline websites for direct communication',
+            'Uses mobile apps primarily for check-in and flight status'
+          ],
+          goals: [
+            'Simple booking experience without hidden complications',
+            'Clear pricing information with no surprise fees',
+            'Easy access to travel information and updates',
+            'Peace of mind knowing everything is organized'
+          ],
+          painPoints: [
+            'Confusing booking process with unclear steps',
+            'Hidden fees that appear at checkout',
+            'Difficulty managing bookings after purchase',
+            'Lack of clear communication about changes or delays'
+          ]
         }
       ]
     },
@@ -605,8 +697,8 @@ export const airopsProjectData = {
     // PM/Agile Practice Showcase
     sprintMetrics: {
       currentSprint: {
-        name: 'Strategy Document Finalization',
-        status: 'Completed',
+        name: 'Current Sprint',
+        status: 'Active',
         duration: '3 weeks',
         committed: 55,
         completed: 55,
@@ -617,8 +709,7 @@ export const airopsProjectData = {
         { name: 'Sprint 1: Discovery', committed: 40, completed: 38 },
         { name: 'Sprint 2: Analysis', committed: 50, completed: 47 },
         { name: 'Sprint 3: Planning', committed: 55, completed: 55 }
-      ],
-      sprintGoal: 'Complete comprehensive strategic document with full stakeholder alignment'
+      ]
     },
 
     qaAndTesting: {
@@ -795,6 +886,75 @@ export const airopsProjectData = {
         }
       ]
     },
+
+    productDecisions: [
+      {
+        decision: 'Phased Implementation vs. Big Bang Approach',
+        date: 'October 2024',
+        context: 'Air Peace operates 24/7 with no downtime windows. A big bang launch would disrupt operations and risk revenue loss. Need to balance transformation speed with operational continuity.',
+        options: {
+          A: 'Big Bang: Launch all systems simultaneously',
+          B: 'Phased: Roll out by functional area (booking → operations → analytics)',
+          C: 'Parallel Run: Run old and new systems simultaneously'
+        },
+        choice: 'B - Phased Implementation',
+        rationale: [
+          'Minimizes operational risk and allows for learning',
+          'Enables gradual user adoption and change management',
+          'Reduces technical complexity and integration challenges',
+          'Allows for course correction based on early feedback'
+        ],
+        tradeoffs: {
+          benefit: 'Lower risk, better change management, incremental value delivery',
+          cost: 'Longer overall timeline, temporary system fragmentation during transition'
+        },
+        validationPlan: 'Measure success of Phase 1 (booking system) before committing to Phase 2. Target: 80% booking migration within 3 months.'
+      },
+      {
+        decision: 'Legacy System Integration vs. Complete Replacement',
+        date: 'September 2024',
+        context: 'Existing legacy systems handle critical operations. Complete replacement would require extensive data migration and retraining. Integration allows gradual transition.',
+        options: {
+          A: 'Complete replacement: Migrate all data and decommission legacy',
+          B: 'Integration: Build APIs to connect new and legacy systems',
+          C: 'Hybrid: Replace non-critical systems, integrate critical ones'
+        },
+        choice: 'B - Integration Approach',
+        rationale: [
+          'Maintains operational continuity during transition',
+          'Reduces risk of data loss or system downtime',
+          'Allows gradual migration of users and processes',
+          'Enables validation of new systems before full cutover'
+        ],
+        tradeoffs: {
+          benefit: 'Lower risk, operational continuity, gradual adoption',
+          cost: 'Temporary complexity managing two systems, API development overhead'
+        },
+        validationPlan: 'Monitor integration stability for 3 months. If API reliability >99.5%, proceed with full migration.'
+      },
+      {
+        decision: 'Mobile App Priority: Native vs. Progressive Web App',
+        date: 'November 2024',
+        context: 'Mobile experience is critical for customer satisfaction, but development resources are limited. Need to balance user experience with development speed and cost.',
+        options: {
+          A: 'Native apps: Separate iOS and Android development',
+          B: 'Progressive Web App: Single codebase, app-like experience',
+          C: 'Hybrid: React Native for cross-platform'
+        },
+        choice: 'A - Native Apps (Phase 2)',
+        rationale: [
+          'Superior user experience and performance',
+          'Better integration with device features (notifications, offline)',
+          'Higher customer satisfaction and engagement',
+          'Industry standard for airline mobile apps'
+        ],
+        tradeoffs: {
+          benefit: 'Best user experience, full device capabilities, higher adoption',
+          cost: 'Higher development cost, longer timeline, requires iOS and Android expertise'
+        },
+        validationPlan: 'Launch web booking first. If mobile bookings >30% of total within 6 months, prioritize native apps.'
+      }
+    ],
 
     artifacts: []
   }

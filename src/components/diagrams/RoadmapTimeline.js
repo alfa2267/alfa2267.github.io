@@ -58,11 +58,7 @@ const RoadmapTimeline = ({ phases = [], title = "Product Roadmap" }) => {
                   flexShrink: 0,
                   boxShadow: 2
                 }}
-              >
-                <Typography variant="h6" fontWeight="bold">
-                  {index + 1}
-                </Typography>
-              </Box>
+              />
 
               {/* Phase content */}
               <Paper

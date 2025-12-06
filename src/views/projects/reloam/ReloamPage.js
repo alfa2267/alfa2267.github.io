@@ -3,7 +3,6 @@ import {
   Box,
   Typography,
   CardContent,
-  Chip,
   Button,
   Grid,
   List,
@@ -11,22 +10,16 @@ import {
   ListItemIcon,
   ListItemText,
   Divider,
-  Paper,
-  Stack
+  Paper
 } from '@mui/material';
 import {
   IconCheck,
   IconCalendar,
   IconChartBar,
-  IconRocket,
   IconAlertTriangle,
   IconFileText,
   IconExternalLink,
-  IconCode,
-  IconBulb,
-  IconTrendingUp,
-  IconUsers,
-  IconWorld
+  IconBulb
 } from '@tabler/icons';
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
@@ -44,9 +37,9 @@ import {
   SprintMetricsSection,
   QATestingSection,
   DevOpsSecuritySection,
-  BacklogManagementSection,
   ProductDecisionsSection,
-  RoadmapSection
+  RoadmapSection,
+  BusinessCaseSection
 } from '../../../components/sections';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
@@ -57,20 +50,19 @@ const ReloamPage = () => {
   // Define table of contents sections
   const tocSections = [
     { id: 'project-showcase', title: 'Project Showcase', level: 1 },
-    { id: 'key-stats', title: 'Key Stats', level: 1 },
     { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
+    { id: 'business-case', title: 'Business Case & ROI', level: 1 },
     { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
-    { id: 'user-research', title: 'User Research & Insights', level: 1 },
-    { id: 'product-roadmap', title: 'Product Roadmap', level: 1 },
-    { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
-    { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
-    { id: 'backlog-management', title: 'Backlog Management', level: 1 },
-    { id: 'qa-testing', title: 'QA & Testing Strategy', level: 1 },
-    { id: 'devops-security', title: 'Process & Compliance', level: 1 },
     { id: 'product-decisions', title: 'Product Decisions & Trade-offs', level: 1 },
-    { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
+    { id: 'user-research', title: 'User Research & Insights', level: 1 },
     { id: 'design-process', title: 'Design Process', level: 1 },
     { id: 'user-flow', title: 'User Flow Diagram', level: 1 },
+    { id: 'product-roadmap', title: 'Product Roadmap', level: 1 },
+    { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
+    { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
+    { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
+    { id: 'qa-testing', title: 'QA & Testing Strategy', level: 1 },
+    { id: 'devops-security', title: 'Process & Compliance', level: 1 },
     { id: 'retrospective', title: 'Retrospective', level: 1 }
   ];
 
@@ -112,7 +104,7 @@ const ReloamPage = () => {
         {/* Main Content */}
         <Grid item xs={12} md={9}>
           {/* Hero Section */}
-          <Box id="hero-section" mb={3}>
+          <Box id="hero-section" mb={6}>
             <ProjectHeroSection
             name={project.name}
             description={project.description}
@@ -130,7 +122,7 @@ const ReloamPage = () => {
           </Box>
 
           {/* Project Showcase */}
-          <Box id="project-showcase" mb={3}>
+          <Box id="project-showcase" mb={6}>
             <ProjectShowcaseSection
             repository={{
               name: 'alfa2267/reloam-landing',
@@ -212,58 +204,8 @@ const ReloamPage = () => {
           />
           </Box>
 
-          {/* Key Stats */}
-          <Box id="key-stats" mb={3}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={3}>
-                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                  <IconTrendingUp size={32} color="#1976d2" style={{ marginBottom: 8 }} />
-                  <Typography variant="h4" color="primary" gutterBottom>
-                    $2B
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Market Gap
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                  <IconRocket size={32} color="#2e7d32" style={{ marginBottom: 8 }} />
-                  <Typography variant="h4" color="success.main" gutterBottom>
-                    Beta
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Deployment Status
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                  <IconUsers size={32} color="#ed6c02" style={{ marginBottom: 8 }} />
-                  <Typography variant="h4" color="warning.main" gutterBottom>
-                    5-10
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Beta Landlords
-                  </Typography>
-                </Paper>
-              </Grid>
-              <Grid item xs={12} md={3}>
-                <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                  <IconWorld size={32} color="#9c27b0" style={{ marginBottom: 8 }} />
-                  <Typography variant="h4" color="secondary" gutterBottom>
-                    2024
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Launch Year
-                  </Typography>
-                </Paper>
-              </Grid>
-            </Grid>
-          </Box>
-
           {/* Problem Discovery & Solution */}
-          <Box id="problem-discovery" mb={3}>
+          <Box id="problem-discovery" mb={6}>
             <ProblemDiscoverySection
             title="Problem Discovery & Solution"
             problemStatement={{
@@ -309,11 +251,23 @@ const ReloamPage = () => {
           />
           </Box>
 
+          {/* Business Case & ROI */}
+          <Box id="business-case" mb={6}>
+            <BusinessCaseSection
+              title="Business Case & ROI Analysis"
+              businessCase={caseStudy.businessCase}
+              swot={caseStudy.swot}
+            />
+          </Box>
+
         {/* Product Vision & MVP Strategy */}
-          <Box id="product-vision" mb={3}>
-          <DashboardCard title="Product Vision & MVP Strategy">
+          <Box id="product-vision" mb={6}>
+            <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+              Product Vision & MVP Strategy
+            </Typography>
+          <DashboardCard>
             <CardContent>
-              <Box mb={3}>
+              <Box mb={6}>
                 <Typography variant="h6" gutterBottom>
                   Vision Statement
                 </Typography>
@@ -425,9 +379,22 @@ const ReloamPage = () => {
           </DashboardCard>
           </Box>
 
+          {/* Product Decisions & Trade-offs */}
+          {caseStudy.productDecisions && caseStudy.productDecisions.length > 0 && (
+            <Box id="product-decisions" mb={6}>
+              <ProductDecisionsSection
+                title="Product Decisions & Trade-offs"
+                decisions={caseStudy.productDecisions}
+              />
+            </Box>
+          )}
+
           {/* User Research & Insights */}
-          <Box id="user-research" mb={3}>
-            <DashboardCard title="User Research & Insights">
+          <Box id="user-research" mb={6}>
+            <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+              User Research & Insights
+            </Typography>
+            <DashboardCard>
               <CardContent>
                 <Grid container spacing={1} mb={2}>
                   <Grid item xs={6} sm={3}>
@@ -529,132 +496,8 @@ const ReloamPage = () => {
           </DashboardCard>
           </Box>
 
-          {/* Product Roadmap */}
-          <Box id="product-roadmap" mb={3}>
-            <RoadmapSection
-              title="Product Roadmap"
-              phases={[
-                {
-                  phase: 'Phase 1: MVP - Core Features (Built)',
-                  duration: 'Months 1-3',
-                  focus: 'Essential features for property management',
-                  deliverables: caseStudy.productVision.mvpScope.mustHave.items,
-                  keyMetrics: ['5-10 beta landlords onboarded', 'Core features validated', 'User feedback collected']
-                },
-                {
-                  phase: 'Phase 2: Enhanced Features (Planned)',
-                  duration: 'Months 4-6',
-                  focus: 'Improve usability and add value features',
-                  deliverables: caseStudy.productVision.mvpScope.shouldHave.items,
-                  keyMetrics: ['Feature adoption > 60%', 'User satisfaction > 80%', 'Active users > 20']
-                },
-                {
-                  phase: 'Phase 3: Advanced Features (Future)',
-                  duration: 'Months 7-9',
-                  focus: 'Scale and expand capabilities',
-                  deliverables: caseStudy.productVision.mvpScope.couldHave.items,
-                  keyMetrics: ['Market expansion', 'Advanced analytics adoption', 'Integration partnerships']
-                }
-              ]}
-              showTimeline={true}
-              showDetailedBreakdown={false}
-              timelineTitle="Implementation Timeline"
-              columnsPerRow={2}
-            />
-          </Box>
-
-          {/* Requirements & User Stories */}
-          <Box id="requirements" mb={3}>
-            <RequirementsSection
-            title="Requirements & User Stories"
-            epics={caseStudy.requirements.epics}
-          />
-          </Box>
-
-          {/* Sprint Metrics & Velocity */}
-          <Box id="sprint-metrics" mb={3}>
-            <SprintMetricsSection
-            title="Sprint Metrics & Velocity"
-            currentSprint={caseStudy.sprintMetrics.currentSprint}
-            velocityHistory={caseStudy.sprintMetrics.velocityHistory}
-            sprintGoal={caseStudy.sprintMetrics.sprintGoal}
-          />
-          </Box>
-
-          {/* Backlog Management */}
-          <Box id="backlog-management" mb={3}>
-            <BacklogManagementSection
-            title="Backlog Management & Prioritization"
-            prioritizationFramework={caseStudy.backlogManagement.prioritizationFramework}
-            backlogHealth={caseStudy.backlogManagement.backlogHealth}
-            technicalDebt={caseStudy.backlogManagement.technicalDebt}
-            refinementNotes={caseStudy.backlogManagement.refinementNotes}
-          />
-          </Box>
-
-          {/* QA & Testing */}
-          <Box id="qa-testing" mb={3}>
-            <QATestingSection
-            title="QA & Testing Strategy"
-            testingApproach={caseStudy.qaAndTesting.testingApproach}
-            testScenarios={caseStudy.qaAndTesting.testScenarios}
-            bugMetrics={caseStudy.qaAndTesting.bugMetrics}
-            acceptanceCriteria={caseStudy.qaAndTesting.acceptanceCriteria}
-          />
-          </Box>
-
-          {/* Process & Compliance */}
-          <Box id="devops-security" mb={3}>
-            <DevOpsSecuritySection
-            title="Process & Compliance"
-            cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
-            securityScans={caseStudy.devOpsSecurity.securityScans}
-            codeQuality={caseStudy.devOpsSecurity.codeQuality}
-          />
-          </Box>
-
-          {/* Product Decisions & Trade-offs */}
-          {caseStudy.productDecisions && caseStudy.productDecisions.length > 0 && (
-            <Box id="product-decisions" mb={3}>
-              <ProductDecisionsSection
-                title="Product Decisions & Trade-offs"
-                decisions={caseStudy.productDecisions}
-              />
-            </Box>
-          )}
-
-          {/* Technical Architecture */}
-          <Box id="technical-architecture" mb={3}>
-            <TechnicalArchitectureSection
-            title="Technical Architecture"
-            overview="MVP architecture optimized for fast iteration and learning, with a focus on simplicity over complexity while maintaining scalability for future growth."
-            architecture={{
-              title: "MVP System Architecture",
-              components: [
-                { name: 'Web App', type: 'client', layer: 'client', color: '#1976d2' },
-                { name: 'React Frontend', type: 'gateway', layer: 'gateway', color: '#2e7d32' },
-                { name: 'LocalStorage', type: 'database', layer: 'database', color: '#9c27b0' }
-              ]
-            }}
-            technologyStack={{
-              frontend: caseStudy.technicalImplementation.technologyChoices.frontend.stack,
-              styling: caseStudy.technicalImplementation.technologyChoices.styling.stack,
-              stateManagement: caseStudy.technicalImplementation.technologyChoices.stateManagement.stack,
-              dataPersistence: caseStudy.technicalImplementation.technologyChoices.dataPersistence.stack
-            }}
-            keyDecisions={[
-              'Component-based architecture for reusability and maintainability',
-              'TypeScript for type safety and better developer experience',
-              'LocalStorage for MVP data persistence (no backend needed, fast iteration)',
-              'Web-first approach for desktop optimization (landlords spend 80% of time at desk)',
-              'Single-tenant architecture for simpler data model and better security',
-              'Modular component structure to enable future migration to multi-tenant SaaS'
-            ]}
-          />
-          </Box>
-
           {/* Design Process */}
-          <Box id="design-process" mb={3}>
+          <Box id="design-process" mb={6}>
             <DesignProcessSection
             title="Design Process"
             designProcess={caseStudy.designProcess}
@@ -662,14 +505,17 @@ const ReloamPage = () => {
           </Box>
 
           {/* User Flow Diagram */}
-          <Box id="user-flow" mb={3}>
-            <DashboardCard title="User Flow Diagram">
-            <CardContent>
-              <Typography variant="body1" paragraph mb={4}>
+          <Box id="user-flow" mb={6}>
+            <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+              User Flow Diagram
+            </Typography>
+            <DashboardCard>
+            <CardContent sx={{ p: 0 }}>
+              <Typography variant="body1" paragraph mb={4} sx={{ px: 2, pt: 2 }}>
                 Visual representation of the key user flows in the Reloam platform:
               </Typography>
               
-              <Grid container spacing={4}>
+              <Grid container spacing={4} sx={{ px: 2, pb: 2 }}>
                 {/* Tenant Onboarding Flow */}
                 <Grid item xs={12}>
                   <UserFlowDiagram
@@ -702,7 +548,6 @@ const ReloamPage = () => {
                     ]}
                   />
                 </Grid>
-
                 {/* Rent Payment Recording Flow */}
                 <Grid item xs={12}>
                   <UserFlowDiagram
@@ -735,7 +580,6 @@ const ReloamPage = () => {
                     ]}
                   />
                 </Grid>
-
                 {/* Activity Logging Flow */}
                 <Grid item xs={12}>
                   <UserFlowDiagram
@@ -768,7 +612,6 @@ const ReloamPage = () => {
                     ]}
                   />
                 </Grid>
-
                 {/* Financial Reporting Flow */}
                 <Grid item xs={12}>
                   <UserFlowDiagram
@@ -806,8 +649,115 @@ const ReloamPage = () => {
           </DashboardCard>
           </Box>
 
+          {/* Product Roadmap */}
+          <Box id="product-roadmap" mb={6}>
+            <RoadmapSection
+              title="Product Roadmap"
+              phases={[
+                {
+                  phase: 'Phase 1: MVP - Core Features (Built)',
+                  duration: 'Months 1-3',
+                  focus: 'Essential features for property management',
+                  deliverables: caseStudy.productVision.mvpScope.mustHave.items,
+                  keyMetrics: ['5-10 beta landlords onboarded', 'Core features validated', 'User feedback collected']
+                },
+                {
+                  phase: 'Phase 2: Enhanced Features (Planned)',
+                  duration: 'Months 4-6',
+                  focus: 'Improve usability and add value features',
+                  deliverables: caseStudy.productVision.mvpScope.shouldHave.items,
+                  keyMetrics: ['Feature adoption > 60%', 'User satisfaction > 80%', 'Active users > 20']
+                },
+                {
+                  phase: 'Phase 3: Advanced Features (Future)',
+                  duration: 'Months 7-9',
+                  focus: 'Scale and expand capabilities',
+                  deliverables: caseStudy.productVision.mvpScope.couldHave.items,
+                  keyMetrics: ['Market expansion', 'Advanced analytics adoption', 'Integration partnerships']
+                }
+              ]}
+              showTimeline={true}
+              showDetailedBreakdown={false}
+              timelineTitle=""
+              columnsPerRow={2}
+            />
+          </Box>
+
+          {/* Requirements & User Stories */}
+          <Box id="requirements" mb={6}>
+            <RequirementsSection
+            title="Requirements & User Stories"
+            epics={caseStudy.requirements.epics}
+          />
+          </Box>
+
+          {/* Technical Architecture */}
+          <Box id="technical-architecture" mb={6}>
+            <TechnicalArchitectureSection
+            title="Technical Architecture"
+            overview="MVP architecture optimized for fast iteration and learning, with a focus on simplicity over complexity while maintaining scalability for future growth."
+            architecture={{
+              title: "MVP System Architecture",
+              components: [
+                { name: 'Web App', type: 'client', layer: 'client', color: '#1976d2' },
+                { name: 'React Frontend', type: 'gateway', layer: 'gateway', color: '#2e7d32' },
+                { name: 'LocalStorage', type: 'database', layer: 'database', color: '#9c27b0' }
+              ]
+            }}
+            technologyStack={{
+              frontend: caseStudy.technicalImplementation.technologyChoices.frontend.stack,
+              styling: caseStudy.technicalImplementation.technologyChoices.styling.stack,
+              stateManagement: caseStudy.technicalImplementation.technologyChoices.stateManagement.stack,
+              dataPersistence: caseStudy.technicalImplementation.technologyChoices.dataPersistence.stack
+            }}
+            keyDecisions={[
+              'Component-based architecture for reusability and maintainability',
+              'TypeScript for type safety and better developer experience',
+              'LocalStorage for MVP data persistence (no backend needed, fast iteration)',
+              'Web-first approach for desktop optimization (landlords spend 80% of time at desk)',
+              'Single-tenant architecture for simpler data model and better security',
+              'Modular component structure to enable future migration to multi-tenant SaaS'
+            ]}
+          />
+          </Box>
+
+          {/* Sprint Metrics & Velocity */}
+          <Box id="sprint-metrics" mb={6}>
+            <SprintMetricsSection
+            title="Sprint Metrics & Velocity"
+            currentSprint={caseStudy.sprintMetrics.currentSprint}
+            velocityHistory={caseStudy.sprintMetrics.velocityHistory}
+            sprintGoal={caseStudy.sprintMetrics.sprintGoal}
+            epics={caseStudy.requirements?.epics || []}
+            userStories={caseStudy.sprintMetrics?.userStories || []}
+            burnDownData={caseStudy.sprintMetrics?.burnDownData || []}
+            backlogManagement={caseStudy.backlogManagement}
+          />
+          </Box>
+
+          {/* QA & Testing */}
+          <Box id="qa-testing" mb={6}>
+            <QATestingSection
+            title="QA & Testing Strategy"
+            testingApproach={caseStudy.qaAndTesting.testingApproach}
+            testScenarios={caseStudy.qaAndTesting.testScenarios}
+            bugMetrics={caseStudy.qaAndTesting.bugMetrics}
+            acceptanceCriteria={caseStudy.qaAndTesting.acceptanceCriteria}
+          />
+          </Box>
+
+          {/* Process & Compliance */}
+          <Box id="devops-security" mb={6}>
+            <DevOpsSecuritySection
+            title="Process & Compliance"
+            cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
+            securityScans={caseStudy.devOpsSecurity.securityScans}
+            codeQuality={caseStudy.devOpsSecurity.codeQuality}
+          />
+          </Box>
+
           {/* Product Owner Reflections */}
-          <Box id="retrospective" mb={3}>
+          <Box id="retrospective" mb={6}>
             <NotebookReflections
             title="Retrospective"
             reflections={{

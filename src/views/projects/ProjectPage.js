@@ -20,10 +20,6 @@ import {
   IconCheck,
   IconCalendar,
   IconExternalLink,
-  IconStar,
-  IconCode,
-  IconUsers,
-  IconEye,
   IconFileText,
   IconBulb,
   IconAlertTriangle,
@@ -39,6 +35,8 @@ import RequirementsSection from '../../components/sections/RequirementsSection.j
 import DevOpsSecuritySection from '../../components/sections/DevOpsSecuritySection.js';
 import RoadmapSection from '../../components/sections/RoadmapSection.js';
 import ProductDecisionsSection from '../../components/sections/ProductDecisionsSection.js';
+import SprintMetricsSection from '../../components/sections/SprintMetricsSection.js';
+import UserFlowDiagram from '../../components/diagrams/UserFlowDiagram.js';
 
 const ProjectPage = () => {
   const { slug } = useParams();
@@ -112,14 +110,14 @@ const ProjectPage = () => {
 
   const renderRepoInfo = () => (
     <Box sx={{ p: 3 }}>
-      <Box display="flex" alignItems="center" mb={3}>
+      <Box display="flex" alignItems="center" mb={6}>
         <IconBrandGithub size={24} />
         <Typography variant="h6" sx={{ ml: 1 }}>
           {project.github_data.full_name}
         </Typography>
       </Box>
       
-      <Grid container spacing={2} mb={3}>
+      <Grid container spacing={2} mb={6}>
         <Grid item xs={6}>
           <Box textAlign="center">
             <Typography variant="h4">
@@ -142,7 +140,7 @@ const ProjectPage = () => {
         </Grid>
       </Grid>
 
-      <Box mb={3}>
+      <Box mb={6}>
         <Typography variant="body2" color="text.secondary" display="flex" alignItems="center">
           <IconCalendar size={16} />
           <Box component="span" ml={1}>
@@ -206,13 +204,15 @@ const ProjectPage = () => {
       <Grid container spacing={3}>
         {/* Main Project Info */}
         <Grid item xs={12}>
+          {/* Title - Outside Card */}
+          <Typography variant="h4" gutterBottom mb={3}>
+            {project.name}
+          </Typography>
+          
           <DashboardCard>
             <CardContent>
               <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap" gap={2}>
                 <Box>
-                  <Typography variant="h4" gutterBottom>
-                    {project.name}
-                  </Typography>
                   <Typography variant="body1" color="text.secondary">
                     {project.description}
                   </Typography>
@@ -234,94 +234,10 @@ const ProjectPage = () => {
           </DashboardCard>
         </Grid>
 
-        {/* Key Stats */}
-        {project.github_data && (
-          <Grid item xs={12}>
-            <Box id="key-stats" mb={3}>
-              <Grid container spacing={3}>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                    <IconStar size={32} color="#1976d2" style={{ marginBottom: 8 }} />
-                    <Typography variant="h4" color="primary" gutterBottom>
-                      {project.github_data.stargazers_count || 0}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Stars
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={6} md={3}>
-                  <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                    <IconCode size={32} color="#2e7d32" style={{ marginBottom: 8 }} />
-                    <Typography variant="h4" color="success.main" gutterBottom>
-                      {project.github_data.language || 'N/A'}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Language
-                    </Typography>
-                  </Paper>
-                </Grid>
-                {project.github_data.forks_count !== undefined && (
-                  <Grid item xs={12} sm={6} md={3}>
-                    <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                      <IconBrandGithub size={32} color="#ed6c02" style={{ marginBottom: 8 }} />
-                      <Typography variant="h4" color="warning.main" gutterBottom>
-                        {project.github_data.forks_count || 0}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Forks
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                )}
-                {project.github_data.watchers_count !== undefined && (
-                  <Grid item xs={12} sm={6} md={3}>
-                    <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                      <IconEye size={32} color="#9c27b0" style={{ marginBottom: 8 }} />
-                      <Typography variant="h4" color="secondary" gutterBottom>
-                        {project.github_data.watchers_count || 0}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Watchers
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                )}
-                {(!project.github_data.forks_count && !project.github_data.watchers_count) && (
-                  <>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                        <IconCalendar size={32} color="#ed6c02" style={{ marginBottom: 8 }} />
-                        <Typography variant="h4" color="warning.main" gutterBottom>
-                          {project.github_data.updated_at ? new Date(project.github_data.updated_at).getFullYear() : 'N/A'}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Updated
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                      <Paper elevation={2} sx={{ p: 3, textAlign: 'center', height: '100%' }}>
-                        <IconCheck size={32} color="#9c27b0" style={{ marginBottom: 8 }} />
-                        <Typography variant="h4" color="secondary" gutterBottom>
-                          {project.status || 'N/A'}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Status
-                        </Typography>
-                      </Paper>
-                    </Grid>
-                  </>
-                )}
-              </Grid>
-            </Box>
-          </Grid>
-        )}
-
         {/* Problem Discovery & Solution */}
         {(project.caseStudy?.problemDiscovery || project.caseStudy?.executiveSummary) && (
           <Grid item xs={12}>
-            <Box id="problem-discovery" mb={3}>
+            <Box id="problem-discovery" mb={6}>
               <ProblemDiscoverySection
                 title="Problem Discovery & Solution"
                 problemStatement={
@@ -368,10 +284,10 @@ const ProjectPage = () => {
         {/* Product Vision & MVP Strategy */}
         {project.caseStudy?.productVision && (
           <Grid item xs={12}>
-            <Box id="product-vision" mb={3}>
+            <Box id="product-vision" mb={6}>
               <DashboardCard title="Product Vision & MVP Strategy">
                 <CardContent>
-                  <Box mb={3}>
+                  <Box mb={6}>
                     <Typography variant="h6" gutterBottom>
                       Vision Statement
                     </Typography>
@@ -566,10 +482,22 @@ const ProjectPage = () => {
           </Grid>
         )}
 
+        {/* Product Decisions & Trade-offs */}
+        {project.caseStudy?.productDecisions && project.caseStudy.productDecisions.length > 0 && (
+          <Grid item xs={12}>
+            <Box id="product-decisions" mb={6}>
+              <ProductDecisionsSection
+                title="Product Decisions & Trade-offs"
+                decisions={project.caseStudy.productDecisions}
+              />
+            </Box>
+          </Grid>
+        )}
+
         {/* User Research & Insights */}
         {(project.caseStudy?.userResearch || project.caseStudy?.problemDiscovery) && (
           <Grid item xs={12}>
-            <Box id="user-research" mb={3}>
+            <Box id="user-research" mb={6}>
               <DashboardCard title="User Research & Insights">
                 <CardContent>
                   {project.caseStudy?.userResearch ? (
@@ -791,10 +719,62 @@ const ProjectPage = () => {
           </Grid>
         )}
 
+        {/* Design Process */}
+        {project.caseStudy?.designProcess && (
+          <Grid item xs={12}>
+            <Box id="design-process" mb={6}>
+              <DesignProcessSection
+                title="Design Process"
+                designProcess={project.caseStudy.designProcess}
+              />
+            </Box>
+          </Grid>
+        )}
+
+        {/* User Flow Diagram */}
+        {project.caseStudy?.designProcess?.userFlows && project.caseStudy.designProcess.userFlows.length > 0 && (
+          <Grid item xs={12}>
+            <Box id="user-flow" mb={6}>
+              <DashboardCard title="User Flow Diagram">
+                <CardContent>
+                  <Typography variant="body1" paragraph mb={4}>
+                    Visual representation of the key user flows:
+                  </Typography>
+                  <Grid container spacing={4}>
+                    {project.caseStudy.designProcess.userFlows.map((flowDescription, index) => {
+                      const [title, ...stepDescriptions] = flowDescription.split(': ');
+                      const steps = stepDescriptions.length > 0 
+                        ? stepDescriptions[0].split(' → ').map((step, i) => ({
+                            name: step.trim(),
+                            description: `Step ${i + 1} in ${title.toLowerCase()} flow`
+                          }))
+                        : [
+                            { name: 'Start', description: 'User initiates flow' },
+                            { name: 'Action', description: 'User performs main action' },
+                            { name: 'Review', description: 'User reviews information' },
+                            { name: 'Complete', description: 'Flow completed successfully' }
+                          ];
+                      
+                      return (
+                        <Grid item xs={12} key={index}>
+                          <UserFlowDiagram
+                            title={title}
+                            steps={steps}
+                          />
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </CardContent>
+              </DashboardCard>
+            </Box>
+          </Grid>
+        )}
+
         {/* Product Roadmap */}
         {(project.caseStudy?.roadmap || (project.caseStudy?.productVision?.mvpScope)) && (
           <Grid item xs={12}>
-            <Box id="product-roadmap" mb={3}>
+            <Box id="product-roadmap" mb={6}>
               <RoadmapSection
                 title="Product Roadmap"
                 phases={project.caseStudy?.roadmap || (
@@ -824,7 +804,7 @@ const ProjectPage = () => {
                 )}
                 showTimeline={true}
                 showDetailedBreakdown={false}
-                timelineTitle="Implementation Timeline"
+                timelineTitle=""
                 columnsPerRow={2}
               />
             </Box>
@@ -834,7 +814,7 @@ const ProjectPage = () => {
         {/* Requirements & User Stories */}
         {project.caseStudy?.requirements?.epics && project.caseStudy.requirements.epics.length > 0 && (
           <Grid item xs={12}>
-            <Box id="requirements" mb={3}>
+            <Box id="requirements" mb={6}>
               <RequirementsSection
                 title="Requirements & User Stories"
                 epics={project.caseStudy.requirements.epics}
@@ -843,37 +823,85 @@ const ProjectPage = () => {
           </Grid>
         )}
 
-        {/* Design Process */}
-        {project.caseStudy?.designProcess && (
+        {/* Technical Architecture */}
+        {project.caseStudy?.technicalArchitecture && (
           <Grid item xs={12}>
-            <DesignProcessSection
-              title="Design Process"
-              designProcess={project.caseStudy.designProcess}
-            />
+            <Box id="technical-architecture" mb={6}>
+              <DashboardCard title="Technical Architecture">
+                <CardContent>
+                  <Typography variant="body1" paragraph>
+                    {project.caseStudy.technicalArchitecture.overview}
+                  </Typography>
+                  {project.caseStudy.technicalArchitecture.technologyStack && (
+                    <>
+                      <Divider sx={{ my: 3 }} />
+                      <Grid container spacing={3} mt={1}>
+                        {Object.entries(project.caseStudy.technicalArchitecture.technologyStack).map(([category, techs]) => (
+                          <Grid item xs={12} md={6} key={category}>
+                            <Typography variant="subtitle1" fontWeight="bold" gutterBottom textTransform="capitalize">
+                              {category.replace(/([A-Z])/g, ' $1').trim()}
+                            </Typography>
+                            <Box display="flex" flexWrap="wrap" gap={1}>
+                              {techs.map((tech, index) => (
+                                <Chip key={index} label={tech} size="small" />
+                              ))}
+                            </Box>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </>
+                  )}
+                  {project.caseStudy.technicalArchitecture.keyDecisions && (
+                    <>
+                      <Divider sx={{ my: 3 }} />
+                      <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
+                        Key Architecture Decisions
+                      </Typography>
+                      <List>
+                        {project.caseStudy.technicalArchitecture.keyDecisions.map((decision, index) => (
+                          <ListItem key={index}>
+                            <ListItemIcon>
+                              <IconCheck size={20} color="#1976d2" />
+                            </ListItemIcon>
+                            <ListItemText primary={decision} />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </>
+                  )}
+                </CardContent>
+              </DashboardCard>
+            </Box>
+          </Grid>
+        )}
+
+        {/* Sprint Metrics & Velocity */}
+        {project.caseStudy?.sprintMetrics && (
+          <Grid item xs={12}>
+            <Box id="sprint-metrics" mb={6}>
+              <SprintMetricsSection
+                title="Sprint Metrics & Velocity"
+                currentSprint={project.caseStudy.sprintMetrics.currentSprint}
+                velocityHistory={project.caseStudy.sprintMetrics.velocityHistory}
+                sprintGoal={project.caseStudy.sprintMetrics.sprintGoal}
+                epics={project.caseStudy.requirements?.epics || []}
+                userStories={project.caseStudy.sprintMetrics?.userStories || []}
+                burnDownData={project.caseStudy.sprintMetrics?.burnDownData || []}
+                backlogManagement={project.caseStudy.backlogManagement}
+              />
+            </Box>
           </Grid>
         )}
 
         {/* Process & Compliance */}
         {project.caseStudy?.devOpsSecurity && (
           <Grid item xs={12}>
-            <Box id="devops-security" mb={3}>
+            <Box id="devops-security" mb={6}>
               <DevOpsSecuritySection
                 title="Process & Compliance"
                 cicdPipeline={project.caseStudy.devOpsSecurity.cicdPipeline}
                 securityScans={project.caseStudy.devOpsSecurity.securityScans}
                 codeQuality={project.caseStudy.devOpsSecurity.codeQuality}
-              />
-            </Box>
-          </Grid>
-        )}
-
-        {/* Product Decisions & Trade-offs */}
-        {project.caseStudy?.productDecisions && project.caseStudy.productDecisions.length > 0 && (
-          <Grid item xs={12}>
-            <Box id="product-decisions" mb={3}>
-              <ProductDecisionsSection
-                title="Product Decisions & Trade-offs"
-                decisions={project.caseStudy.productDecisions}
               />
             </Box>
           </Grid>

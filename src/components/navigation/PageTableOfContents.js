@@ -119,10 +119,13 @@ const PageTableOfContents = ({ sections = [], sx = {} }) => {
                 borderRadius: 1,
                 py: 0.5,
                 '&.Mui-selected': {
-                  backgroundColor: 'primary.light',
-                  color: 'primary.contrastText',
+                  backgroundColor: 'primary.main',
+                  color: 'white',
                   '&:hover': {
-                    backgroundColor: 'primary.main'
+                    backgroundColor: 'primary.dark'
+                  },
+                  '& .MuiListItemText-primary': {
+                    color: 'white'
                   }
                 },
                 '&:hover': {
@@ -135,7 +138,10 @@ const PageTableOfContents = ({ sections = [], sx = {} }) => {
                 primaryTypographyProps={{
                   variant: section.level === 1 ? 'body2' : 'caption',
                   fontWeight: activeSection === section.id ? 'bold' : 'normal',
-                  fontSize: section.level === 1 ? '0.875rem' : '0.75rem'
+                  fontSize: section.level === 1 ? '0.875rem' : '0.75rem',
+                  sx: {
+                    color: activeSection === section.id ? 'white' : 'inherit'
+                  }
                 }}
               />
             </ListItemButton>

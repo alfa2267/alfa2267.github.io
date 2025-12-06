@@ -25,8 +25,12 @@ const QATestingSection = ({
   };
 
   return (
-    <DashboardCard title={title}>
-      <Grid container spacing={3}>
+    <>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title}
+      </Typography>
+      <DashboardCard>
+        <Grid container spacing={3}>
         {/* Testing Approach */}
         {testingApproach.description && (
           <Grid item xs={12}>
@@ -184,53 +188,9 @@ const QATestingSection = ({
             ))}
           </Grid>
         )}
-
-        {/* Acceptance Criteria Checklist */}
-        {acceptanceCriteria.length > 0 && (
-          <Grid item xs={12}>
-            <Paper elevation={1} sx={{ p: 2 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Acceptance Criteria Checklist
-              </Typography>
-              <List>
-                {acceptanceCriteria.map((criteria, index) => (
-                  <ListItem key={index}>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
-                      {criteria.completed ? (
-                        <IconCheck size={20} color="#13DEB9" />
-                      ) : criteria.blocked ? (
-                        <IconX size={20} color="#FA896B" />
-                      ) : (
-                        <IconAlertTriangle size={20} color="#FFAE1F" />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={criteria.description}
-                      secondary={criteria.notes}
-                      primaryTypographyProps={{
-                        variant: 'body2',
-                        style: {
-                          textDecoration: criteria.completed ? 'line-through' : 'none',
-                          color: criteria.completed ? '#666' : 'inherit'
-                        }
-                      }}
-                    />
-                    {criteria.priority && (
-                      <Chip
-                        label={criteria.priority}
-                        size="small"
-                        color={criteria.priority === 'P0' ? 'error' : criteria.priority === 'P1' ? 'warning' : 'default'}
-                        variant="outlined"
-                      />
-                    )}
-                  </ListItem>
-                ))}
-              </List>
-            </Paper>
-          </Grid>
-        )}
       </Grid>
-    </DashboardCard>
+      </DashboardCard>
+    </>
   );
 };
 

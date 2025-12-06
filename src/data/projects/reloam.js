@@ -75,7 +75,93 @@ export const reloamProjectData = {
       },
       opportunity: 'Agricultural property management is distinct from residential/commercial. Features needed: crop cycle tracking, harvest yield monitoring, seasonal payment schedules, land productivity analytics, weather/soil condition logging.'
     },
-    
+
+    businessCase: {
+      investment: {
+        development: {
+          total: 50000,
+          breakdown: {
+            mvpDevelopment: 30000,
+            designAndUX: 10000,
+            infrastructure: 5000,
+            testing: 5000
+          }
+        },
+        infrastructure: {
+          total: 5000,
+          breakdown: {
+            hosting: 2000,
+            domain: 500,
+            tools: 2500
+          }
+        },
+        marketing: {
+          total: 10000,
+          breakdown: {
+            userResearch: 3000,
+            betaTesting: 5000,
+            marketing: 2000
+          }
+        },
+        contingency: 10000,
+        total: 75000
+      },
+      projectedReturns: {
+        threeYear: {
+          year1: {
+            revenueIncrease: 20000,
+            costSavings: 10000,
+            netBenefit: 30000
+          },
+          year2: {
+            revenueIncrease: 80000,
+            costSavings: 20000,
+            netBenefit: 100000
+          },
+          year3: {
+            revenueIncrease: 200000,
+            costSavings: 50000,
+            netBenefit: 250000
+          },
+          totalBenefit: 380000,
+          totalInvestment: 75000,
+          totalROI: 407,
+          breakEvenMonth: 24,
+          costSavings: 80000,
+          revenueIncrease: 300000
+        }
+      },
+      assumptions: [
+        'Beta launch with 5-10 landlords at $50/month',
+        'Year 1: Validate product-market fit, achieve 10 paying customers',
+        'Year 2: Scale to 50 customers through word-of-mouth and referrals',
+        'Year 3: Expand to 150 customers with enhanced features and mobile app',
+        'Customer LTV: $2,400 (average 4-year retention)',
+        'Churn rate: 15% annually',
+        'No external funding required - bootstrap from revenue'
+      ],
+      risks: [
+        {
+          risk: 'Low user adoption',
+          probability: 'Medium',
+          impact: 'High',
+          mitigation: 'Conduct extensive user research before scaling, offer free tier for feedback'
+        },
+        {
+          risk: 'Competitor enters market',
+          probability: 'Medium',
+          impact: 'Medium',
+          mitigation: 'Move fast to establish presence, build strong user relationships'
+        },
+        {
+          risk: 'Technical scalability issues',
+          probability: 'Low',
+          impact: 'Medium',
+          mitigation: 'Plan migration to multi-tenant backend after validation'
+        }
+      ]
+    },
+
     productVision: {
       visionStatement: 'Empower agricultural landlords across Africa to efficiently manage large-scale properties through a digital platform that combines tenant relationship management, financial operations, and activity tracking.',
       mvpScope: {

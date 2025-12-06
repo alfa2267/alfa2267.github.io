@@ -22,7 +22,11 @@ const ProblemDiscoverySection = ({
   showMetrics = true
 }) => {
   return (
-    <DashboardCard title={title}>
+    <Box>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title}
+      </Typography>
+      <DashboardCard>
       <Grid container spacing={3}>
         {/* Problem Statement */}
         <Grid item xs={12} md={6}>
@@ -31,7 +35,7 @@ const ProblemDiscoverySection = ({
           </Typography>
 
           {problemStatement.description && (
-            <Typography variant="body1" paragraph>
+            <Typography variant="body1" paragraph color="text.primary">
               {problemStatement.description}
             </Typography>
           )}
@@ -49,7 +53,7 @@ const ProblemDiscoverySection = ({
                     </ListItemIcon>
                     <ListItemText
                       primary={challenge}
-                      primaryTypographyProps={{ variant: 'body2' }}
+                      primaryTypographyProps={{ variant: 'body2', color: 'text.primary' }}
                     />
                   </ListItem>
                 ))}
@@ -70,7 +74,7 @@ const ProblemDiscoverySection = ({
                     </ListItemIcon>
                     <ListItemText
                       primary={item}
-                      primaryTypographyProps={{ variant: 'body2' }}
+                      primaryTypographyProps={{ variant: 'body2', color: 'text.primary' }}
                     />
                   </ListItem>
                 ))}
@@ -91,7 +95,7 @@ const ProblemDiscoverySection = ({
                     </ListItemIcon>
                     <ListItemText
                       primary={pain}
-                      primaryTypographyProps={{ variant: 'body2' }}
+                      primaryTypographyProps={{ variant: 'body2', color: 'text.primary' }}
                     />
                   </ListItem>
                 ))}
@@ -107,7 +111,7 @@ const ProblemDiscoverySection = ({
           </Typography>
 
           {solutionOverview.description && (
-            <Typography variant="body1" paragraph>
+            <Typography variant="body1" paragraph color="text.primary">
               {solutionOverview.description}
             </Typography>
           )}
@@ -125,7 +129,7 @@ const ProblemDiscoverySection = ({
                     </ListItemIcon>
                     <ListItemText
                       primary={item}
-                      primaryTypographyProps={{ variant: 'body2' }}
+                      primaryTypographyProps={{ variant: 'body2', color: 'text.primary' }}
                     />
                   </ListItem>
                 ))}
@@ -165,7 +169,7 @@ const ProblemDiscoverySection = ({
               <Typography variant="body2" fontWeight={600} gutterBottom>
                 Value Proposition
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" color="text.primary">
                 {solutionOverview.valueProposition}
               </Typography>
             </Paper>
@@ -194,7 +198,7 @@ const ProblemDiscoverySection = ({
                       <Typography variant="h6" color="primary" fontWeight={700}>
                         {criteria.value}
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography variant="caption" color="text.primary" fontWeight={500}>
                         {criteria.label}
                       </Typography>
                     </Paper>
@@ -205,7 +209,8 @@ const ProblemDiscoverySection = ({
           </Grid>
         )}
       </Grid>
-    </DashboardCard>
+      </DashboardCard>
+    </Box>
   );
 };
 

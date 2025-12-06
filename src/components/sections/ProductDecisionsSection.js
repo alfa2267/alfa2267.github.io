@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Typography, Grid, Paper, List, ListItem, ListItemIcon, ListItemText, Chip, Stack } from '@mui/material';
 import { IconCheck } from '@tabler/icons';
-import DashboardCard from '../shared/DashboardCard';
 
 /**
  * ProductDecisionsSection - Showcases product decision-making and trade-offs
@@ -18,7 +17,10 @@ const ProductDecisionsSection = ({
   }
 
   return (
-    <DashboardCard title={title}>
+    <Box>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title}
+      </Typography>
       <Stack spacing={3}>
         {decisions.map((decision, index) => (
           <Paper key={index} elevation={2} sx={{ p: 3 }}>
@@ -114,7 +116,7 @@ const ProductDecisionsSection = ({
           </Paper>
         ))}
       </Stack>
-    </DashboardCard>
+    </Box>
   );
 };
 

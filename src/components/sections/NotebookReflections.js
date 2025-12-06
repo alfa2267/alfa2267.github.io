@@ -217,8 +217,12 @@ const NotebookReflections = ({ title = "Product Notebook", reflections = [] }) =
   );
 
   return (
-    <DashboardCard title={title} subtitle="Scribbles from the product journey">
-      <Box>
+    <>
+      <Typography variant="h5" gutterBottom mb={3} sx={{ color: '#001f3f' }}>
+        {title}
+      </Typography>
+      <DashboardCard subtitle="Scribbles from the product journey">
+        <Box>
         {/* Sticky Notes Row */}
         {reflections.stickyNotes && (
           <Grid container spacing={2} mb={4}>
@@ -312,8 +316,9 @@ const NotebookReflections = ({ title = "Product Notebook", reflections = [] }) =
             </Typography>
           </Box>
         )}
-      </Box>
-    </DashboardCard>
+        </Box>
+      </DashboardCard>
+    </>
   );
 };
 

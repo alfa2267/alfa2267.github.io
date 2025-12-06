@@ -1,12 +1,12 @@
 import React from 'react';
 import { Box, Typography, Grid, Paper } from '@mui/material';
-import { IconTrendingUp, IconCurrencyDollar, IconChartBar, IconClock } from '@tabler/icons';
+import { IconTrendingUp, IconChartBar, IconClock } from '@tabler/icons';
 
 /**
  * Business Case Infographic Component
  * Visualizes ROI, investment, and returns
  */
-const BusinessCaseInfographic = ({ data = {}, title = "Business Case" }) => {
+const BusinessCaseInfographic = ({ data = {}, title }) => {
   const {
     investment = 2900000,
     totalBenefit = 9700000,
@@ -33,26 +33,6 @@ const BusinessCaseInfographic = ({ data = {}, title = "Business Case" }) => {
         </Typography>
       )}
       <Grid container spacing={3}>
-        {/* Investment */}
-        <Grid item xs={12} sm={6} md={3}>
-          <Paper
-            elevation={3}
-            sx={{
-              p: 3,
-              textAlign: 'center',
-              bgcolor: 'primary.main',
-              color: 'white',
-              height: '100%'
-            }}
-          >
-            <IconCurrencyDollar size={32} style={{ marginBottom: 8 }} />
-            <Typography variant="h5" fontWeight="bold">
-              {formatCurrency(investment)}
-            </Typography>
-            <Typography variant="body2">Total Investment</Typography>
-          </Paper>
-        </Grid>
-
         {/* Total Benefit */}
         <Grid item xs={12} sm={6} md={3}>
           <Paper
