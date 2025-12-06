@@ -38,7 +38,7 @@ const RequirementsSection = ({
         </Typography>
       )}
       <DashboardCard>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} sx={{ m: -2 }}>
         {epics.map((epic, epicIndex) => {
           // Calculate total story points for the epic
           const epicPoints = epic.userStories?.reduce((sum, story) => {

@@ -336,7 +336,7 @@ const BusinessCaseSection = ({ title = "Business Case & ROI Analysis", businessC
       <Grid container spacing={3} mt={3}>
         {/* Key Assumptions */}
         {assumptions && assumptions.length > 0 && (
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <DashboardCard title="Key Assumptions">
               <List dense>
                 {assumptions.map((assumption, index) => (
@@ -354,7 +354,7 @@ const BusinessCaseSection = ({ title = "Business Case & ROI Analysis", businessC
 
         {/* SWOT Analysis */}
         {swot && (
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <DashboardCard title="SWOT Analysis">
               <SWOTAnalysis swot={swot} />
             </DashboardCard>
@@ -363,7 +363,7 @@ const BusinessCaseSection = ({ title = "Business Case & ROI Analysis", businessC
 
         {/* Risk Assessment */}
         {risks && risks.length > 0 && (
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <DashboardCard 
               title="Risk Assessment"
               action={
