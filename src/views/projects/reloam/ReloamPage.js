@@ -161,12 +161,6 @@ const ReloamPage = () => {
                 description: 'AI-powered chat interface for tenant support and inquiries',
                 type: 'screenshot',
                 link: 'https://tn.reloam.ainaeco.uk/'
-              },
-              {
-                url: '/assets/images/reloam/Overall Views.png',
-                title: 'Overall Platform Views',
-                description: 'Comprehensive overview of the Reloam platform features',
-                type: 'screenshot'
               }
             ]}
             wireframes={[
