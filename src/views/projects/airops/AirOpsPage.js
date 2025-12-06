@@ -36,7 +36,6 @@ import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseIn
 import PageTableOfContents from '../../../components/navigation/PageTableOfContents.js';
 import BackToTop from '../../../components/navigation/BackToTop.js';
 import {
-  LessonsLearnedSection,
   RoadmapSection,
   ProjectShowcaseSection,
   DesignProcessSection,
@@ -44,8 +43,10 @@ import {
   QATestingSection,
   DevOpsSecuritySection,
   BacklogManagementSection,
-  ProblemDiscoverySection
+  ProblemDiscoverySection,
+  ProductDecisionsSection
 } from '../../../components/sections';
+import NotebookReflections from '../../../components/sections/NotebookReflections.js';
 import ProjectService from '../../../services/projectService.js';
 
 const AirOpsPage = () => {
@@ -60,15 +61,17 @@ const AirOpsPage = () => {
     { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
     { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
     { id: 'user-research', title: 'User Research & Insights', level: 1 },
-    { id: 'business-case', title: 'Business Case & ROI', level: 1 },
+    { id: 'product-roadmap', title: 'Product Roadmap', level: 1 },
     { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
     { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
     { id: 'backlog-management', title: 'Backlog Management', level: 1 },
-    { id: 'qa-testing', title: 'QA & Validation Strategy', level: 1 },
+    { id: 'qa-testing', title: 'QA & Testing Strategy', level: 1 },
     { id: 'devops-security', title: 'Process & Compliance', level: 1 },
+    { id: 'product-decisions', title: 'Product Decisions & Trade-offs', level: 1 },
     { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
+    { id: 'business-case', title: 'Business Case & ROI', level: 1 },
     { id: 'risk-assessment', title: 'Risk Assessment & Go-to-Market Strategy', level: 1 },
-    { id: 'lessons-learned', title: 'Lessons Learned & Reflections', level: 1 },
+    { id: 'lessons-learned', title: 'Retrospectives', level: 1 },
     { id: 'strategy-document', title: 'Strategy Document Summary', level: 1 }
   ];
 
@@ -484,9 +487,8 @@ const AirOpsPage = () => {
             title="Product Roadmap"
             phases={caseStudy.roadmap}
             showTimeline={true}
-            showDetailedBreakdown={true}
+            showDetailedBreakdown={false}
             timelineTitle="Implementation Timeline"
-            breakdownTitle="Detailed Phase Breakdown"
             columnsPerRow={2}
           />
           </Box>
@@ -557,6 +559,9 @@ const AirOpsPage = () => {
             currentSprint={caseStudy.sprintMetrics.currentSprint}
             velocityHistory={caseStudy.sprintMetrics.velocityHistory}
             sprintGoal={caseStudy.sprintMetrics.sprintGoal}
+            epics={caseStudy.requirements?.epics || []}
+            userStories={caseStudy.sprintMetrics.userStories || []}
+            burnDownData={caseStudy.sprintMetrics.burnDownData || []}
           />
           </Box>
 
@@ -574,7 +579,7 @@ const AirOpsPage = () => {
           {/* QA & Testing */}
           <Box id="qa-testing" mb={3}>
             <QATestingSection
-            title="QA & Validation Strategy"
+            title="QA & Testing Strategy"
             testingApproach={caseStudy.qaAndTesting.testingApproach}
             testScenarios={caseStudy.qaAndTesting.testScenarios}
             bugMetrics={caseStudy.qaAndTesting.bugMetrics}
@@ -591,6 +596,16 @@ const AirOpsPage = () => {
             codeQuality={caseStudy.devOpsSecurity.codeQuality}
           />
           </Box>
+
+          {/* Product Decisions & Trade-offs */}
+          {caseStudy.productDecisions && caseStudy.productDecisions.length > 0 && (
+            <Box id="product-decisions" mb={3}>
+              <ProductDecisionsSection
+                title="Product Decisions & Trade-offs"
+                decisions={caseStudy.productDecisions}
+              />
+            </Box>
+          )}
 
         {/* Technical Architecture */}
           <Box id="technical-architecture" mb={3}>
@@ -897,13 +912,54 @@ const AirOpsPage = () => {
           </DashboardCard>
           </Box>
 
-        {/* Lessons Learned */}
+        {/* Retrospectives */}
           <Box id="lessons-learned" mb={3}>
-          <LessonsLearnedSection
-            title="Lessons Learned & Reflections"
-            whatILearned={caseStudy.lessonsLearned.insights}
-            whatWouldDoDifferently={{ items: caseStudy.lessonsLearned.whatWouldDoDifferently }}
-            keyTakeaways={caseStudy.lessonsLearned.keyTakeaways}
+            <NotebookReflections
+              title="Retrospectives"
+              reflections={{
+                stickyNotes: [
+                  {
+                    color: '#C8E6C9',
+                    title: 'Key Insights',
+                    content: caseStudy.lessonsLearned.insights.slice(0, 2).join(' • '),
+                    icon: IconCheck
+                  },
+                  {
+                    color: '#FFCCBC',
+                    title: 'What I\'d Do Differently',
+                    content: caseStudy.lessonsLearned.whatWouldDoDifferently.slice(0, 2).join(' • '),
+                    icon: IconAlertTriangle
+                  },
+                  {
+                    color: '#BBDEFB',
+                    title: 'More Insights',
+                    content: caseStudy.lessonsLearned.insights.slice(2).join(' • '),
+                    icon: IconBulb
+                  },
+                  {
+                    color: '#FFF9C4',
+                    title: 'Additional Learnings',
+                    content: caseStudy.lessonsLearned.whatWouldDoDifferently.slice(2).join(' • '),
+                    icon: IconChartBar
+                  }
+                ],
+                sketches: [
+                  {
+                    title: 'Key Takeaways',
+                    items: caseStudy.lessonsLearned.keyTakeaways
+                  },
+                  {
+                    title: 'Product Management Lessons',
+                    items: [
+                      'Product management in aviation requires deep understanding of operational constraints',
+                      'Digital transformation is as much about people as it is about technology',
+                      'Comprehensive documentation and planning are essential for large-scale initiatives',
+                      'ROI must be clearly communicated to secure executive buy-in'
+                    ]
+                  }
+                ],
+                keyTakeaway: "Building products in complex industries like aviation requires balancing innovation with operational continuity. The most successful transformations happen when technology, people, and processes are aligned from day one."
+              }}
           />
           </Box>
 

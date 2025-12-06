@@ -1,7 +1,8 @@
 import React from 'react';
-import { Box, Typography, Grid, Paper, LinearProgress, Chip, List, ListItem, ListItemText } from '@mui/material';
-import { IconCalendar, IconTrendingUp, IconTarget, IconActivity } from '@tabler/icons-react';
+import { Box, Typography, Grid, Paper, LinearProgress, Chip, List, ListItem, ListItemText, ListItemIcon, Accordion, AccordionSummary, AccordionDetails, Divider } from '@mui/material';
+import { IconCalendar, IconTrendingUp, IconTarget, IconActivity, IconCheck, IconChevronDown } from '@tabler/icons-react';
 import DashboardCard from '../shared/DashboardCard';
+import VelocityChart from '../diagrams/VelocityChart';
 
 /**
  * SprintMetricsSection - Showcases Agile/Scrum practices
@@ -14,7 +15,10 @@ const SprintMetricsSection = ({
   currentSprint = {},
   velocityHistory = [],
   sprintGoal = '',
-  showVelocityChart = true
+  showVelocityChart = true,
+  epics = [],
+  userStories = [],
+  burnDownData = []
 }) => {
   const velocityAverage = velocityHistory.length > 0
     ? Math.round(velocityHistory.reduce((sum, s) => sum + s.completed, 0) / velocityHistory.length)
@@ -115,49 +119,143 @@ const SprintMetricsSection = ({
           </Paper>
         </Grid>
 
-        {/* Velocity Tracking */}
+        {/* Velocity Chart */}
         {showVelocityChart && velocityHistory.length > 0 && (
-          <Grid item xs={12} md={6}>
-            <Paper elevation={1} sx={{ p: 2 }}>
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Velocity Trend
-              </Typography>
-              <Box mb={2}>
-                <Typography variant="h5" color="primary">
-                  {velocityAverage} pts
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  Average Velocity (Last {velocityHistory.length} Sprints)
-                </Typography>
-              </Box>
+          <Grid item xs={12}>
+            <VelocityChart velocityHistory={velocityHistory} burnDownData={burnDownData} />
+          </Grid>
+        )}
 
-              {/* Simple velocity bar chart */}
-              <Box>
-                {velocityHistory.map((sprint, index) => (
-                  <Box key={index} mb={1.5}>
-                    <Box display="flex" justifyContent="space-between" mb={0.5}>
-                      <Typography variant="caption" color="text.secondary">
-                        {sprint.name}
-                      </Typography>
-                      <Typography variant="caption" fontWeight={600}>
-                        {sprint.completed} pts
-                      </Typography>
-                    </Box>
-                    <LinearProgress
-                      variant="determinate"
-                      value={(sprint.completed / Math.max(...velocityHistory.map(s => s.completed))) * 100}
-                      sx={{
-                        height: 6,
-                        borderRadius: 1,
-                        backgroundColor: '#E6FFFA',
-                        '& .MuiLinearProgress-bar': {
-                          backgroundColor: sprint.completed >= velocityAverage ? '#13DEB9' : '#FFAE1F'
-                        }
-                      }}
-                    />
-                  </Box>
-                ))}
-              </Box>
+        {/* Epics with Success Criteria and Story Points */}
+        {epics && epics.length > 0 && (
+          <Grid item xs={12}>
+            <Paper elevation={1} sx={{ p: 3 }}>
+              <Typography variant="h6" fontWeight="bold" gutterBottom mb={2}>
+                Epics & Success Criteria
+              </Typography>
+              <Grid container spacing={2}>
+                {epics.map((epic, index) => {
+                  const epicPoints = epic.userStories?.reduce((sum, story) => {
+                    const points = parseInt(story.effort?.match(/\d+/)?.[0] || story.storyPoints || 0);
+                    return sum + points;
+                  }, 0) || 0;
+
+                  return (
+                    <Grid item xs={12} md={6} key={index}>
+                      <Accordion>
+                        <AccordionSummary expandIcon={<IconChevronDown />}>
+                          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', pr: 2 }}>
+                            <Box>
+                              <Typography variant="subtitle1" fontWeight="bold">
+                                {epic.name || epic.id}
+                              </Typography>
+                              <Typography variant="caption" color="text.secondary">
+                                {epic.description}
+                              </Typography>
+                            </Box>
+                            <Chip label={`${epicPoints} pts`} size="small" color="primary" />
+                          </Box>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {epic.successCriteria && (
+                            <Box mb={2}>
+                              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                                Success Criteria:
+                              </Typography>
+                              <List dense>
+                                {epic.successCriteria.map((criteria, cIndex) => (
+                                  <ListItem key={cIndex} disablePadding>
+                                    <ListItemIcon sx={{ minWidth: 24 }}>
+                                      <IconCheck size={14} color="green" />
+                                    </ListItemIcon>
+                                    <ListItemText primary={criteria} primaryTypographyProps={{ variant: 'body2' }} />
+                                  </ListItem>
+                                ))}
+                              </List>
+                            </Box>
+                          )}
+                          {epic.userStories && epic.userStories.length > 0 && (
+                            <Box>
+                              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
+                                User Stories ({epic.userStories.length}):
+                              </Typography>
+                              <List dense>
+                                {epic.userStories.map((story, sIndex) => {
+                                  const storyPoints = parseInt(story.effort?.match(/\d+/)?.[0] || story.storyPoints || 0);
+                                  return (
+                                    <ListItem key={sIndex} disablePadding sx={{ py: 0.5 }}>
+                                      <ListItemIcon sx={{ minWidth: 32 }}>
+                                        <Chip label={`${storyPoints}pt`} size="small" variant="outlined" sx={{ minWidth: 40 }} />
+                                      </ListItemIcon>
+                                      <ListItemText 
+                                        primary={story.title || story.id}
+                                        secondary={story.as ? `As ${story.as}, I want ${story.want || story.iWantTo}, so that ${story.so || story.soThat}` : story.description}
+                                        primaryTypographyProps={{ variant: 'body2', fontWeight: 600 }}
+                                        secondaryTypographyProps={{ variant: 'caption' }}
+                                      />
+                                    </ListItem>
+                                  );
+                                })}
+                              </List>
+                            </Box>
+                          )}
+                        </AccordionDetails>
+                      </Accordion>
+                    </Grid>
+                  );
+                })}
+              </Grid>
+            </Paper>
+          </Grid>
+        )}
+
+        {/* User Stories List (if provided separately) */}
+        {userStories && userStories.length > 0 && epics.length === 0 && (
+          <Grid item xs={12}>
+            <Paper elevation={1} sx={{ p: 3 }}>
+              <Typography variant="h6" fontWeight="bold" gutterBottom mb={2}>
+                User Stories
+              </Typography>
+              <List>
+                {userStories.map((story, index) => {
+                  const storyPoints = parseInt(story.effort?.match(/\d+/)?.[0] || story.storyPoints || 0);
+                  return (
+                    <ListItem key={index} sx={{ borderBottom: '1px solid', borderColor: 'divider' }}>
+                      <ListItemIcon sx={{ minWidth: 60 }}>
+                        <Chip label={`${storyPoints}pt`} size="small" color="primary" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary={story.title || story.id}
+                        secondary={story.as ? `As ${story.as}, I want ${story.want || story.iWantTo}, so that ${story.so || story.soThat}` : story.description}
+                        primaryTypographyProps={{ variant: 'body1', fontWeight: 600 }}
+                        secondaryTypographyProps={{ variant: 'body2' }}
+                      />
+                      {story.acceptanceCriteria && (
+                        <Box sx={{ ml: 2 }}>
+                          <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
+                            Acceptance Criteria:
+                          </Typography>
+                          <List dense>
+                            {story.acceptanceCriteria.slice(0, 2).map((criteria, cIndex) => (
+                              <ListItem key={cIndex} disablePadding>
+                                <ListItemIcon sx={{ minWidth: 20 }}>
+                                  <IconCheck size={12} color="green" />
+                                </ListItemIcon>
+                                <ListItemText primary={criteria} primaryTypographyProps={{ variant: 'caption' }} />
+                              </ListItem>
+                            ))}
+                            {story.acceptanceCriteria.length > 2 && (
+                              <Typography variant="caption" color="text.secondary">
+                                +{story.acceptanceCriteria.length - 2} more
+                              </Typography>
+                            )}
+                          </List>
+                        </Box>
+                      )}
+                    </ListItem>
+                  );
+                })}
+              </List>
             </Paper>
           </Grid>
         )}

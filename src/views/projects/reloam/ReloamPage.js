@@ -44,7 +44,9 @@ import {
   SprintMetricsSection,
   QATestingSection,
   DevOpsSecuritySection,
-  BacklogManagementSection
+  BacklogManagementSection,
+  ProductDecisionsSection,
+  RoadmapSection
 } from '../../../components/sections';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
@@ -59,16 +61,16 @@ const ReloamPage = () => {
     { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
     { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
     { id: 'user-research', title: 'User Research & Insights', level: 1 },
+    { id: 'product-roadmap', title: 'Product Roadmap', level: 1 },
     { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
     { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
     { id: 'backlog-management', title: 'Backlog Management', level: 1 },
     { id: 'qa-testing', title: 'QA & Testing Strategy', level: 1 },
-    { id: 'devops-security', title: 'DevOps & Security', level: 1 },
+    { id: 'devops-security', title: 'Process & Compliance', level: 1 },
     { id: 'product-decisions', title: 'Product Decisions & Trade-offs', level: 1 },
     { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
     { id: 'design-process', title: 'Design Process', level: 1 },
     { id: 'user-flow', title: 'User Flow Diagram', level: 1 },
-    { id: 'validation', title: 'Validation & Next Steps', level: 1 },
     { id: 'retrospective', title: 'Retrospective', level: 1 }
   ];
 
@@ -523,8 +525,42 @@ const ReloamPage = () => {
                     <strong>Opportunity:</strong> {caseStudy.problemStatement.opportunity}
                   </Typography>
                 </Paper>
-              </CardContent>
-            </DashboardCard>
+            </CardContent>
+          </DashboardCard>
+          </Box>
+
+          {/* Product Roadmap */}
+          <Box id="product-roadmap" mb={3}>
+            <RoadmapSection
+              title="Product Roadmap"
+              phases={[
+                {
+                  phase: 'Phase 1: MVP - Core Features (Built)',
+                  duration: 'Months 1-3',
+                  focus: 'Essential features for property management',
+                  deliverables: caseStudy.productVision.mvpScope.mustHave.items,
+                  keyMetrics: ['5-10 beta landlords onboarded', 'Core features validated', 'User feedback collected']
+                },
+                {
+                  phase: 'Phase 2: Enhanced Features (Planned)',
+                  duration: 'Months 4-6',
+                  focus: 'Improve usability and add value features',
+                  deliverables: caseStudy.productVision.mvpScope.shouldHave.items,
+                  keyMetrics: ['Feature adoption > 60%', 'User satisfaction > 80%', 'Active users > 20']
+                },
+                {
+                  phase: 'Phase 3: Advanced Features (Future)',
+                  duration: 'Months 7-9',
+                  focus: 'Scale and expand capabilities',
+                  deliverables: caseStudy.productVision.mvpScope.couldHave.items,
+                  keyMetrics: ['Market expansion', 'Advanced analytics adoption', 'Integration partnerships']
+                }
+              ]}
+              showTimeline={true}
+              showDetailedBreakdown={false}
+              timelineTitle="Implementation Timeline"
+              columnsPerRow={2}
+            />
           </Box>
 
           {/* Requirements & User Stories */}
@@ -567,10 +603,10 @@ const ReloamPage = () => {
           />
           </Box>
 
-          {/* DevOps & Security */}
+          {/* Process & Compliance */}
           <Box id="devops-security" mb={3}>
             <DevOpsSecuritySection
-            title="DevOps & Security"
+            title="Process & Compliance"
             cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
             securityScans={caseStudy.devOpsSecurity.securityScans}
             codeQuality={caseStudy.devOpsSecurity.codeQuality}
@@ -578,81 +614,14 @@ const ReloamPage = () => {
           </Box>
 
           {/* Product Decisions & Trade-offs */}
-          <Box id="product-decisions" mb={3}>
-            <Typography variant="h5" gutterBottom>
-              Product Decisions & Trade-offs
-            </Typography>
-            <Stack spacing={2}>
-            {caseStudy.productDecisions.map((decision, index) => (
-                  <Paper key={index} elevation={2} sx={{ p: 3 }}>
-                    <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                      <Typography variant="h6">{decision.decision}</Typography>
-                      <Chip label={decision.date} size="small" />
-                    </Box>
-                    <Typography variant="body2" color="text.secondary" paragraph>
-                      <strong>Context:</strong> {decision.context}
-                    </Typography>
-                    <Typography variant="subtitle2" fontWeight="bold" mt={2} mb={1}>
-                      Options Considered:
-                    </Typography>
-                    <List dense>
-                      {Object.entries(decision.options).map(([key, value]) => (
-                        <ListItem key={key} disablePadding>
-                          <ListItemIcon sx={{ minWidth: 32 }}>
-                            <Typography variant="body2" fontWeight="bold">{key}.</Typography>
-                          </ListItemIcon>
-                          <ListItemText primary={value} />
-                        </ListItem>
-                      ))}
-                    </List>
-                    <Box mt={2} p={2} bgcolor="success.light" borderRadius={1}>
-                      <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                        Decision: {decision.choice}
-                      </Typography>
-                      <Typography variant="subtitle2" fontWeight="bold" mt={1} mb={0.5}>
-                        Rationale:
-                      </Typography>
-                      <List dense>
-                        {decision.rationale.map((reason, rIndex) => (
-                          <ListItem key={rIndex} disablePadding>
-                            <ListItemIcon sx={{ minWidth: 32 }}>
-                              <IconCheck size={14} color="green" />
-                            </ListItemIcon>
-                            <ListItemText primary={reason} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
-                    <Grid container spacing={2} mt={2}>
-                      <Grid item xs={12} md={6}>
-                        <Paper elevation={1} sx={{ p: 1.5, bgcolor: 'success.light' }}>
-                          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                            ✅ Benefit:
-                          </Typography>
-                          <Typography variant="body2">{decision.tradeoffs.benefit}</Typography>
-                        </Paper>
-                      </Grid>
-                      <Grid item xs={12} md={6}>
-                        <Paper elevation={1} sx={{ p: 1.5, bgcolor: 'warning.light' }}>
-                          <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                            ❌ Cost:
-                          </Typography>
-                          <Typography variant="body2">{decision.tradeoffs.cost}</Typography>
-                        </Paper>
-                      </Grid>
-                    </Grid>
-                    {decision.validationPlan && (
-                      <Box mt={2} p={1.5} bgcolor="info.light" borderRadius={1}>
-                        <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                          Validation Plan:
-                        </Typography>
-                        <Typography variant="body2">{decision.validationPlan}</Typography>
-                      </Box>
-                    )}
-                  </Paper>
-                ))}
-              </Stack>
-          </Box>
+          {caseStudy.productDecisions && caseStudy.productDecisions.length > 0 && (
+            <Box id="product-decisions" mb={3}>
+              <ProductDecisionsSection
+                title="Product Decisions & Trade-offs"
+                decisions={caseStudy.productDecisions}
+              />
+            </Box>
+          )}
 
           {/* Technical Architecture */}
           <Box id="technical-architecture" mb={3}>
@@ -833,62 +802,6 @@ const ReloamPage = () => {
                   />
                 </Grid>
               </Grid>
-            </CardContent>
-          </DashboardCard>
-          </Box>
-
-          {/* Validation & Next Steps */}
-          <Box id="validation" mb={3}>
-            <DashboardCard title="Validation & Next Steps">
-            <CardContent>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Current Status
-                  </Typography>
-                  <List>
-                    {caseStudy.validation.currentStatus.map((status, index) => (
-                      <ListItem key={index}>
-                        <ListItemIcon>
-                          <IconCheck size={20} color="green" />
-                        </ListItemIcon>
-                        <ListItemText primary={status} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    Planned Validation
-                  </Typography>
-                  <List>
-                    {caseStudy.validation.plannedValidation.map((item, index) => (
-                      <ListItem key={index}>
-                        <ListItemIcon>
-                          <IconChartBar size={20} color="#1976d2" />
-                        </ListItemIcon>
-                        <ListItemText primary={item} />
-                      </ListItem>
-                    ))}
-                  </List>
-                </Grid>
-              </Grid>
-
-              <Divider sx={{ my: 3 }} />
-
-              <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                Next Steps (if Validated)
-              </Typography>
-              <List>
-                {caseStudy.validation.nextSteps.map((step, index) => (
-                  <ListItem key={index}>
-                    <ListItemIcon>
-                      <IconRocket size={20} color="#1976d2" />
-                    </ListItemIcon>
-                    <ListItemText primary={step} />
-                  </ListItem>
-                ))}
-              </List>
             </CardContent>
           </DashboardCard>
           </Box>

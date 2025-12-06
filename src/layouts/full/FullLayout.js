@@ -56,7 +56,7 @@ const FullLayout = () => {
         {/* ------------------------------------------- */}
         <Container sx={{
           paddingTop: "20px",
-          maxWidth: isSidebarOpen ? '1200px' : '1400px',
+          maxWidth: isSidebarOpen ? '1200px' : false,
           transition: 'max-width 0.3s ease',
         }}
         >

@@ -13,5 +13,6 @@ export { default as ProblemDiscoverySection } from './ProblemDiscoverySection.js
 export { default as SprintMetricsSection } from './SprintMetricsSection.js';
 export { default as QATestingSection } from './QATestingSection.js';
 export { default as DevOpsSecuritySection } from './DevOpsSecuritySection.js';
+export { default as ProductDecisionsSection } from './ProductDecisionsSection.js';
 export { default as BacklogManagementSection } from './BacklogManagementSection.js';
 

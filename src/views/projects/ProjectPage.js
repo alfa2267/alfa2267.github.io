@@ -36,6 +36,9 @@ import DesignProcessSection from '../../components/sections/DesignProcessSection
 import ProjectShowcaseSection from '../../components/sections/ProjectShowcaseSection.js';
 import ProblemDiscoverySection from '../../components/sections/ProblemDiscoverySection.js';
 import RequirementsSection from '../../components/sections/RequirementsSection.js';
+import DevOpsSecuritySection from '../../components/sections/DevOpsSecuritySection.js';
+import RoadmapSection from '../../components/sections/RoadmapSection.js';
+import ProductDecisionsSection from '../../components/sections/ProductDecisionsSection.js';
 
 const ProjectPage = () => {
   const { slug } = useParams();
@@ -788,6 +791,46 @@ const ProjectPage = () => {
           </Grid>
         )}
 
+        {/* Product Roadmap */}
+        {(project.caseStudy?.roadmap || (project.caseStudy?.productVision?.mvpScope)) && (
+          <Grid item xs={12}>
+            <Box id="product-roadmap" mb={3}>
+              <RoadmapSection
+                title="Product Roadmap"
+                phases={project.caseStudy?.roadmap || (
+                  project.caseStudy?.productVision?.mvpScope ? [
+                    {
+                      phase: 'Phase 1: MVP - Core Features (Built)',
+                      duration: 'Months 1-3',
+                      focus: 'Essential features for validation',
+                      deliverables: project.caseStudy.productVision.mvpScope.mustHave?.items || [],
+                      keyMetrics: ['Core features validated', 'User feedback collected']
+                    },
+                    {
+                      phase: 'Phase 2: Enhanced Features (Planned)',
+                      duration: 'Months 4-6',
+                      focus: 'Improve usability and add value features',
+                      deliverables: project.caseStudy.productVision.mvpScope.shouldHave?.items || [],
+                      keyMetrics: ['Feature adoption > 60%', 'User satisfaction > 80%']
+                    },
+                    {
+                      phase: 'Phase 3: Advanced Features (Future)',
+                      duration: 'Months 7-9',
+                      focus: 'Scale and expand capabilities',
+                      deliverables: project.caseStudy.productVision.mvpScope.couldHave?.items || [],
+                      keyMetrics: ['Market expansion', 'Advanced features adoption']
+                    }
+                  ].filter(phase => phase.deliverables.length > 0) : []
+                )}
+                showTimeline={true}
+                showDetailedBreakdown={false}
+                timelineTitle="Implementation Timeline"
+                columnsPerRow={2}
+              />
+            </Box>
+          </Grid>
+        )}
+
         {/* Requirements & User Stories */}
         {project.caseStudy?.requirements?.epics && project.caseStudy.requirements.epics.length > 0 && (
           <Grid item xs={12}>
@@ -807,6 +850,32 @@ const ProjectPage = () => {
               title="Design Process"
               designProcess={project.caseStudy.designProcess}
             />
+          </Grid>
+        )}
+
+        {/* Process & Compliance */}
+        {project.caseStudy?.devOpsSecurity && (
+          <Grid item xs={12}>
+            <Box id="devops-security" mb={3}>
+              <DevOpsSecuritySection
+                title="Process & Compliance"
+                cicdPipeline={project.caseStudy.devOpsSecurity.cicdPipeline}
+                securityScans={project.caseStudy.devOpsSecurity.securityScans}
+                codeQuality={project.caseStudy.devOpsSecurity.codeQuality}
+              />
+            </Box>
+          </Grid>
+        )}
+
+        {/* Product Decisions & Trade-offs */}
+        {project.caseStudy?.productDecisions && project.caseStudy.productDecisions.length > 0 && (
+          <Grid item xs={12}>
+            <Box id="product-decisions" mb={3}>
+              <ProductDecisionsSection
+                title="Product Decisions & Trade-offs"
+                decisions={project.caseStudy.productDecisions}
+              />
+            </Box>
           </Grid>
         )}
 
