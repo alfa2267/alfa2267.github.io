@@ -236,7 +236,7 @@ class ReadmeParser {
     }
 
     console.log(`Summary: ${reposWithMetadata} projects with metadata, ${reposWithoutMetadata} repos without metadata`);
-    
+
     // Sort by priority, then by name
     return projects.sort((a, b) => {
       if (a.priority !== b.priority) {

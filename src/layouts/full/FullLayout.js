@@ -35,9 +35,12 @@ const FullLayout = () => {
       {/* ------------------------------------------- */}
       {/* Sidebar */}
       {/* ------------------------------------------- */}
-      <Sidebar isSidebarOpen={isSidebarOpen}
+      <Sidebar 
+        isSidebarOpen={isSidebarOpen}
         isMobileSidebarOpen={isMobileSidebarOpen}
-        onSidebarClose={() => setMobileSidebarOpen(false)} />
+        onSidebarClose={() => setMobileSidebarOpen(false)}
+        toggleSidebar={() => setSidebarOpen(!isSidebarOpen)}
+      />
       {/* ------------------------------------------- */}
       {/* Main Wrapper */}
       {/* ------------------------------------------- */}

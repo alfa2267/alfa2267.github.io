@@ -33,6 +33,8 @@ import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import SystemArchitecture from '../../../components/diagrams/SystemArchitecture.js';
 import BusinessCaseInfographic from '../../../components/diagrams/BusinessCaseInfographic.js';
+import PageTableOfContents from '../../../components/navigation/PageTableOfContents.js';
+import BackToTop from '../../../components/navigation/BackToTop.js';
 import {
   LessonsLearnedSection,
   RoadmapSection,
@@ -48,6 +50,24 @@ import ProjectService from '../../../services/projectService.js';
 const AirOpsPage = () => {
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Define table of contents sections
+  const tocSections = [
+    { id: 'project-showcase', title: 'Project Showcase', level: 1 },
+    { id: 'key-stats', title: 'Key Stats', level: 1 },
+    { id: 'design-process', title: 'Design Process', level: 1 },
+    { id: 'executive-summary', title: 'Executive Summary', level: 1 },
+    { id: 'product-vision', title: 'Product Vision & Strategy', level: 1 },
+    { id: 'business-case', title: 'Business Case & ROI', level: 1 },
+    { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
+    { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
+    { id: 'backlog-management', title: 'Backlog Management', level: 1 },
+    { id: 'qa-testing', title: 'QA & Validation Strategy', level: 1 },
+    { id: 'devops-security', title: 'Process & Compliance', level: 1 },
+    { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
+    { id: 'risk-assessment', title: 'Risk Assessment & Go-to-Market', level: 1 },
+    { id: 'strategy-document', title: 'Strategy Document Summary', level: 1 }
+  ];
 
   useEffect(() => {
     const loadProject = async () => {
@@ -179,8 +199,15 @@ const AirOpsPage = () => {
       description={project.description}
     >
       <Grid container spacing={3}>
+        {/* Table of Contents - Sidebar */}
+        <Grid item xs={12} md={3} sx={{ display: { xs: 'none', lg: 'block' } }}>
+          <PageTableOfContents sections={tocSections} />
+        </Grid>
+
+        {/* Main Content */}
+        <Grid item xs={12} md={9}>
         {/* Hero Section */}
-        <Grid item xs={12}>
+          <Box id="hero-section" mb={3}>
           <DashboardCard>
             <CardContent>
               <Box display="flex" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap" gap={2}>
@@ -200,11 +227,11 @@ const AirOpsPage = () => {
               </Box>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
-        {/* Project Showcase */}
-        <Grid item xs={12}>
-          <ProjectShowcaseSection
+          {/* Project Showcase */}
+          <Box id="project-showcase" mb={3}>
+            <ProjectShowcaseSection
             repository={{
               name: 'alfa2267/airops-strategy',
               full_name: 'alfa2267/airops-strategy',
@@ -229,9 +256,11 @@ const AirOpsPage = () => {
             showWireframes={project.caseStudy?.artifacts?.wireframes && project.caseStudy.artifacts.wireframes.length > 0}
             showTitle={false}
           />
-        </Grid>
+          </Box>
 
         {/* Key Stats */}
+          <Box id="key-stats" mb={3}>
+            <Grid container spacing={3}>
         <Grid item xs={12} md={3}>
           <StatCard 
             icon={IconFileText} 
@@ -264,17 +293,19 @@ const AirOpsPage = () => {
             color="#9c27b0"
           />
         </Grid>
+          </Grid>
+          </Box>
 
-        {/* Design Process */}
-        <Grid item xs={12}>
-          <DesignProcessSection
+          {/* Design Process */}
+          <Box id="design-process" mb={3}>
+            <DesignProcessSection
             title="Design Process"
             designProcess={caseStudy.designProcess}
           />
-        </Grid>
+          </Box>
 
         {/* Executive Summary */}
-        <Grid item xs={12}>
+          <Box id="executive-summary" mb={3}>
           <DashboardCard title="Executive Summary">
             <CardContent>
                   <Grid container spacing={3}>
@@ -375,10 +406,10 @@ const AirOpsPage = () => {
                   </Grid>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
         {/* Product Vision & Strategy */}
-        <Grid item xs={12}>
+          <Box id="product-vision" mb={3}>
           <DashboardCard title="Product Vision & Strategy">
             <CardContent>
               <Typography variant="body1" paragraph mb={2}>
@@ -445,10 +476,10 @@ const AirOpsPage = () => {
               </Box>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
         {/* User Research & Insights */}
-        <Grid item xs={12}>
+          <Box id="user-research" mb={3}>
           <DashboardCard title="User Research & Insights">
             <CardContent>
               <Grid container spacing={1} mb={2}>
@@ -522,10 +553,10 @@ const AirOpsPage = () => {
               </Grid>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
         {/* Product Roadmap */}
-        <Grid item xs={12}>
+          <Box id="product-roadmap" mb={3}>
           <RoadmapSection
             title="Product Roadmap"
             phases={caseStudy.roadmap}
@@ -535,10 +566,10 @@ const AirOpsPage = () => {
             breakdownTitle="Detailed Phase Breakdown"
             columnsPerRow={2}
           />
-        </Grid>
+          </Box>
 
         {/* Requirements Documentation */}
-        <Grid item xs={12}>
+          <Box id="requirements" mb={3}>
           <DashboardCard title="Requirements Documentation">
             <CardContent>
               <Grid container spacing={2}>
@@ -594,52 +625,52 @@ const AirOpsPage = () => {
               </Grid>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
-        {/* Sprint Metrics & Velocity */}
-        <Grid item xs={12}>
-          <SprintMetricsSection
+          {/* Sprint Metrics & Velocity */}
+          <Box id="sprint-metrics" mb={3}>
+            <SprintMetricsSection
             title="Sprint Metrics & Velocity"
             currentSprint={caseStudy.sprintMetrics.currentSprint}
             velocityHistory={caseStudy.sprintMetrics.velocityHistory}
             sprintGoal={caseStudy.sprintMetrics.sprintGoal}
           />
-        </Grid>
+          </Box>
 
-        {/* Backlog Management */}
-        <Grid item xs={12}>
-          <BacklogManagementSection
+          {/* Backlog Management */}
+          <Box id="backlog-management" mb={3}>
+            <BacklogManagementSection
             title="Backlog Management & Prioritization"
             prioritizationFramework={caseStudy.backlogManagement.prioritizationFramework}
             backlogHealth={caseStudy.backlogManagement.backlogHealth}
             technicalDebt={caseStudy.backlogManagement.technicalDebt}
             refinementNotes={caseStudy.backlogManagement.refinementNotes}
           />
-        </Grid>
+          </Box>
 
-        {/* QA & Testing */}
-        <Grid item xs={12}>
-          <QATestingSection
+          {/* QA & Testing */}
+          <Box id="qa-testing" mb={3}>
+            <QATestingSection
             title="QA & Validation Strategy"
             testingApproach={caseStudy.qaAndTesting.testingApproach}
             testScenarios={caseStudy.qaAndTesting.testScenarios}
             bugMetrics={caseStudy.qaAndTesting.bugMetrics}
             acceptanceCriteria={caseStudy.qaAndTesting.acceptanceCriteria}
           />
-        </Grid>
+          </Box>
 
-        {/* DevOps & Security */}
-        <Grid item xs={12}>
-          <DevOpsSecuritySection
+          {/* DevOps & Security */}
+          <Box id="devops-security" mb={3}>
+            <DevOpsSecuritySection
             title="Process & Compliance"
             cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
             securityScans={caseStudy.devOpsSecurity.securityScans}
             codeQuality={caseStudy.devOpsSecurity.codeQuality}
           />
-        </Grid>
+          </Box>
 
         {/* Technical Architecture */}
-        <Grid item xs={12}>
+          <Box id="technical-architecture" mb={3}>
           <DashboardCard title="Technical Architecture">
             <CardContent>
               <Typography variant="body1" paragraph>
@@ -699,10 +730,10 @@ const AirOpsPage = () => {
               </List>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
         {/* Business Case & ROI */}
-        <Grid item xs={12}>
+          <Box id="business-case" mb={3}>
           <Typography variant="h5" gutterBottom>
             Business Case & ROI Analysis
           </Typography>
@@ -840,10 +871,10 @@ const AirOpsPage = () => {
                   <strong>Break-even Point:</strong> Month {caseStudy.businessCase.projectedReturns.threeYear.breakEvenMonth}
                 </Typography>
               </Box>
-        </Grid>
+          </Box>
 
         {/* Risk Assessment & Go-to-Market Strategy */}
-        <Grid item xs={12}>
+          <Box id="risk-assessment" mb={3}>
           <DashboardCard title="Risk Assessment & Go-to-Market Strategy">
             <CardContent>
               <Grid container spacing={2}>
@@ -941,20 +972,20 @@ const AirOpsPage = () => {
               </Grid>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
         {/* Lessons Learned */}
-        <Grid item xs={12}>
+          <Box id="lessons-learned" mb={3}>
           <LessonsLearnedSection
             title="Lessons Learned & Reflections"
             whatILearned={caseStudy.lessonsLearned.insights}
             whatWouldDoDifferently={{ items: caseStudy.lessonsLearned.whatWouldDoDifferently }}
             keyTakeaways={caseStudy.lessonsLearned.keyTakeaways}
           />
-        </Grid>
+          </Box>
 
         {/* Strategy Document Preview */}
-        <Grid item xs={12}>
+          <Box id="strategy-document" mb={3}>
           <DashboardCard title="Strategy Document Preview">
             <CardContent>
               <Typography variant="body2" paragraph mb={2}>
@@ -1042,9 +1073,12 @@ const AirOpsPage = () => {
               </Box>
             </CardContent>
           </DashboardCard>
+          </Box>
         </Grid>
-
       </Grid>
+
+      {/* Back to Top Button */}
+      <BackToTop />
     </PageContainer>
   );
 };

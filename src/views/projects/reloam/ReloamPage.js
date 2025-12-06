@@ -54,7 +54,12 @@ const ReloamPage = () => {
     { id: 'project-showcase', title: 'Project Showcase', level: 1 },
     { id: 'problem-discovery', title: 'Problem Discovery & Solution', level: 1 },
     { id: 'product-vision', title: 'Product Vision & MVP Strategy', level: 1 },
-    { id: 'product-decisions', title: 'Product Decisions', level: 1 },
+    { id: 'requirements', title: 'Requirements & User Stories', level: 1 },
+    { id: 'sprint-metrics', title: 'Sprint Metrics & Velocity', level: 1 },
+    { id: 'backlog-management', title: 'Backlog Management', level: 1 },
+    { id: 'qa-testing', title: 'QA & Testing Strategy', level: 1 },
+    { id: 'devops-security', title: 'DevOps & Security', level: 1 },
+    { id: 'product-decisions', title: 'Product Decisions & Trade-offs', level: 1 },
     { id: 'technical-architecture', title: 'Technical Architecture', level: 1 },
     { id: 'design-process', title: 'Design Process', level: 1 },
     { id: 'user-flow', title: 'User Flow Diagram', level: 1 },
@@ -115,7 +120,7 @@ const ReloamPage = () => {
               timestamp: '2024-12-15'
             }}
           />
-        </Grid>
+          </Box>
 
           {/* Project Showcase */}
           <Box id="project-showcase" mb={3}>
@@ -361,64 +366,64 @@ const ReloamPage = () => {
               </Grid>
             </CardContent>
           </DashboardCard>
-        </Grid>
+          </Box>
 
-        {/* Requirements & User Stories */}
-        <Grid item xs={12}>
-          <RequirementsSection
+          {/* Requirements & User Stories */}
+          <Box id="requirements" mb={3}>
+            <RequirementsSection
             title="Requirements & User Stories"
             epics={caseStudy.requirements.epics}
           />
-        </Grid>
+          </Box>
 
-        {/* Sprint Metrics & Velocity */}
-        <Grid item xs={12}>
-          <SprintMetricsSection
+          {/* Sprint Metrics & Velocity */}
+          <Box id="sprint-metrics" mb={3}>
+            <SprintMetricsSection
             title="Sprint Metrics & Velocity"
             currentSprint={caseStudy.sprintMetrics.currentSprint}
             velocityHistory={caseStudy.sprintMetrics.velocityHistory}
             sprintGoal={caseStudy.sprintMetrics.sprintGoal}
           />
-        </Grid>
+          </Box>
 
-        {/* Backlog Management */}
-        <Grid item xs={12}>
-          <BacklogManagementSection
+          {/* Backlog Management */}
+          <Box id="backlog-management" mb={3}>
+            <BacklogManagementSection
             title="Backlog Management & Prioritization"
             prioritizationFramework={caseStudy.backlogManagement.prioritizationFramework}
             backlogHealth={caseStudy.backlogManagement.backlogHealth}
             technicalDebt={caseStudy.backlogManagement.technicalDebt}
             refinementNotes={caseStudy.backlogManagement.refinementNotes}
           />
-        </Grid>
+          </Box>
 
-        {/* QA & Testing */}
-        <Grid item xs={12}>
-          <QATestingSection
+          {/* QA & Testing */}
+          <Box id="qa-testing" mb={3}>
+            <QATestingSection
             title="QA & Testing Strategy"
             testingApproach={caseStudy.qaAndTesting.testingApproach}
             testScenarios={caseStudy.qaAndTesting.testScenarios}
             bugMetrics={caseStudy.qaAndTesting.bugMetrics}
             acceptanceCriteria={caseStudy.qaAndTesting.acceptanceCriteria}
           />
-        </Grid>
+          </Box>
 
-        {/* DevOps & Security */}
-        <Grid item xs={12}>
-          <DevOpsSecuritySection
+          {/* DevOps & Security */}
+          <Box id="devops-security" mb={3}>
+            <DevOpsSecuritySection
             title="DevOps & Security"
             cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
             securityScans={caseStudy.devOpsSecurity.securityScans}
             codeQuality={caseStudy.devOpsSecurity.codeQuality}
           />
-        </Grid>
+          </Box>
 
-        {/* Product Decisions & Trade-offs */}
-        <Grid item xs={12}>
-          <Typography variant="h5" gutterBottom>
-            Product Decisions & Trade-offs
-          </Typography>
-          <Stack spacing={2}>
+          {/* Product Decisions & Trade-offs */}
+          <Box id="product-decisions" mb={3}>
+            <Typography variant="h5" gutterBottom>
+              Product Decisions & Trade-offs
+            </Typography>
+            <Stack spacing={2}>
             {caseStudy.productDecisions.map((decision, index) => (
                   <Paper key={index} elevation={2} sx={{ p: 3 }}>
                     <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
@@ -532,31 +537,143 @@ const ReloamPage = () => {
           <Box id="user-flow" mb={3}>
             <DashboardCard title="User Flow Diagram">
             <CardContent>
-              <UserFlowDiagram
-                title="Reloam User Journey"
-                steps={[
-                  {
-                    name: 'Login',
-                    description: 'Landlord authentication'
-                  },
-                  {
-                    name: 'Dashboard',
-                    description: 'Overview of tenants and finances'
-                  },
-                  {
-                    name: 'Manage Tenants',
-                    description: 'Add/edit tenant profiles'
-                  },
-                  {
-                    name: 'Track Payments',
-                    description: 'Record and monitor rent collection'
-                  },
-                  {
-                    name: 'View Reports',
-                    description: 'Financial summaries and insights'
-                  }
-                ]}
-              />
+              <Typography variant="body1" paragraph mb={4}>
+                Visual representation of the key user flows in the Reloam platform:
+              </Typography>
+              
+              <Grid container spacing={4}>
+                {/* Tenant Onboarding Flow */}
+                <Grid item xs={12}>
+                  <UserFlowDiagram
+                    title="Tenant Onboarding Flow"
+                    steps={[
+                      {
+                        name: 'Navigate',
+                        description: 'Go to Tenant Management page'
+                      },
+                      {
+                        name: 'Add Tenant',
+                        description: 'Click "Add New Tenant" button'
+                      },
+                      {
+                        name: 'Enter Details',
+                        description: 'Fill in name, contact, plot number'
+                      },
+                      {
+                        name: 'Set Terms',
+                        description: 'Configure rental terms and payment schedule'
+                      },
+                      {
+                        name: 'Save',
+                        description: 'Save tenant profile'
+                      },
+                      {
+                        name: 'Complete',
+                        description: 'Tenant appears in list as Active'
+                      }
+                    ]}
+                  />
+                </Grid>
+
+                {/* Rent Payment Recording Flow */}
+                <Grid item xs={12}>
+                  <UserFlowDiagram
+                    title="Rent Payment Recording Flow"
+                    steps={[
+                      {
+                        name: 'Select Tenant',
+                        description: 'Choose tenant from dashboard'
+                      },
+                      {
+                        name: 'Record Payment',
+                        description: 'Click "Record Payment" button'
+                      },
+                      {
+                        name: 'Enter Details',
+                        description: 'Input payment amount and date'
+                      },
+                      {
+                        name: 'Submit',
+                        description: 'Save payment record'
+                      },
+                      {
+                        name: 'Update Status',
+                        description: 'Tenant status shows "Paid"'
+                      },
+                      {
+                        name: 'Dashboard Update',
+                        description: 'Dashboard reflects new payment'
+                      }
+                    ]}
+                  />
+                </Grid>
+
+                {/* Activity Logging Flow */}
+                <Grid item xs={12}>
+                  <UserFlowDiagram
+                    title="Activity Logging Flow"
+                    steps={[
+                      {
+                        name: 'Navigate',
+                        description: 'Go to Activity Log page'
+                      },
+                      {
+                        name: 'Select Property',
+                        description: 'Choose property or tenant'
+                      },
+                      {
+                        name: 'Log Activity',
+                        description: 'Click "Add Activity" button'
+                      },
+                      {
+                        name: 'Enter Details',
+                        description: 'Fill in activity type, date, description'
+                      },
+                      {
+                        name: 'Save',
+                        description: 'Save activity entry'
+                      },
+                      {
+                        name: 'View Timeline',
+                        description: 'Activity appears in timeline view'
+                      }
+                    ]}
+                  />
+                </Grid>
+
+                {/* Financial Reporting Flow */}
+                <Grid item xs={12}>
+                  <UserFlowDiagram
+                    title="Financial Reporting Flow"
+                    steps={[
+                      {
+                        name: 'Navigate',
+                        description: 'Go to Reports page'
+                      },
+                      {
+                        name: 'Select Range',
+                        description: 'Choose date range (e.g., current month)'
+                      },
+                      {
+                        name: 'Generate',
+                        description: 'Click "Generate Report"'
+                      },
+                      {
+                        name: 'Review',
+                        description: 'Verify calculations and totals'
+                      },
+                      {
+                        name: 'Export',
+                        description: 'Export to CSV if needed'
+                      },
+                      {
+                        name: 'Complete',
+                        description: 'Report shows paid vs outstanding'
+                      }
+                    ]}
+                  />
+                </Grid>
+              </Grid>
             </CardContent>
           </DashboardCard>
           </Box>

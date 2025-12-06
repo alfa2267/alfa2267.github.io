@@ -139,16 +139,16 @@ const ProjectShowcaseSection = ({
                 </Typography>
               </Box>
 
-              {repository.language && (
+                {repository.language && (
                 <Box mb={3}>
-                  <Box textAlign="center">
-                    <Typography variant="h4">
-                      {repository.language}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Language
-                    </Typography>
-                  </Box>
+                    <Box textAlign="center">
+                      <Typography variant="h4">
+                        {repository.language}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Language
+                      </Typography>
+                    </Box>
                 </Box>
               )}
 
@@ -255,19 +255,19 @@ const ProjectShowcaseSection = ({
                       }}>
                         {allItems[slideshowIndex].url ? (
                           <CardMedia
-                            component="img"
+                component="img"
                             image={allItems[slideshowIndex].url}
                             alt={allItems[slideshowIndex].title || `Slide ${slideshowIndex + 1}`}
-                            sx={{
-                              width: '100%',
-                              height: 'auto',
+                sx={{
+                  width: '100%',
+                  height: 'auto',
                               maxHeight: '70vh',
                               minHeight: '400px',
                               objectFit: 'contain',
-                              display: 'block'
-                            }}
-                            onError={(e) => {
-                              e.target.style.display = 'none';
+                  display: 'block'
+                }}
+                onError={(e) => {
+                  e.target.style.display = 'none';
                             }}
                           />
                         ) : (
@@ -339,9 +339,9 @@ const ProjectShowcaseSection = ({
                               <IconChevronRight size={24} />
                             </IconButton>
                           </>
-                        )}
+        )}
                       </Box>
-                      
+
                       {/* Slide Info */}
                       <Box sx={{ p: 2, bgcolor: 'background.paper' }}>
                         <Box display="flex" justifyContent="space-between" alignItems="center">

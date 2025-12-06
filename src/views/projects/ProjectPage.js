@@ -257,7 +257,7 @@ const ProjectPage = () => {
             showDemoImage={true}
             showScreenshots={project.screenshots && project.screenshots.length > 0}
             showWireframes={project.caseStudy?.artifacts?.wireframes && project.caseStudy.artifacts.wireframes.length > 0}
-          />
+              />
         </Grid>
       </Grid>
     </PageContainer>

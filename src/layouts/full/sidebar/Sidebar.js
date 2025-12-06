@@ -1,4 +1,5 @@
-import { useMediaQuery, Box, Drawer } from '@mui/material';
+import { useMediaQuery, Box, Drawer, IconButton, Tooltip } from '@mui/material';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons';
 import Logo from '../shared/logo/Logo';
 import SidebarItems from './SidebarItems';
 
@@ -7,13 +8,16 @@ const Sidebar = (props) => {
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up("lg"));
 
   const sidebarWidth = '270px';
+  const collapsedWidth = '70px';
+  const isCollapsed = !props.isSidebarOpen;
 
   if (lgUp) {
     return (
       <Box
         sx={{
-          width: sidebarWidth,
+          width: isCollapsed ? collapsedWidth : sidebarWidth,
           flexShrink: 0,
+          transition: 'width 0.3s ease',
         }}
       >
         {/* ------------------------------------------- */}
@@ -21,13 +25,15 @@ const Sidebar = (props) => {
         {/* ------------------------------------------- */}
         <Drawer
           anchor="left"
-          open={props.isSidebarOpen}
+          open={true}
           variant="permanent"
           PaperProps={{
             sx: {
-              width: sidebarWidth,
+              width: isCollapsed ? collapsedWidth : sidebarWidth,
               boxSizing: 'border-box',
               zIndex: 1100, // Lower than footer (1300)
+              transition: 'width 0.3s ease',
+              overflowX: 'hidden',
             },
           }}
         >
@@ -37,19 +43,40 @@ const Sidebar = (props) => {
           <Box
             sx={{
               height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
             {/* ------------------------------------------- */}
-            {/* Logo */}
+            {/* Logo and Toggle Button */}
             {/* ------------------------------------------- */}
-            <Box px={3}>
-              <Logo />
+            <Box 
+              sx={{ 
+                px: isCollapsed ? 1 : 3,
+                py: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottom: '1px solid',
+                borderColor: 'divider'
+              }}
+            >
+              {!isCollapsed && <Logo />}
+              <Tooltip title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"} placement="right">
+                <IconButton
+                  onClick={() => props.toggleSidebar && props.toggleSidebar()}
+                  size="small"
+                  sx={{ ml: isCollapsed ? 0 : 'auto' }}
+                >
+                  {isCollapsed ? <IconChevronRight size={20} /> : <IconChevronLeft size={20} />}
+                </IconButton>
+              </Tooltip>
             </Box>
-            <Box>
+            <Box sx={{ flexGrow: 1, overflow: 'auto' }}>
               {/* ------------------------------------------- */}
               {/* Sidebar Items */}
               {/* ------------------------------------------- */}
-              <SidebarItems />
+              <SidebarItems isCollapsed={isCollapsed} />
             </Box>
             
           </Box>
