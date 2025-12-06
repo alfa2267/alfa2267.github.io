@@ -207,6 +207,99 @@ export const reloamProjectData = {
       }
     },
     
+    userResearch: {
+      interviews: {
+        landlords: 1,
+        platformsAnalyzed: 5
+      },
+      keyInsights: [
+        'Agricultural property management has unique needs not addressed by existing tools',
+        'Landlords spend significant time on manual tracking (2+ days/month)',
+        'No centralized system for tenant communication and maintenance requests',
+        'Financial visibility is poor due to manual record-keeping',
+        'Market gap exists in emerging African PropTech space'
+      ],
+      painPoints: [
+        'Contract tracking across multiple tenants (paper-based, prone to loss)',
+        'No centralized communication channel with tenants',
+        'Manual rent collection tracking (error-prone)',
+        'No real-time view of outstanding payments',
+        'Difficult end-of-year accounting (shoebox of receipts)',
+        'No system for maintenance requests',
+        'Can\'t track land utilization or productivity per plot'
+      ],
+      personas: [
+        {
+          name: 'Adebayo Okafor',
+          role: 'Agricultural Landlord',
+          occupation: 'Agricultural Landlord & Business Owner',
+          age: '52',
+          location: 'Lagos, Nigeria',
+          techExposure: 'Medium',
+          devices: 'Android Phone, Windows Laptop',
+          family: 'Married with 3 children',
+          income: 'Manages 63 hectares generating $50K-80K annually',
+          quote: 'I spend 2 full days every month just tracking who paid rent and who didn\'t. It\'s all in notebooks and WhatsApp messages.',
+          about: 'Adebayo manages 63 hectares of farmland with 20+ tenant farmers across multiple plots. He inherited the land from his father and has been managing it for 15 years. He runs a small business in Lagos and visits the farm monthly. He\'s comfortable with basic technology but prefers simple, straightforward tools.',
+          behaviors: [
+            'Uses WhatsApp for all tenant communication',
+            'Keeps financial records in notebooks and spreadsheets',
+            'Visits farm monthly to collect rent and check on operations',
+            'Relies on memory and paper notes for tracking',
+            'Uses mobile banking for payments but tracks manually'
+          ],
+          goals: [
+            'Reduce time spent on administrative tasks',
+            'Have clear visibility into which tenants have paid',
+            'Track maintenance issues before they become problems',
+            'Generate reports for accountant without manual compilation',
+            'Understand which plots are most productive'
+          ],
+          painPoints: [
+            'Spends 2 full days monthly tracking payments manually',
+            'No centralized system - information scattered across notebooks and WhatsApp',
+            'Maintenance issues discovered weeks late, affecting harvests',
+            'Accountant frustrated with disorganized records',
+            'Can\'t assess portfolio productivity or make data-driven decisions'
+          ]
+        },
+        {
+          name: 'Fatima Hassan',
+          role: 'Tenant Farmer',
+          occupation: 'Small-Scale Agricultural Tenant',
+          age: '38',
+          location: 'Rural Nigeria',
+          techExposure: 'Low',
+          devices: 'Basic Android Phone (shared with family)',
+          family: 'Single mother with 2 children',
+          income: 'Earns $200-400/month from farming',
+          quote: 'When I have a problem with my plot, I don\'t know who to contact or how. By the time the landlord visits, it\'s too late.',
+          about: 'Fatima rents a 2-hectare plot to grow vegetables and cassava. She\'s been farming for 8 years and relies on the income to support her family. She has limited access to technology and prefers simple, mobile-friendly tools. She needs to communicate issues quickly but often doesn\'t know how.',
+          behaviors: [
+            'Uses basic phone primarily for calls and WhatsApp',
+            'Visits farm daily, checks on crops regularly',
+            'Communicates with landlord via WhatsApp when urgent',
+            'Keeps minimal records, relies on memory',
+            'Prefers voice communication over text when possible'
+          ],
+          goals: [
+            'Report maintenance issues quickly and easily',
+            'Understand payment schedule and amounts clearly',
+            'Access information about her plot and lease terms',
+            'Feel confident that issues will be addressed promptly',
+            'Maintain good relationship with landlord'
+          ],
+          painPoints: [
+            'No clear channel to report problems',
+            'Uncertain about payment schedules and amounts',
+            'Limited access to lease documents and terms',
+            'Delayed response to maintenance requests affects harvest',
+            'Feels disconnected from landlord between visits'
+          ]
+        }
+      ]
+    },
+    
     requirements: {
       epics: [
         {
