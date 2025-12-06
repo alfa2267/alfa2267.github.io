@@ -36,7 +36,11 @@ import {
   RequirementsSection,
   NotebookReflections,
   ProjectShowcaseSection,
-  DesignProcessSection
+  DesignProcessSection,
+  SprintMetricsSection,
+  QATestingSection,
+  DevOpsSecuritySection,
+  BacklogManagementSection
 } from '../../../components/sections';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
@@ -343,6 +347,48 @@ const ReloamPage = () => {
           <RequirementsSection
             title="Requirements & User Stories"
             epics={caseStudy.requirements.epics}
+          />
+        </Grid>
+
+        {/* Sprint Metrics & Velocity */}
+        <Grid item xs={12}>
+          <SprintMetricsSection
+            title="Sprint Metrics & Velocity"
+            currentSprint={caseStudy.sprintMetrics.currentSprint}
+            velocityHistory={caseStudy.sprintMetrics.velocityHistory}
+            sprintGoal={caseStudy.sprintMetrics.sprintGoal}
+          />
+        </Grid>
+
+        {/* Backlog Management */}
+        <Grid item xs={12}>
+          <BacklogManagementSection
+            title="Backlog Management & Prioritization"
+            prioritizationFramework={caseStudy.backlogManagement.prioritizationFramework}
+            backlogHealth={caseStudy.backlogManagement.backlogHealth}
+            technicalDebt={caseStudy.backlogManagement.technicalDebt}
+            refinementNotes={caseStudy.backlogManagement.refinementNotes}
+          />
+        </Grid>
+
+        {/* QA & Testing */}
+        <Grid item xs={12}>
+          <QATestingSection
+            title="QA & Testing Strategy"
+            testingApproach={caseStudy.qaAndTesting.testingApproach}
+            testScenarios={caseStudy.qaAndTesting.testScenarios}
+            bugMetrics={caseStudy.qaAndTesting.bugMetrics}
+            acceptanceCriteria={caseStudy.qaAndTesting.acceptanceCriteria}
+          />
+        </Grid>
+
+        {/* DevOps & Security */}
+        <Grid item xs={12}>
+          <DevOpsSecuritySection
+            title="DevOps & Security"
+            cicdPipeline={caseStudy.devOpsSecurity.cicdPipeline}
+            securityScans={caseStudy.devOpsSecurity.securityScans}
+            codeQuality={caseStudy.devOpsSecurity.codeQuality}
           />
         </Grid>
 

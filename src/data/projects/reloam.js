@@ -590,9 +590,210 @@ export const reloamProjectData = {
           skill: 'Self-Awareness & Growth',
           description: 'Honest reflection on what could be improved, applied lessons to future product thinking'
         }
+      ],
+      keyTakeaways: [
+        'User research is non-negotiable',
+        'MVPs should be even simpler than you think',
+        'Define success metrics before building',
+        'Prototypes save time and money'
       ]
     },
-    
+
+    // PM/Agile Practice Showcase
+    sprintMetrics: {
+      currentSprint: {
+        name: 'Sprint 3: Beta Launch Prep',
+        status: 'Active',
+        duration: '2 weeks',
+        committed: 34,
+        completed: 28,
+        inProgress: 6,
+        teamCapacity: 40
+      },
+      velocityHistory: [
+        { name: 'Sprint 1', committed: 30, completed: 24 },
+        { name: 'Sprint 2', committed: 32, completed: 29 },
+        { name: 'Sprint 3', committed: 34, completed: 28 }
+      ],
+      sprintGoal: 'Deliver MVP with all core features tested and ready for beta landlords'
+    },
+
+    qaAndTesting: {
+      testingApproach: {
+        description: 'Test-driven development with manual QA for user flows. Focus on acceptance criteria validation before sprint completion.',
+        types: ['Unit Testing', 'Integration Testing', 'Manual E2E Testing', 'User Acceptance Testing']
+      },
+      bugMetrics: {
+        totalBugs: 18,
+        resolved: 15,
+        open: 3,
+        resolutionTime: '2.3 days',
+        byPriority: {
+          critical: 0,
+          high: 1,
+          medium: 2,
+          low: 0
+        }
+      },
+      testScenarios: [
+        {
+          title: 'Tenant Onboarding Flow',
+          description: 'Verify landlord can successfully add a new tenant with all required information',
+          status: 'Passed',
+          steps: [
+            'Navigate to Tenant Management page',
+            'Click "Add New Tenant" button',
+            'Fill in tenant name, contact info, and plot number',
+            'Set rental terms and payment schedule',
+            'Save tenant profile'
+          ],
+          expectedResult: 'Tenant appears in tenant list with correct information and status set to "Active"'
+        },
+        {
+          title: 'Rent Payment Recording',
+          description: 'Landlord can record a rent payment and see updated financial status',
+          status: 'Passed',
+          steps: [
+            'Select tenant from dashboard',
+            'Click "Record Payment"',
+            'Enter payment amount and date',
+            'Submit payment record'
+          ],
+          expectedResult: 'Payment history updated, tenant status shows "Paid", dashboard reflects new payment'
+        },
+        {
+          title: 'Financial Report Generation',
+          description: 'Generate monthly financial summary report',
+          status: 'Passed',
+          steps: [
+            'Navigate to Reports page',
+            'Select date range (current month)',
+            'Click "Generate Report"',
+            'Verify calculations and export to CSV'
+          ],
+          expectedResult: 'Report shows accurate totals, paid vs outstanding, and exports successfully'
+        }
+      ],
+      acceptanceCriteria: [
+        { description: 'All tenant CRUD operations work correctly', completed: true, priority: 'P0' },
+        { description: 'Payment tracking calculates totals accurately', completed: true, priority: 'P0' },
+        { description: 'Dashboard loads in < 2 seconds', completed: true, priority: 'P1' },
+        { description: 'Mobile responsive design (480px min width)', completed: false, priority: 'P2', notes: 'Targeted for Sprint 4' },
+        { description: 'Data persists across browser sessions', completed: true, priority: 'P0' }
+      ]
+    },
+
+    devOpsSecurity: {
+      cicdPipeline: {
+        status: 'Passing',
+        stages: [
+          { name: 'Build', status: 'success', description: 'npm run build' },
+          { name: 'Lint', status: 'success', description: 'ESLint checks' },
+          { name: 'Test', status: 'success', description: 'Unit tests' },
+          { name: 'Deploy', status: 'success', description: 'Vercel deployment' }
+        ],
+        metrics: {
+          deploymentFrequency: '3/week',
+          successRate: '96%',
+          leadTime: '< 1 hour',
+          mttr: '< 30 min'
+        }
+      },
+      securityScans: {
+        scans: [
+          { name: 'Dependency Audit', status: 'passed', findings: 0, severity: 'low' },
+          { name: 'OWASP Top 10 Check', status: 'passed', findings: 0 },
+          { name: 'Data Validation', status: 'passed', findings: 0 }
+        ],
+        summary: {
+          totalIssues: 0,
+          criticalIssues: 0
+        },
+        bestPractices: [
+          'Input sanitization',
+          'LocalStorage encryption for sensitive data',
+          'No hardcoded credentials',
+          'HTTPS only',
+          'Content Security Policy headers'
+        ]
+      },
+      codeQuality: {
+        coverage: 75,
+        linting: {
+          status: 'Passing',
+          errors: 0,
+          warnings: 3
+        },
+        metrics: [
+          { name: 'Maintainability Index', value: 'B', status: 'good' },
+          { name: 'Code Duplication', value: '< 5%', status: 'good' },
+          { name: 'Cyclomatic Complexity', value: 'Low', status: 'good' }
+        ]
+      }
+    },
+
+    backlogManagement: {
+      prioritizationFramework: {
+        name: 'MoSCoW (Must/Should/Could/Won\'t)',
+        description: 'Prioritized MVP features using MoSCoW method to focus on core value proposition while deferring nice-to-have features.',
+        criteria: ['User impact', 'Development effort', 'Risk/complexity', 'Validation value']
+      },
+      backlogHealth: {
+        totalItems: 42,
+        refined: 28,
+        needsRefinement: 14,
+        avgAge: '12 days',
+        distribution: {
+          features: 18,
+          bugs: 3,
+          techDebt: 6,
+          research: 5
+        },
+        insights: [
+          'Backlog is 67% refined - above healthy threshold of 60%',
+          'Tech debt items prioritized for Sprint 4 to improve performance',
+          'Research items focused on user validation for Phase 2 features'
+        ]
+      },
+      technicalDebt: [
+        {
+          description: 'Migrate from LocalStorage to Supabase backend for data persistence',
+          priority: 'P1',
+          effort: 13,
+          impact: 'Enables multi-user support and data backup'
+        },
+        {
+          description: 'Implement proper error boundaries and logging',
+          priority: 'P2',
+          effort: 5,
+          impact: 'Better debugging and user experience'
+        },
+        {
+          description: 'Add comprehensive unit test coverage (current: 75%, target: 85%)',
+          priority: 'P2',
+          effort: 8,
+          impact: 'Improved code reliability and confidence in changes'
+        }
+      ],
+      refinementNotes: [
+        {
+          date: 'Dec 1',
+          summary: 'Refined Phase 2 features with team',
+          details: 'Broke down "Mobile App" epic into 12 user stories, estimated at 89 points total'
+        },
+        {
+          date: 'Nov 24',
+          summary: 'Groomed tech debt backlog',
+          details: 'Prioritized backend migration as P1 based on scalability needs for beta launch'
+        },
+        {
+          date: 'Nov 17',
+          summary: 'Validation metrics review',
+          details: 'Added analytics tracking stories to measure user adoption and feature usage'
+        }
+      ]
+    },
+
     artifacts: [
       {
         type: 'demo',
