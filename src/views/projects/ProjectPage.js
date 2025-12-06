@@ -23,6 +23,7 @@ import ProjectService from '../../services/projectService.js';
 import PageContainer from '../../components/container/PageContainer.js';
 import DashboardCard from '../../components/shared/DashboardCard.js';
 import DesignProcessSection from '../../components/sections/DesignProcessSection.js';
+import ProjectShowcaseSection from '../../components/sections/ProjectShowcaseSection.js';
 
 const ProjectPage = () => {
   const { slug } = useParams();
@@ -218,29 +219,6 @@ const ProjectPage = () => {
           </DashboardCard>
         </Grid>
 
-        {/* Screenshots placeholder */}
-        {project.screenshots.length > 0 && (
-          <Grid item xs={12} md={6}>
-            <DashboardCard title="Screenshots">
-              <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  Screenshots will be displayed here once implemented
-                </Typography>
-                {/* TODO: Add image gallery component */}
-              </CardContent>
-            </DashboardCard>
-          </Grid>
-        )}
-
-        {/* Repository Info */}
-        {project.github_data && (
-          <Grid item xs={12} md={4}>
-            <DashboardCard title="Repository Info">
-              {renderRepoInfo()}
-            </DashboardCard>
-          </Grid>
-        )}
-
         {/* Design Process */}
         {project.caseStudy?.designProcess && (
           <Grid item xs={12}>
@@ -251,31 +229,35 @@ const ProjectPage = () => {
           </Grid>
         )}
 
-        {/* Demo Image */}
-        <Grid item xs={12} md={project.github_data ? 8 : 12}>
-          
-          
-              <Box
-                component="img"
-                src={`https://raw.githubusercontent.com/alfa2267/${project.github_data?.name || project.slug}/main/demo.png`}
-                alt={`${project.name} Demo`}
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: 1,
-                  boxShadow: 2,
-                  '&:hover': {
-                    boxShadow: 4,
-                    transition: 'box-shadow 0.3s ease-in-out'
-                  }
-                }}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.parentNode.innerHTML = '<p style="text-align: center; color: #666; padding: 2rem;">Demo image not available</p>';
-                }}
-              />
-          
-       
+        {/* Project Showcase */}
+        <Grid item xs={12}>
+          <ProjectShowcaseSection
+            title=""
+            showTitle={false}
+            repository={project.github_data ? {
+              name: project.github_data.full_name || project.github_data.name,
+              full_name: project.github_data.full_name,
+              url: project.repo_url || project.github_data.html_url,
+              stars: project.github_data.stargazers_count,
+              stargazers_count: project.github_data.stargazers_count,
+              language: project.github_data.language,
+              updated_at: project.github_data.updated_at,
+              tech_stack: project.tech_stack || [],
+              features: project.features || []
+            } : null}
+            demoImage={{
+              url: `https://raw.githubusercontent.com/alfa2267/${project.github_data?.name || project.slug}/main/demo.png`,
+              alt: `${project.name} Demo`,
+              description: `Overview of ${project.name}`
+            }}
+            screenshots={project.screenshots || []}
+            wireframes={project.caseStudy?.artifacts?.wireframes || []}
+            screenshotsTitle=""
+            showRepository={!!project.github_data}
+            showDemoImage={true}
+            showScreenshots={project.screenshots && project.screenshots.length > 0}
+            showWireframes={project.caseStudy?.artifacts?.wireframes && project.caseStudy.artifacts.wireframes.length > 0}
+          />
         </Grid>
       </Grid>
     </PageContainer>

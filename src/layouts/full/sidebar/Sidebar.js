@@ -27,6 +27,7 @@ const Sidebar = (props) => {
             sx: {
               width: sidebarWidth,
               boxSizing: 'border-box',
+              zIndex: 1100, // Lower than footer (1300)
             },
           }}
         >

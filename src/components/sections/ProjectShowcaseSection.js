@@ -13,17 +13,27 @@ import {
   ListItemText,
   Accordion,
   AccordionSummary,
-  AccordionDetails
+  AccordionDetails,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
+  IconButton,
+  Card,
+  CardMedia
 } from '@mui/material';
 import {
   IconBrandGithub,
-  IconCalendar,
   IconExternalLink,
   IconCheck,
   IconDeviceDesktop,
   IconFileText,
   IconChevronDown,
-  IconPhoto
+  IconPhoto,
+  IconLayoutGrid,
+  IconList,
+  IconPlayerPlay,
+  IconChevronLeft,
+  IconChevronRight
 } from '@tabler/icons';
 import ScreenshotGallery from '../gallery/ScreenshotGallery.js';
 
@@ -40,7 +50,7 @@ const ProjectShowcaseSection = ({
   demoImage = null, // { url, alt, description }
   // Screenshots
   screenshots = [],
-  screenshotsTitle = "Live Application Screenshots",
+  screenshotsTitle = "",
   screenshotsView = "gallery", // "gallery" or "accordion"
   // Wireframes/Mockups
   wireframes = [],
@@ -51,6 +61,64 @@ const ProjectShowcaseSection = ({
   showScreenshots = true,
   showWireframes = true
 }) => {
+  // Combine all items: demo, screenshots, wireframes
+  const allItems = [
+    // Add demo image first if available
+    ...(showDemoImage && demoImage ? [{
+      url: demoImage.url,
+      title: demoImage.alt || 'Project Demo',
+      description: demoImage.description,
+      type: 'demo',
+      link: null
+    }] : []),
+    // Add screenshots
+    ...screenshots,
+    // Add wireframes/mockups
+    ...(showWireframes && wireframes.length > 0 ? wireframes.map(wireframe => ({
+      url: wireframe.url || null,
+      title: wireframe.title,
+      description: wireframe.description,
+      type: wireframe.type || 'wireframe',
+      icon: wireframe.icon,
+      link: wireframe.url || null
+    })) : [])
+  ];
+
+  const [viewMode, setViewMode] = React.useState(screenshotsView);
+  const [slideshowIndex, setSlideshowIndex] = React.useState(0);
+  const [slideshowPlaying, setSlideshowPlaying] = React.useState(false);
+
+  const handleViewChange = (event, newView) => {
+    if (newView !== null) {
+      setViewMode(newView);
+      if (newView === 'slideshow') {
+        setSlideshowIndex(0);
+        setSlideshowPlaying(true);
+      } else {
+        setSlideshowPlaying(false);
+      }
+    }
+  };
+
+  // Slideshow navigation
+  const nextSlide = () => {
+    setSlideshowIndex((prev) => (prev + 1) % allItems.length);
+  };
+
+  const prevSlide = () => {
+    setSlideshowIndex((prev) => (prev - 1 + allItems.length) % allItems.length);
+  };
+
+  // Auto-advance slideshow
+  React.useEffect(() => {
+    if (slideshowPlaying && viewMode === 'slideshow' && allItems.length > 1) {
+      const interval = setInterval(() => {
+        setSlideshowIndex((prev) => (prev + 1) % allItems.length);
+      }, 5000); // Change slide every 5 seconds
+      return () => clearInterval(interval);
+    }
+  }, [slideshowPlaying, viewMode, allItems.length]);
+
   return (
     <Box>
       {showTitle && (
@@ -60,9 +128,9 @@ const ProjectShowcaseSection = ({
       )}
 
       <Grid container spacing={3}>
-        {/* Repository Info - Left Column */}
+        {/* Repository Info - Left Column (or full width if no visual content) */}
         {showRepository && repository && (
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={(!showDemoImage || !demoImage) && (!showScreenshots || screenshots.length === 0) && (!showWireframes || wireframes.length === 0) ? 12 : 4}>
             <Paper elevation={2} sx={{ p: 3, height: '100%' }}>
               <Box display="flex" alignItems="center" mb={3}>
                 <IconBrandGithub size={24} />
@@ -71,41 +139,16 @@ const ProjectShowcaseSection = ({
                 </Typography>
               </Box>
 
-              <Grid container spacing={2} mb={3}>
-                {repository.stars !== undefined && (
-                  <Grid item xs={6}>
-                    <Box textAlign="center">
-                      <Typography variant="h4">
-                        {repository.stars || repository.stargazers_count || 0}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Stars
-                      </Typography>
-                    </Box>
-                  </Grid>
-                )}
-                {repository.language && (
-                  <Grid item xs={6}>
-                    <Box textAlign="center">
-                      <Typography variant="h4">
-                        {repository.language}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        Language
-                      </Typography>
-                    </Box>
-                  </Grid>
-                )}
-              </Grid>
-
-              {repository.updated_at && (
+              {repository.language && (
                 <Box mb={3}>
-                  <Typography variant="body2" color="text.secondary" display="flex" alignItems="center">
-                    <IconCalendar size={16} />
-                    <Box component="span" ml={1}>
-                      Updated: {new Date(repository.updated_at).toLocaleDateString()}
-                    </Box>
-                  </Typography>
+                  <Box textAlign="center">
+                    <Typography variant="h4">
+                      {repository.language}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Language
+                    </Typography>
+                  </Box>
                 </Box>
               )}
 
@@ -157,63 +200,223 @@ const ProjectShowcaseSection = ({
           </Grid>
         )}
 
-        {/* Demo Image - Right Column (or full width if no repo) */}
-        {showDemoImage && demoImage && (
+        {/* Demo Image & Screenshots Combined - Right Column (or full width if no repo) */}
+        {(showDemoImage && demoImage) || (showScreenshots && screenshots.length > 0) || (showWireframes && wireframes.length > 0) ? (
           <Grid item xs={12} md={showRepository && repository ? 8 : 12}>
-            <Paper elevation={2} sx={{ overflow: 'hidden' }}>
-              <Box
-                component="img"
-                src={demoImage.url}
-                alt={demoImage.alt || 'Project Demo'}
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block'
-                }}
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  const placeholder = e.target.parentNode;
-                  placeholder.innerHTML = `
-                    <div style="padding: 4rem; text-align: center; color: #666; min-height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="margin-bottom: 16px;">
-                        <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5" stroke-width="2"/>
-                        <path d="M21 15l-5-5L5 21" stroke-width="2"/>
-                      </svg>
-                      <p style="margin-top: 8px; font-size: 14px;">${demoImage.alt || 'Demo image not available'}</p>
-                    </div>
-                  `;
-                }}
-              />
-              {demoImage.description && (
-                <Box sx={{ p: 2, bgcolor: 'background.paper' }}>
-                  <Typography variant="body2" color="text.secondary">
-                    {demoImage.description}
+            <Box>
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                {screenshotsTitle && (
+                  <Typography variant="h6">
+                    {screenshotsTitle}
                   </Typography>
+                )}
+                {!screenshotsTitle && <Box />}
+                {allItems.length > 0 && (
+                  <ToggleButtonGroup
+                    value={viewMode}
+                    exclusive
+                    onChange={handleViewChange}
+                    size="small"
+                    aria-label="view mode"
+                  >
+                    <ToggleButton value="gallery" aria-label="gallery view">
+                      <Tooltip title="Gallery View">
+                        <IconLayoutGrid size={18} />
+                      </Tooltip>
+                    </ToggleButton>
+                    <ToggleButton value="accordion" aria-label="accordion view">
+                      <Tooltip title="List View">
+                        <IconList size={18} />
+                      </Tooltip>
+                    </ToggleButton>
+                    <ToggleButton value="slideshow" aria-label="slideshow view">
+                      <Tooltip title="Slideshow View">
+                        <IconPlayerPlay size={18} />
+                      </Tooltip>
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                )}
+              </Box>
+              
+              {/* Combine demo image, screenshots, and wireframes */}
+              {viewMode === "slideshow" ? (
+                /* Slideshow View */
+                <Box>
+                  {allItems.length > 0 && (
+                    <Card elevation={3} sx={{ position: 'relative', mb: 2, overflow: 'hidden' }}>
+                      <Box sx={{ 
+                        position: 'relative', 
+                        width: '100%', 
+                        bgcolor: 'black',
+                        minHeight: '500px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                      }}>
+                        {allItems[slideshowIndex].url ? (
+                          <CardMedia
+                            component="img"
+                            image={allItems[slideshowIndex].url}
+                            alt={allItems[slideshowIndex].title || `Slide ${slideshowIndex + 1}`}
+                            sx={{
+                              width: '100%',
+                              height: 'auto',
+                              maxHeight: '70vh',
+                              minHeight: '400px',
+                              objectFit: 'contain',
+                              display: 'block'
+                            }}
+                            onError={(e) => {
+                              e.target.style.display = 'none';
+                            }}
+                          />
+                        ) : (
+                          <Box
+                            sx={{
+                              width: '100%',
+                              minHeight: 400,
+                              bgcolor: 'grey.900',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              p: 4
+                            }}
+                          >
+                            {allItems[slideshowIndex].icon === 'desktop' ? (
+                              <IconDeviceDesktop size={64} style={{ color: '#999', marginBottom: 16 }} />
+                            ) : allItems[slideshowIndex].icon === 'document' ? (
+                              <IconFileText size={64} style={{ color: '#999', marginBottom: 16 }} />
+                            ) : (
+                              <IconPhoto size={64} style={{ color: '#999', marginBottom: 16 }} />
+                            )}
+                            <Typography variant="h6" color="white" textAlign="center">
+                              {allItems[slideshowIndex].title || 'Placeholder'}
+                            </Typography>
+                            {allItems[slideshowIndex].description && (
+                              <Typography variant="body2" color="grey.400" textAlign="center" mt={1}>
+                                {allItems[slideshowIndex].description}
+                  </Typography>
+                            )}
                 </Box>
               )}
-            </Paper>
-          </Grid>
-        )}
-      </Grid>
-
-      {/* Screenshots Section */}
-      {showScreenshots && screenshots.length > 0 && (
-        <Box mt={4}>
-          <Typography variant="h6" gutterBottom>
-            {screenshotsTitle}
+                        
+                        {/* Navigation Arrows */}
+                        {allItems.length > 1 && (
+                          <>
+                            <IconButton
+                              onClick={prevSlide}
+                              sx={{
+                                position: 'absolute',
+                                left: 8,
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                bgcolor: 'rgba(0,0,0,0.5)',
+                                color: 'white',
+                                '&:hover': {
+                                  bgcolor: 'rgba(0,0,0,0.7)'
+                                }
+                              }}
+                              aria-label="Previous slide"
+                            >
+                              <IconChevronLeft size={24} />
+                            </IconButton>
+                            <IconButton
+                              onClick={nextSlide}
+                              sx={{
+                                position: 'absolute',
+                                right: 8,
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                bgcolor: 'rgba(0,0,0,0.5)',
+                                color: 'white',
+                                '&:hover': {
+                                  bgcolor: 'rgba(0,0,0,0.7)'
+                                }
+                              }}
+                              aria-label="Next slide"
+                            >
+                              <IconChevronRight size={24} />
+                            </IconButton>
+                          </>
+                        )}
+                      </Box>
+                      
+                      {/* Slide Info */}
+                      <Box sx={{ p: 2, bgcolor: 'background.paper' }}>
+                        <Box display="flex" justifyContent="space-between" alignItems="center">
+                          <Box>
+                            <Typography variant="h6" fontWeight={600}>
+                              {allItems[slideshowIndex].title || `Slide ${slideshowIndex + 1}`}
+                            </Typography>
+                            {allItems[slideshowIndex].description && (
+                              <Typography variant="body2" color="text.secondary" mt={0.5}>
+                                {allItems[slideshowIndex].description}
+                              </Typography>
+                            )}
+                          </Box>
+                          {(allItems[slideshowIndex].link || allItems[slideshowIndex].url) && (
+                            <Button
+                              variant="outlined"
+                              size="small"
+                              startIcon={<IconExternalLink size={16} />}
+                              href={allItems[slideshowIndex].link || allItems[slideshowIndex].url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {allItems[slideshowIndex].type === 'wireframe' || allItems[slideshowIndex].type === 'mockup' 
+                                ? `View ${allItems[slideshowIndex].type}` 
+                                : 'View Live'}
+                            </Button>
+                          )}
+                        </Box>
+                        
+                        {/* Slide Indicators */}
+                        {allItems.length > 1 && (
+                          <Box display="flex" justifyContent="center" gap={1} mt={2}>
+                            {allItems.map((_, index) => (
+                              <Box
+                                key={index}
+                                onClick={() => setSlideshowIndex(index)}
+                                sx={{
+                                  width: 8,
+                                  height: 8,
+                                  borderRadius: '50%',
+                                  bgcolor: index === slideshowIndex ? 'primary.main' : 'grey.300',
+                                  cursor: 'pointer',
+                                  transition: 'background-color 0.2s',
+                                  '&:hover': {
+                                    bgcolor: index === slideshowIndex ? 'primary.dark' : 'grey.400'
+                                  }
+                                }}
+                                aria-label={`Go to slide ${index + 1}`}
+                              />
+                            ))}
+                          </Box>
+                        )}
+                        
+                        {/* Slide Counter */}
+                        {allItems.length > 1 && (
+                          <Typography variant="caption" color="text.secondary" textAlign="center" display="block" mt={1}>
+                            {slideshowIndex + 1} / {allItems.length}
           </Typography>
-          {screenshotsView === "accordion" ? (
+                        )}
+                      </Box>
+                    </Card>
+                  )}
+                </Box>
+              ) : viewMode === "accordion" ? (
             <Box>
-              {screenshots.map((screenshot, index) => (
+              {/* Combine all items: demo, screenshots, wireframes */}
+              {allItems.map((item, index) => (
                 <Accordion key={index} defaultExpanded={index === 0}>
                   <AccordionSummary expandIcon={<IconChevronDown />}>
                     <Box display="flex" alignItems="center" gap={2} width="100%">
-                      {screenshot.url ? (
+                      {item.url ? (
                         <Box
                           component="img"
-                          src={screenshot.url}
-                          alt={screenshot.title || `Screenshot ${index + 1}`}
+                          src={item.url}
+                          alt={item.title || `Item ${index + 1}`}
                           sx={{
                             width: 120,
                             height: 80,
@@ -238,16 +441,22 @@ const ProjectShowcaseSection = ({
                             borderRadius: 1
                           }}
                         >
+                          {item.icon === 'desktop' ? (
+                            <IconDeviceDesktop size={32} style={{ color: '#999' }} />
+                          ) : item.icon === 'document' ? (
+                            <IconFileText size={32} style={{ color: '#999' }} />
+                          ) : (
                           <IconPhoto size={32} style={{ color: '#999' }} />
+                          )}
                         </Box>
                       )}
                       <Box flex={1}>
                         <Typography variant="subtitle1" fontWeight="bold">
-                          {screenshot.title || `Screenshot ${index + 1}`}
+                          {item.title || `Item ${index + 1}`}
                         </Typography>
-                        {screenshot.description && (
+                        {item.description && (
                           <Typography variant="body2" color="text.secondary">
-                            {screenshot.description}
+                            {item.description}
                           </Typography>
                         )}
                       </Box>
@@ -255,11 +464,11 @@ const ProjectShowcaseSection = ({
                   </AccordionSummary>
                   <AccordionDetails>
                     <Box>
-                      {screenshot.url ? (
+                      {item.url ? (
                         <Box
                           component="img"
-                          src={screenshot.url}
-                          alt={screenshot.title || `Screenshot ${index + 1}`}
+                          src={item.url}
+                          alt={item.title || `Item ${index + 1}`}
                           sx={{
                             width: '100%',
                             height: 'auto',
@@ -276,7 +485,7 @@ const ProjectShowcaseSection = ({
                                   <circle cx="8.5" cy="8.5" r="1.5" stroke-width="2"/>
                                   <path d="M21 15l-5-5L5 21" stroke-width="2"/>
                                 </svg>
-                                <p style="margin-top: 8px; font-size: 14px;">${screenshot.title || 'Image not available'}</p>
+                                <p style="margin-top: 8px; font-size: 14px;">${item.title || 'Image not available'}</p>
                               </div>
                             `;
                           }}
@@ -295,23 +504,29 @@ const ProjectShowcaseSection = ({
                             p: 3
                           }}
                         >
+                          {item.icon === 'desktop' ? (
+                            <IconDeviceDesktop size={48} style={{ color: '#999', marginBottom: 8 }} />
+                          ) : item.icon === 'document' ? (
+                            <IconFileText size={48} style={{ color: '#999', marginBottom: 8 }} />
+                          ) : (
                           <IconPhoto size={48} style={{ color: '#999', marginBottom: 8 }} />
+                          )}
                           <Typography variant="body2" color="text.secondary" textAlign="center">
-                            {screenshot.title || 'Screenshot placeholder'}
+                            {item.title || 'Placeholder'}
                           </Typography>
                         </Box>
                       )}
-                      {screenshot.link && (
+                      {(item.link || (item.url && (item.type === 'wireframe' || item.type === 'mockup'))) && (
                         <Button
                           variant="outlined"
                           size="small"
                           startIcon={<IconExternalLink size={16} />}
-                          href={screenshot.link}
+                          href={item.link || item.url}
                           target="_blank"
                           rel="noopener noreferrer"
                           sx={{ mt: 1 }}
                         >
-                          View Live
+                          {item.type === 'wireframe' || item.type === 'mockup' ? `View ${item.type}` : 'View Live'}
                         </Button>
                       )}
                     </Box>
@@ -322,67 +537,13 @@ const ProjectShowcaseSection = ({
           ) : (
             <ScreenshotGallery
               title=""
-              screenshots={screenshots}
+              screenshots={allItems}
             />
           )}
         </Box>
-      )}
-
-      {/* Wireframes & Mockups Section */}
-      {showWireframes && wireframes.length > 0 && (
-        <>
-          {(showScreenshots && screenshots.length > 0) && <Divider sx={{ my: 4 }} />}
-          <Typography variant="h6" gutterBottom>
-            {wireframesTitle}
-          </Typography>
-          <Grid container spacing={2}>
-            {wireframes.map((wireframe, index) => (
-              <Grid item xs={12} md={6} key={index}>
-                <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
-                  <Typography variant="subtitle1" fontWeight="bold" gutterBottom>
-                    {wireframe.title}
-                  </Typography>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: 300,
-                      bgcolor: 'grey.100',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 1,
-                      mb: 2
-                    }}
-                  >
-                    {wireframe.icon === 'desktop' ? (
-                      <IconDeviceDesktop size={48} style={{ color: '#999', marginBottom: 8 }} />
-                    ) : (
-                      <IconFileText size={48} style={{ color: '#999', marginBottom: 8 }} />
-                    )}
-                    <Typography variant="body2" color="text.secondary" textAlign="center">
-                      {wireframe.description || wireframe.title}
-                    </Typography>
-                  </Box>
-                  {wireframe.url && (
-                    <Button
-                      variant="outlined"
-                      size="small"
-                      startIcon={<IconExternalLink size={16} />}
-                      href={wireframe.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      fullWidth
-                    >
-                      View {wireframe.type || 'Wireframe'}
-                    </Button>
-                  )}
-                </Paper>
-              </Grid>
-            ))}
           </Grid>
-        </>
-      )}
+        ) : null}
+      </Grid>
     </Box>
   );
 };

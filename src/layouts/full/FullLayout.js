@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 
 import Header from './header/Header';
 import Sidebar from './sidebar/Sidebar';
+import SystemStatus from '../../components/shared/SystemStatus';
 
 const MainWrapper = styled('div')(() => ({
   display: 'flex',
@@ -65,6 +66,10 @@ const FullLayout = () => {
           {/* End Page */}
           {/* ------------------------------------------- */}
         </Container>
+        {/* ------------------------------------------- */}
+        {/* System Status Footer */}
+        {/* ------------------------------------------- */}
+        <SystemStatus />
       </PageWrapper>
     </MainWrapper>
   );

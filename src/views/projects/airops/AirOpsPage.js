@@ -186,9 +186,9 @@ const AirOpsPage = () => {
                     {project.description}
                   </Typography>
                   <Box display="flex" gap={1} flexWrap="wrap" mt={2}>
-                    <Chip label={project.role} color="primary" variant="outlined" />
-                    <Chip label={project.timeline} icon={<IconCalendar size={16} />} />
-                    <Chip label={project.value} color="success" />
+                    <Chip label={project.role} color="primary" variant="outlined" size="small" />
+                    <Chip label={project.timeline} icon={<IconCalendar size={16} />} size="small" />
+                    <Chip label={project.value} color="success" size="small" />
                   </Box>
                 </Box>
               </Box>
@@ -210,11 +210,17 @@ const AirOpsPage = () => {
               tech_stack: project.tech_stack,
               features: project.features
             }}
-            demoImage={null}
+            demoImage={{
+              url: `https://raw.githubusercontent.com/alfa2267/airops-strategy/main/demo.png`,
+              alt: 'AirOps Strategy Demo',
+              description: 'Overview of the AirOps digital transformation strategy'
+            }}
+            screenshots={project.screenshots || []}
+            wireframes={project.caseStudy?.artifacts?.wireframes || []}
             showRepository={true}
-            showDemoImage={false}
-            showScreenshots={false}
-            showWireframes={false}
+            showDemoImage={true}
+            showScreenshots={project.screenshots && project.screenshots.length > 0}
+            showWireframes={project.caseStudy?.artifacts?.wireframes && project.caseStudy.artifacts.wireframes.length > 0}
             showTitle={false}
           />
         </Grid>

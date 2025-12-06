@@ -8,14 +8,31 @@ import RecentActivity from './components/RecentAcitvity';
 import MonthlyActivity from './components/MonthlyActivity';
 import AboutMe from './components/AboutMe';
 import Testimonials from './components/Testimonials';
+import ReleaseHealth from './components/ReleaseHealth';
+import ProductDiscoveryPipeline from './components/ProductDiscoveryPipeline';
+import DevOpsQuirks from './components/DevOpsQuirks';
 
 const Dashboard = () => {
   return (
     <PageContainer title="Dashboard" description="this is Dashboard">
       <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+        {/* Release Health & Product Pipeline - NEW */}
+        <div style={{
+          display: 'flex',
+          gap: '24px',
+          flexDirection: window.innerWidth < 1200 ? 'column' : 'row'
+        }}>
+          <div style={{ flex: '1' }}>
+            <ReleaseHealth />
+          </div>
+          <div style={{ flex: '1' }}>
+            <ProductDiscoveryPipeline />
+          </div>
+        </div>
+
         {/* Top row - Chart and side cards */}
-        <div style={{ 
-          display: 'flex', 
+        <div style={{
+          display: 'flex',
           gap: '24px',
           flexDirection: window.innerWidth < 1200 ? 'column' : 'row',
           minHeight: '500px'
@@ -23,7 +40,7 @@ const Dashboard = () => {
           <div style={{ flex: '2' }}>
             <MyProjects />
           </div>
-          <div style={{ 
+          <div style={{
             flex: '1',
             display: 'flex',
             flexDirection: 'column',
@@ -38,10 +55,10 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Bottom row */}
-        <div style={{ 
-          display: 'flex', 
+        <div style={{
+          display: 'flex',
           gap: '24px',
           flexDirection: window.innerWidth < 768 ? 'column' : 'row',
           alignItems: 'stretch'
@@ -52,11 +69,14 @@ const Dashboard = () => {
           <div style={{ flex: '1', height: '100%' }}>
             <AboutMe />
           </div>
+          <div style={{ flex: '1', height: '100%' }}>
+            <DevOpsQuirks />
+          </div>
         </div>
 
         {/* Testimonials row */}
-        <div style={{ 
-          display: 'flex', 
+        <div style={{
+          display: 'flex',
           gap: '24px',
           flexDirection: window.innerWidth < 768 ? 'column' : 'row',
           alignItems: 'stretch'

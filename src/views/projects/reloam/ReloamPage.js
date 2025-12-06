@@ -28,13 +28,16 @@ import {
 import PageContainer from '../../../components/container/PageContainer.js';
 import DashboardCard from '../../../components/shared/DashboardCard.js';
 import UserFlowDiagram from '../../../components/diagrams/UserFlowDiagram.js';
-import ProblemStatementSection from '../../../components/sections/ProblemStatementSection.js';
-import FeatureShowcaseSection from '../../../components/sections/FeatureShowcaseSection.js';
-import RequirementsSection from '../../../components/sections/RequirementsSection.js';
-import LessonsLearnedSection from '../../../components/sections/LessonsLearnedSection.js';
-import ArtifactsSection from '../../../components/sections/ArtifactsSection.js';
-import ProjectShowcaseSection from '../../../components/sections/ProjectShowcaseSection.js';
-import DesignProcessSection from '../../../components/sections/DesignProcessSection.js';
+import {
+  ProjectHeroSection,
+  ProblemDiscoverySection,
+  TechnicalArchitectureSection,
+  FeatureShowcaseSection,
+  RequirementsSection,
+  NotebookReflections,
+  ProjectShowcaseSection,
+  DesignProcessSection
+} from '../../../components/sections';
 import { reloamProjectData } from '../../../data/projects/reloam.js';
 
 const ReloamPage = () => {
@@ -73,26 +76,20 @@ const ReloamPage = () => {
       <Grid container spacing={3}>
         {/* Hero Section */}
         <Grid item xs={12}>
-          <DashboardCard>
-            <CardContent>
-              <Box display="flex" justifyContent="space-between" alignItems="flex-start" flexWrap="wrap" gap={2}>
-                <Box flex={1}>
-                  <Typography variant="h3" gutterBottom>
-                    {project.name}
-                  </Typography>
-                  <Typography variant="body1" color="text.secondary" paragraph>
-                    {project.description}
-                  </Typography>
-                  <Box display="flex" gap={1} flexWrap="wrap" mt={2}>
-                    <Chip label={project.role} color="primary" variant="outlined" />
-                    <Chip label={project.timeline} icon={<IconCalendar size={16} />} />
-                    <Chip label={project.status.toUpperCase()} color="success" />
-                    <Chip label={project.technology} />
-                  </Box>
-                </Box>
-              </Box>
-            </CardContent>
-          </DashboardCard>
+          <ProjectHeroSection
+            name={project.name}
+            description={project.description}
+            role={project.role}
+            timeline={project.timeline}
+            value="Solving $2B PropTech market gap in Africa"
+            tags={project.tech_stack}
+            showDeployment={true}
+            deploymentStatus={{
+              status: 'deployed',
+              environment: 'beta',
+              timestamp: '2024-12-15'
+            }}
+          />
         </Grid>
 
         {/* Project Showcase */}
@@ -178,85 +175,50 @@ const ReloamPage = () => {
           />
         </Grid>
 
-        {/* Problem Discovery */}
+        {/* Problem Discovery & Solution */}
         <Grid item xs={12}>
-          <DashboardCard title="Problem Discovery">
-            <CardContent>
-              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                Initial Insight (Q3 2024)
-              </Typography>
-              <Typography variant="body2" paragraph>
-                Met with a <strong>{caseStudy.problemDiscovery.initialResearch.interviewSubject}</strong> divided among 20+ tenant farmers. Key frustrations:
-              </Typography>
-              {caseStudy.problemDiscovery.initialResearch.quotes && caseStudy.problemDiscovery.initialResearch.quotes.map((quote, index) => (
-                <Box key={index} mb={1.5} p={1.5} bgcolor="grey.50" borderRadius={1}>
-                  <Typography variant="body2" fontStyle="italic" color="text.secondary">
-                    {quote}
-                  </Typography>
-                </Box>
-              ))}
-              <Box mt={2} mb={2} p={1.5} bgcolor="info.light" borderRadius={1}>
-                <Typography variant="body2">
-                  <strong>Key Insight:</strong> {caseStudy.problemDiscovery.initialResearch.insight}
-                </Typography>
-              </Box>
-
-              <Divider sx={{ my: 2 }} />
-
-              <Typography variant="subtitle2" fontWeight="bold" gutterBottom>
-                Market Research
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Paper elevation={1} sx={{ p: 1.5 }}>
-                    <Typography variant="h6">{caseStudy.problemDiscovery.marketResearch.platformsAnalyzed}</Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      Existing platforms analyzed
-                    </Typography>
-                  </Paper>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Paper elevation={1} sx={{ p: 1.5 }}>
-                    <Typography variant="caption" color="text.secondary" display="block" gutterBottom>
-                      Finding
-                    </Typography>
-                    <Typography variant="body2">{caseStudy.problemDiscovery.marketResearch.finding}</Typography>
-                  </Paper>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </DashboardCard>
-        </Grid>
-
-        {/* Problem Statement */}
-        <Grid item xs={12}>
-          <ProblemStatementSection
-            title="Problem Statement"
-            targetUser={caseStudy.problemStatement.targetUser}
-            painPoints={[
-              {
-                number: 1,
-                title: 'Tenant Relationship Management',
-                items: caseStudy.problemStatement.painPoints.tenantManagement,
-                color: 'error',
-                iconColor: 'red'
-              },
-              {
-                number: 2,
-                title: 'Financial Visibility',
-                items: caseStudy.problemStatement.painPoints.financialVisibility,
-                color: 'warning.main',
-                iconColor: 'orange'
-              },
-              {
-                number: 3,
-                title: 'Property Operations',
-                items: caseStudy.problemStatement.painPoints.propertyOperations,
-                color: 'info.main',
-                iconColor: '#1976d2'
-              }
+          <ProblemDiscoverySection
+            title="Problem Discovery & Solution"
+            problemStatement={{
+              description: `After interviewing a ${caseStudy.problemDiscovery.initialResearch.interviewSubject}, I discovered a significant gap: existing property management tools focus on residential/commercial real estate. Agricultural properties have unique needs that aren't being served.`,
+              challenges: [
+                'Contract tracking across 20+ tenants (paper-based, prone to loss)',
+                'No centralized communication channel',
+                'Manual rent collection tracking (error-prone)',
+                'No system for maintenance requests',
+                'Can\'t track land utilization or productivity per plot'
+              ],
+              impact: [
+                'Landlords spend 2 full days every month just tracking rent in notebooks and WhatsApp',
+                'No real-time view of outstanding payments or portfolio financial health',
+                'Maintenance issues discovered weeks late, affecting tenant harvests',
+                'Missing data for strategic decisions (which crops, which tenants)'
+              ],
+              userPainPoints: caseStudy.problemDiscovery.initialResearch.quotes
+            }}
+            solutionOverview={{
+              description: 'A digital platform empowering agricultural landlords to efficiently manage large-scale properties through tenant relationship management, financial operations, and activity tracking.',
+              approach: [
+                'Web-first MVP optimized for desktop data entry and reporting',
+                'Manual payment tracking (validates core value without complex integrations)',
+                'Single-tenant architecture for faster development and better security',
+                'Focus on 80/20 principle: core workflows that solve 80% of pain with 20% of features'
+              ],
+              keyFeatures: [
+                'Tenant database with profiles',
+                'Rent payment tracking',
+                'Financial reports',
+                'Activity logging',
+                'Dashboard overview'
+              ],
+              valueProposition: 'Transform chaotic notebook-based property management into organized, data-driven decision-making with clear visibility into tenants, finances, and property operations.'
+            }}
+            successCriteria={[
+              { value: '5-10', label: 'Beta Landlords' },
+              { value: '80%', label: 'Time Saved' },
+              { value: '0', label: 'Paper Tracking' },
+              { value: '$2B', label: 'Market Gap' }
             ]}
-            opportunity={caseStudy.problemStatement.opportunity}
           />
         </Grid>
 
