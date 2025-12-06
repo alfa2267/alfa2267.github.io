@@ -16,6 +16,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "ajv": "^8.17.1",
     "apexcharts": "^3.23.1",
     "chance": "^1.1.9",
     "dompurify": "^3.2.6",
@@ -50,7 +51,8 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "gh-pages": "^6.0.0",
-    "prettier": "^2.3.1"
+    "prettier": "^2.3.1",
+    "webpack-dev-server": "^4.15.1"
   },
   "overrides": {
     "ws": "^8.14.2",
@@ -61,8 +63,7 @@
     "follow-redirects": ">=1.15.6",
     "on-headers": ">=1.1.0",
     "postcss": ">=8.4.31",
-    "webpack": ">=5.94.0",
-    "webpack-dev-server": "4.15.1"
+    "webpack": ">=5.94.0"
   },
   "scripts": {
     "start": "react-scripts start",
